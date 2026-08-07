@@ -1190,7 +1190,7 @@ button, input, select, textarea {
 }
 
 /* ----------------------------------------------------
-   RESPONSIVE DESIGN (MEDIA QUERIES)
+   RESPONSIVE DESIGN (NATIVE MOBILE APP UI FEEL)
    ---------------------------------------------------- */
 @media (max-width: 1024px) {
   .search-box {
@@ -1207,7 +1207,7 @@ button, input, select, textarea {
   }
   .stats-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    gap: 2.5rem;
   }
   .stat-item {
     border-right: none;
@@ -1218,63 +1218,461 @@ button, input, select, textarea {
 }
 
 @media (max-width: 768px) {
+  /* Global mobile typography & scale down */
+  html {
+    font-size: 14px;
+  }
+
   .top-header {
     display: none;
   }
-  .mobile-toggle {
-    display: block;
+
+  .main-header {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
   }
+
+  .nav-container {
+    padding: 0.65rem 1rem;
+  }
+
+  .logo-graphic {
+    width: 32px;
+    height: 32px;
+  }
+  .tower-1 { width: 6px; height: 18px; }
+  .tower-2 { width: 7px; height: 26px; }
+  .tower-3 { width: 6px; height: 16px; }
+
+  .logo-title {
+    font-size: 1.15rem;
+    letter-spacing: 1.5px;
+  }
+
+  .logo-subtitle {
+    font-size: 0.52rem;
+    letter-spacing: 1px;
+  }
+
+  .btn-contact-nav {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+  }
+
+  .mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.3rem;
+  }
+
   .nav-links {
     position: fixed;
-    top: 70px;
+    top: 54px;
     left: 0;
     width: 100%;
-    background: var(--bg-navy-header);
+    height: calc(100vh - 54px);
+    background: rgba(10, 24, 40, 0.98);
+    backdrop-filter: blur(12px);
     flex-direction: column;
-    padding: 2rem;
+    padding: 2.5rem 1.5rem;
     gap: 1.5rem;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    transform: translateY(-150%);
-    transition: transform 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transform: translateY(-120%);
+    transition: transform 0.35 cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 999;
   }
+
   .nav-links.active {
     transform: translateY(0);
   }
+
+  .nav-link {
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+    text-align: center;
+    width: 100%;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  /* Compact Hero Section */
+  .hero-section {
+    min-height: 380px;
+    padding: 3rem 1rem 5.5rem 1rem;
+  }
+
+  .hero-tagline {
+    font-size: 0.68rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.6rem;
+  }
+
   .hero-title {
-    font-size: 2.2rem;
+    font-size: 1.65rem;
+    line-height: 1.22;
+    margin-bottom: 0.8rem;
   }
+
+  .hero-description {
+    font-size: 0.825rem;
+    line-height: 1.5;
+    margin-bottom: 1.4rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    gap: 0.7rem;
+    width: 100%;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 0.75rem 1.2rem;
+    font-size: 0.75rem;
+    width: 100%;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Compact Search Filter Card (App-style) */
+  .search-wrapper {
+    margin: -3.5rem auto 2.5rem auto;
+    padding: 0 0.85rem;
+  }
+
   .search-box {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(10, 24, 40, 0.12);
   }
+
   .filter-group {
     border-right: none;
     border-bottom: 1px solid #EEF2F6;
     padding-right: 0;
-    padding-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+    gap: 0.2rem;
   }
+
+  .filter-group:nth-child(3), .filter-group:nth-child(4) {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .filter-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+
+  .filter-select {
+    font-size: 0.78rem;
+    padding: 0.35rem 1.2rem 0.35rem 0;
+  }
+
+  .select-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  .btn-search {
+    grid-column: 1 / -1;
+    padding: 0.75rem;
+    font-size: 0.78rem;
+    justify-content: center;
+    border-radius: 8px;
+    margin-top: 0.3rem;
+  }
+
+  /* Compact Section Headers */
+  .section-properties, .section-zones {
+    margin: 0 auto 3rem auto;
+    padding: 0 1rem;
+  }
+
+  .section-header-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.2rem;
+  }
+
+  .section-title {
+    font-size: 1.35rem;
+    line-height: 1.25;
+  }
+
+  .section-link {
+    font-size: 0.75rem;
+  }
+
+  /* Compact Property Cards (App UI) */
   .properties-grid {
     grid-template-columns: 1fr;
+    gap: 1.2rem;
   }
+
+  .property-card {
+    border-radius: 12px;
+  }
+
+  .card-image-wrap {
+    height: 180px;
+  }
+
+  .badge-tag {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.65rem;
+    top: 0.65rem;
+    left: 0.65rem;
+  }
+
+  .card-content {
+    padding: 1rem;
+  }
+
+  .card-title {
+    font-size: 0.98rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .card-features {
+    gap: 0.8rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.8rem;
+  }
+
+  .feature-item svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .card-price {
+    font-size: 1.08rem;
+  }
+
+  /* Services Grid on Mobile (2 Columns) */
+  .section-services {
+    padding: 3rem 1rem;
+  }
+
   .services-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+    margin-top: 1.8rem;
   }
+
+  .service-card {
+    padding: 1.2rem 0.75rem;
+    border-radius: 12px;
+  }
+
+  .service-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .service-icon-box {
+    width: 44px;
+    height: 44px;
+    margin-bottom: 0.75rem;
+  }
+
+  .service-icon-box svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .service-title {
+    font-size: 0.78rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .service-desc {
+    font-size: 0.72rem;
+    line-height: 1.4;
+  }
+
+  /* Zones Grid on Mobile (2 Columns) */
   .zones-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.85rem;
+    margin-top: 1.5rem;
   }
+
+  .zone-card {
+    height: 150px;
+    border-radius: 12px;
+  }
+
+  .zone-overlay {
+    padding: 0.85rem;
+  }
+
+  .zone-name {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+  }
+
+  .zone-arrow {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Compact Stats Section */
+  .stats-banner {
+    padding: 3rem 1rem;
+  }
+
   .stats-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 1rem;
   }
+
+  .stat-item {
+    padding: 0 0.5rem;
+  }
+
+  .stat-icon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .stat-number {
+    font-size: 1.75rem;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-desc {
+    font-size: 0.7rem;
+    line-height: 1.35;
+  }
+
+  /* Compact CTA Box */
+  .cta-wrapper {
+    margin: -1.8rem auto 3rem auto;
+    padding: 0 0.85rem;
+  }
+
   .cta-box {
-    flex-direction: column;
-    text-align: center;
+    padding: 1.4rem 1.1rem;
+    border-radius: 14px;
+    gap: 1.2rem;
   }
+
   .cta-left {
-    flex-direction: column;
+    flex-direction: row;
+    gap: 1rem;
+    text-align: left;
   }
+
+  .cta-phone-icon {
+    width: 44px;
+    height: 44px;
+  }
+
+  .cta-phone-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .cta-text-title {
+    font-size: 1.05rem;
+  }
+
+  .cta-text-subtitle {
+    font-size: 0.78rem;
+  }
+
+  .btn-cta {
+    width: 100%;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.78rem;
+    border-radius: 8px;
+  }
+
+  /* Compact Footer */
+  .site-footer {
+    padding-top: 3rem;
+  }
+
   .footer-container {
     grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 1rem 2.5rem 1rem;
   }
-  .modal-prop-grid {
-    grid-template-columns: 1fr;
+
+  .footer-col-title {
+    font-size: 0.75rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .footer-links a, .footer-contact-item {
+    font-size: 0.8rem;
+  }
+
+  .footer-bottom-container {
+    flex-direction: column;
+    gap: 0.4rem;
+    text-align: center;
+    font-size: 0.72rem;
+  }
+
+  /* Modals on Mobile App UI */
+  .modal-overlay {
+    padding: 0.75rem;
+  }
+
+  .modal-card {
+    border-radius: 16px;
+    max-height: 94vh;
+  }
+
+  .modal-header {
+    padding: 1rem 1.2rem;
+  }
+
+  .modal-title {
+    font-size: 1.05rem;
+  }
+
+  .modal-body {
+    padding: 1.2rem;
+  }
+
+  .modal-prop-img {
+    height: 200px;
+    border-radius: 10px;
+  }
+
+  .modal-prop-price {
+    font-size: 1.4rem;
+  }
+
+  .modal-prop-specs {
+    font-size: 0.8rem;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .toast {
+    bottom: 1rem;
+    left: 1rem;
+    right: 1rem;
+    padding: 0.8rem 1.2rem;
+    font-size: 0.8rem;
+    border-radius: 10px;
   }
 }
+
