@@ -1835,6 +1835,8 @@ button, input, select, textarea {
   .search-input-wrap {
     grid-column: 1 / -1;
   }
+}
+
 /* ----------------------------------------------------
    SINGLE PROPERTY DETAIL PAGE (propiedad.html)
    ---------------------------------------------------- */
@@ -1994,6 +1996,10 @@ button, input, select, textarea {
   }
   .prop-sidebar-card {
     position: static;
+  }
+  .about-grid, .services-page-grid, .contact-page-grid {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
   }
 }
 
