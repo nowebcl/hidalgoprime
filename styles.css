@@ -1347,23 +1347,24 @@ button, input, select, textarea {
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
-  /* Ultra-Minimal & Image-Centered Mobile Hero Section */
+  /* Left-Aligned Minimal Hero Section */
   .hero-section {
     min-height: 360px;
-    padding: 2.8rem 1.5rem 4.5rem 1.5rem;
-    background: linear-gradient(180deg, rgba(7, 18, 32, 0.45) 0%, rgba(13, 30, 50, 0.35) 100%), url('assets/images/hero_bg.jpg') center/cover no-repeat;
+    padding: 2.8rem 1.2rem 4.5rem 1.2rem;
+    background: linear-gradient(180deg, rgba(7, 18, 32, 0.48) 0%, rgba(13, 30, 50, 0.38) 100%), url('assets/images/hero_bg.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
   }
 
   .hero-container {
-    padding: 0 1rem;
+    padding: 0 0.5rem;
+    width: 100%;
   }
 
   .hero-content {
-    max-width: 270px;
-    margin: 0 auto;
-    text-align: center;
+    max-width: 290px;
+    margin: 0;
+    text-align: left;
   }
 
   .hero-tagline {
@@ -1374,11 +1375,12 @@ button, input, select, textarea {
   }
 
   .hero-title {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     line-height: 1.22;
     margin-bottom: 0.45rem;
     font-weight: 700;
     text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    text-align: left;
   }
 
   .hero-description {
@@ -1387,13 +1389,14 @@ button, input, select, textarea {
     color: #F1F5F9;
     margin-bottom: 0.85rem;
     text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    text-align: left;
   }
 
   .hero-actions {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    align-items: flex-start;
+    justify-content: flex-start;
     gap: 0.4rem;
     width: 100%;
   }
