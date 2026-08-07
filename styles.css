@@ -406,7 +406,7 @@ button, input, select, textarea {
 
 .btn-search {
   background: var(--gold-gradient);
-  color: #0A1828;
+  color: #FFFFFF;
   padding: 1.1rem 2.2rem;
   font-size: 0.9rem;
   font-weight: 800;
@@ -420,6 +420,11 @@ button, input, select, textarea {
   align-items: center;
   gap: 0.6rem;
   height: 100%;
+}
+
+.btn-search svg, .btn-search span {
+  color: #FFFFFF;
+  stroke: #FFFFFF;
 }
 
 .btn-search:hover {
