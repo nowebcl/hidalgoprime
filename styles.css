@@ -230,7 +230,7 @@ button, input, select, textarea {
 .hero-section {
   position: relative;
   min-height: 560px;
-  background: linear-gradient(180deg, rgba(7, 18, 32, 0.55) 0%, rgba(13, 30, 50, 0.4) 100%), url('assets/images/hero_bg.jpg') center/cover no-repeat;
+  background: linear-gradient(180deg, rgba(7, 18, 32, 0.55) 0%, rgba(13, 30, 50, 0.4) 100%), url('assets/images/portada.png') center/cover no-repeat;
   display: flex;
   align-items: center;
   padding: 4rem 1.5rem 6.5rem 1.5rem;
@@ -1306,7 +1306,7 @@ button, input, select, textarea {
   .hero-section {
     min-height: 360px;
     padding: 2.8rem 1.2rem 4.5rem 1.2rem;
-    background: linear-gradient(180deg, rgba(7, 18, 32, 0.48) 0%, rgba(13, 30, 50, 0.38) 100%), url('assets/images/hero_bg.jpg') center/cover no-repeat;
+    background: linear-gradient(180deg, rgba(7, 18, 32, 0.48) 0%, rgba(13, 30, 50, 0.38) 100%), url('assets/images/portada.png') center/cover no-repeat;
     display: flex;
     align-items: center;
   }
@@ -1711,7 +1711,7 @@ button, input, select, textarea {
    PAGE MINI HERO & MULTI-PAGE STYLES
    ---------------------------------------------------- */
 .page-hero {
-  background: linear-gradient(180deg, rgba(7, 18, 32, 0.75) 0%, rgba(13, 30, 50, 0.85) 100%), url('assets/images/hero_bg.jpg') center/cover no-repeat;
+  background: linear-gradient(180deg, rgba(7, 18, 32, 0.75) 0%, rgba(13, 30, 50, 0.85) 100%), url('assets/images/portada.png') center/cover no-repeat;
   padding: 3.8rem 1.5rem;
   color: #FFFFFF;
   text-align: center;
