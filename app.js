@@ -378,9 +378,9 @@ function renderSinglePropertyPage(id) {
       </div>
 
       <div class="prop-detail-box">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
           <span class="badge-tag" style="position: relative; top: 0; left: 0;">${prop.operacion}</span>
-          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">ID Propiedad: HP-${1000 + prop.id}</span>
+          <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600; white-space: nowrap;">ID: HP-${1000 + prop.id}</span>
         </div>
 
         <div class="prop-price-large">${prop.precio}</div>
