@@ -146,7 +146,7 @@ function renderProperties(properties) {
   }
 
   propertiesGrid.innerHTML = properties.map(prop => `
-    <div class="property-card" onclick="openPropertyModal(${prop.id})">
+    <div class="property-card" onclick="window.location.href='propiedad.html?id=${prop.id}'">
       <div class="card-image-wrap">
         <img src="${prop.image}" alt="${prop.title}" class="card-image">
         <span class="badge-tag">${prop.operacion}</span>
@@ -345,12 +345,167 @@ window.addEventListener("click", (e) => {
   if (e.target === contactModal) closeContactModal();
 });
 
+// Single Property Page Renderer
+function renderSinglePropertyPage(id) {
+  const singlePropLayout = document.getElementById("singlePropLayout");
+  if (!singlePropLayout) return;
+
+  const prop = propertiesData.find(p => p.id === Number(id)) || propertiesData[0];
+
+  // Update page titles
+  const pageTitle = document.getElementById("pageTitle");
+  if (pageTitle) pageTitle.textContent = `${prop.title} | Hidalgo Prime`;
+  
+  const breadcrumbTitle = document.getElementById("breadcrumbTitle");
+  if (breadcrumbTitle) breadcrumbTitle.textContent = prop.title;
+
+  const propTitleHeader = document.getElementById("propTitleHeader");
+  if (propTitleHeader) propTitleHeader.textContent = prop.title;
+
+  const propLocationHeader = document.getElementById("propLocationHeader");
+  if (propLocationHeader) propLocationHeader.textContent = `Comuna ${prop.comunaLabel}, Santiago, Chile`;
+
+  singlePropLayout.innerHTML = `
+    <div>
+      <div class="prop-gallery-card">
+        <img src="${prop.image}" alt="${prop.title}" id="mainGalleryImg" class="prop-gallery-main">
+        <div class="prop-gallery-thumbs">
+          <img src="${prop.image}" class="prop-thumb active" onclick="switchMainImage(this.src, this)">
+          <img src="assets/images/hero_bg.jpg" class="prop-thumb" onclick="switchMainImage(this.src, this)">
+          <img src="assets/images/zone_vitacura.jpg" class="prop-thumb" onclick="switchMainImage(this.src, this)">
+          <img src="assets/images/zone_las_condes.jpg" class="prop-thumb" onclick="switchMainImage(this.src, this)">
+        </div>
+      </div>
+
+      <div class="prop-detail-box">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <span class="badge-tag" style="position: relative; top: 0; left: 0;">${prop.operacion}</span>
+          <span style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">ID Propiedad: HP-${1000 + prop.id}</span>
+        </div>
+
+        <div class="prop-price-large">${prop.precio}</div>
+
+        <div class="specs-grid-box">
+          <div class="spec-item-big">
+            <i data-lucide="bed"></i>
+            <span class="val">${prop.dorm}</span>
+            <span class="lbl">Dormitorios</span>
+          </div>
+          <div class="spec-item-big">
+            <i data-lucide="bath"></i>
+            <span class="val">${prop.banos}</span>
+            <span class="lbl">Baños</span>
+          </div>
+          <div class="spec-item-big">
+            <i data-lucide="maximize-2"></i>
+            <span class="val">${prop.superficie} m²</span>
+            <span class="lbl">Superficie Total</span>
+          </div>
+          <div class="spec-item-big">
+            <i data-lucide="building-2"></i>
+            <span class="val">${prop.tipo.toUpperCase()}</span>
+            <span class="lbl">Tipo Propiedad</span>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--bg-navy-header); margin-bottom: 0.8rem;">Descripción de la Propiedad</h3>
+        <p style="font-size: 0.95rem; color: var(--text-dark); line-height: 1.7; margin-bottom: 1.8rem;">
+          ${prop.description}
+        </p>
+
+        <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--bg-navy-header); margin-bottom: 0.8rem;">Equipamiento y Características</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.6rem;">
+          ${prop.features.map(f => `<span style="background: #F8FAFC; border: 1px solid #E2E8F0; font-size: 0.82rem; font-weight: 700; padding: 0.4rem 0.85rem; border-radius: 50px; color: var(--bg-navy-header);">${f}</span>`).join('')}
+        </div>
+      </div>
+    </div>
+
+    <!-- Sticky Inquiry Sidebar -->
+    <div>
+      <div class="prop-sidebar-card">
+        <div class="agent-profile">
+          <div class="agent-avatar">HP</div>
+          <div>
+            <h4 style="font-size: 1rem; font-weight: 800; color: var(--bg-navy-header);">Asesor Inmobiliario</h4>
+            <p style="font-size: 0.8rem; color: var(--gold-primary); font-weight: 700;">Hidalgo Prime Executive</p>
+          </div>
+        </div>
+
+        <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--bg-navy-header); margin-bottom: 1rem;">Solicitar Información</h4>
+
+        <form onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="spName">Nombre completo *</label>
+            <input type="text" id="spName" class="form-input" placeholder="Ej: Carlos Rojas" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="spEmail">Correo electrónico *</label>
+            <input type="email" id="spEmail" class="form-input" placeholder="carlos@ejemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="spPhone">Teléfono *</label>
+            <input type="tel" id="spPhone" class="form-input" placeholder="+56 9 1234 5678" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="spMessage">Mensaje</label>
+            <textarea id="spMessage" class="form-textarea" rows="3">Hola, me interesa obtener información sobre ${prop.title} (${prop.precio}).</textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-bottom: 0.8rem;">
+            <i data-lucide="mail"></i> Enviar Consulta
+          </button>
+        </form>
+
+        <a href="https://wa.me/56912345678?text=Hola,%20quisiera%20consultar%20por%20la%20propiedad:%20${encodeURIComponent(prop.title)}" target="_blank" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none;">
+          <i data-lucide="message-circle" style="color: #25D366;"></i> Consultar por WhatsApp
+        </a>
+      </div>
+    </div>
+  `;
+
+  // Render similar properties at bottom
+  const similarGrid = document.getElementById("similarPropertiesGrid");
+  if (similarGrid) {
+    const similarProps = propertiesData.filter(p => p.id !== prop.id).slice(0, 3);
+    similarGrid.innerHTML = similarProps.map(p => `
+      <div class="property-card" onclick="window.location.href='propiedad.html?id=${p.id}'">
+        <div class="card-image-wrap">
+          <img src="${p.image}" alt="${p.title}" class="card-image">
+          <span class="badge-tag">${p.operacion}</span>
+        </div>
+        <div class="card-content">
+          <h3 class="card-title">${p.title}</h3>
+          <div class="card-features">
+            <div class="feature-item"><i data-lucide="bed"></i> <span>${p.dorm} Dorm.</span></div>
+            <div class="feature-item"><i data-lucide="bath"></i> <span>${p.banos} Baños</span></div>
+            <div class="feature-item"><i data-lucide="maximize-2"></i> <span>${p.superficie} m²</span></div>
+          </div>
+          <div class="card-price">${p.precio}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  lucide.createIcons();
+}
+
+function switchMainImage(src, thumbEl) {
+  const mainImg = document.getElementById("mainGalleryImg");
+  if (mainImg) mainImg.src = src;
+  document.querySelectorAll('.prop-thumb').forEach(t => t.classList.remove('active'));
+  if (thumbEl) thumbEl.classList.add('active');
+}
+
 // Initialize Page & Parse URL Query Parameters
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
+  const idParam = params.get("id");
   const comunaParam = params.get("comuna");
   const operacionParam = params.get("operacion");
   const tipoParam = params.get("tipo");
+
+  if (idParam) {
+    renderSinglePropertyPage(idParam);
+  }
 
   if (comunaParam && filterComuna) filterComuna.value = comunaParam;
   if (operacionParam && filterOperacion) filterOperacion.value = operacionParam;
