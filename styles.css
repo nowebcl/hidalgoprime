@@ -903,29 +903,34 @@ button, input, select, textarea {
 .social-links {
   display: flex;
   gap: 0.8rem;
+  margin-top: 0.5rem;
 }
 
 .social-icon {
-  width: 34px;
-  height: 34px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(197, 155, 63, 0.4);
+  background: rgba(10, 24, 40, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #FFFFFF;
+  color: var(--gold-primary);
   transition: var(--transition);
 }
 
 .social-icon:hover {
+  background: var(--gold-primary);
+  color: #0A1828;
   border-color: var(--gold-primary);
-  color: var(--gold-primary);
-  background: rgba(197, 155, 63, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(197, 155, 63, 0.35);
 }
 
 .social-icon svg {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
 }
 
 .footer-col-title {
