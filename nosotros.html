@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiénes Somos | Hidalgo Prime Real Estate</title>
+  <meta name="description" content="Conoce la trayectoria de Hidalgo Prime: expertos en gestión inmobiliaria e inversiones de alto nivel en Chile.">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- TOP HEADER BAR -->
+  <div class="top-header">
+    <div class="top-header-container">
+      <div class="top-info-group">
+        <div class="top-info-item">
+          <i data-lucide="map-pin"></i>
+          <span><span class="label">Oficina</span> Av. Vitacura 5900, oficina 211, Vitacura, Santiago, Chile</span>
+        </div>
+        <div class="top-info-item">
+          <i data-lucide="phone"></i>
+          <span><span class="label">Teléfono</span> <a href="tel:+56912345678">+56 9 1234 5678</a></span>
+        </div>
+        <div class="top-info-item">
+          <i data-lucide="mail"></i>
+          <span><span class="label">Correo</span> <a href="mailto:contacto@hidalgoprime.cl">contacto@hidalgoprime.cl</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION HEADER -->
+  <header class="main-header">
+    <div class="nav-container">
+      <div class="brand-logo" onclick="window.location.href='index.html'">
+        <img src="assets/images/logo.png" alt="Hidalgo Prime Logo" class="brand-logo-img">
+      </div>
+
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html" class="nav-link">Inicio</a></li>
+          <li><a href="propiedades.html" class="nav-link">Propiedades</a></li>
+          <li><a href="nosotros.html" class="nav-link active">Quiénes Somos</a></li>
+          <li><a href="servicios.html" class="nav-link">Servicios</a></li>
+          <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button class="btn-contact-nav" onclick="openContactModal()">Contáctanos</button>
+
+      <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- PAGE MINI HERO -->
+  <section class="page-hero">
+    <span class="page-hero-subtitle">Nuestra Historia y Filosofía</span>
+    <h1 class="page-hero-title">Quiénes Somos</h1>
+    <p style="font-size: 0.9rem; color: #CBD5E1; max-width: 540px; margin: 0.4rem auto 0 auto;">
+      Acompañamos a nuestros clientes con ética, rigor profesional y visión financiera para maximizar el valor de su patrimonio inmobiliario.
+    </p>
+  </section>
+
+  <!-- ABOUT CONTENT SECTION -->
+  <section style="max-width: var(--max-width); margin: 4rem auto; padding: 0 1.5rem;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;" class="about-grid">
+      <div>
+        <span class="section-subtitle">Experiencia y Compromiso</span>
+        <h2 class="section-title" style="margin-bottom: 1.2rem;">Transformamos la gestión inmobiliaria en un activo estratégico.</h2>
+        <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.2rem;">
+          En <strong>Hidalgo Prime</strong> combinamos el conocimiento profundo del mercado residencial y comercial de Santiago con un enfoque personalizado y transparente.
+        </p>
+        <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 1.8rem;">
+          Nos especializamos en sectores de alta plusvalía como Vitacura, Las Condes, Lo Barnechea y Providencia, brindando asesoría legal, financiera y comercial de primer nivel.
+        </p>
+        <div style="display: flex; gap: 1rem;">
+          <button class="btn-primary" onclick="openContactModal('Asesoría Integral')">Agendar Reunión</button>
+          <a href="propiedades.html" class="btn-secondary" style="display: inline-flex; align-items: center;">Ver Propiedades</a>
+        </div>
+      </div>
+
+      <div>
+        <img src="assets/images/zone_vitacura.jpg" alt="Hidalgo Prime Oficina" style="width: 100%; height: 380px; object-fit: cover; border-radius: 20px; box-shadow: var(--shadow-lg);">
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BANNER -->
+  <section class="stats-banner">
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="users"></i></div>
+        <div class="stat-number">+10</div>
+        <div class="stat-label">Años de Experiencia</div>
+        <div class="stat-desc">en gestión inmobiliaria e inversiones.</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="handshake"></i></div>
+        <div class="stat-number">+500</div>
+        <div class="stat-label">Operaciones Exitosas</div>
+        <div class="stat-desc">en compra, venta y arriendos.</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="shield-check"></i></div>
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Compromiso y Transparencia</div>
+        <div class="stat-desc">Trabajamos con ética, claridad y foco en tus objetivos.</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="line-chart"></i></div>
+        <div class="stat-label" style="margin-top: 1rem;">Enfoque en Resultados</div>
+        <div class="stat-desc">Estrategias personalizadas para maximizar el valor de tu inversión.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <div class="brand-logo" onclick="window.location.href='index.html'">
+          <img src="assets/images/logo.png" alt="Hidalgo Prime Logo" class="brand-logo-img">
+        </div>
+        <div class="social-links">
+          <a href="https://linkedin.com" target="_blank" class="social-icon" aria-label="LinkedIn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://instagram.com" target="_blank" class="social-icon" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://facebook.com" target="_blank" class="social-icon" aria-label="Facebook">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+          <a href="https://wa.me/56912345678" target="_blank" class="social-icon" aria-label="WhatsApp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Navegación</h4>
+        <ul class="footer-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="propiedades.html">Propiedades</a></li>
+          <li><a href="nosotros.html">Quiénes Somos</a></li>
+          <li><a href="servicios.html">Servicios</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Servicios</h4>
+        <ul class="footer-links">
+          <li><a onclick="openContactModal('Compra y Venta')">Compra y venta</a></li>
+          <li><a onclick="openContactModal('Arriendos')">Arriendos</a></li>
+          <li><a onclick="openContactModal('Administración')">Administración</a></li>
+          <li><a onclick="openContactModal('Inversiones')">Inversiones</a></li>
+          <li><a onclick="openContactModal('Asesoría Integral')">Asesoría integral</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Contacto</h4>
+        <div class="footer-contact-item">
+          <i data-lucide="map-pin"></i>
+          <span>Av. Vitacura 5900, Oficina 211 Vitacura, Santiago, Chile</span>
+        </div>
+        <div class="footer-contact-item">
+          <i data-lucide="phone"></i>
+          <span>+56 9 1234 5678</span>
+        </div>
+        <div class="footer-contact-item">
+          <i data-lucide="mail"></i>
+          <span>contacto@hidalgoprime.cl</span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="footer-col-title">Horario de Atención</h4>
+        <p style="font-size: 0.85rem; margin-bottom: 0.5rem; color: #94A3B8;">Lunes a Viernes<br><strong style="color: #FFF;">9:00 a 18:00 hrs.</strong></p>
+        <p style="font-size: 0.85rem; color: #94A3B8;">Sábado<br><strong style="color: #FFF;">10:00 a 14:00 hrs.</strong></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-container">
+        <span>© 2026 Hidalgo Prime SpA. Todos los derechos reservados.</span>
+        <span class="developer">Desarrollado por <a href="https://www.instagram.com/noweb.dev/" target="_blank" style="color: var(--gold-primary); text-decoration: none; font-weight: 700;">NOWEB LABS</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="contactModal">
+    <div class="modal-card" style="max-width: 550px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Contacto Hidalgo Prime</h3>
+        <button class="modal-close" onclick="closeContactModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="contactForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="contactName">Nombre completo *</label>
+            <input type="text" id="contactName" class="form-input" placeholder="Ej: Juan Pérez" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactEmail">Correo electrónico *</label>
+            <input type="email" id="contactEmail" class="form-input" placeholder="juan@ejemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactPhone">Teléfono *</label>
+            <input type="tel" id="contactPhone" class="form-input" placeholder="+56 9 1234 5678" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactService">Servicio de interés</label>
+            <select id="contactService" class="form-select">
+              <option value="Compra y Venta">Compra y Venta</option>
+              <option value="Arriendos">Arriendos</option>
+              <option value="Administración">Administración</option>
+              <option value="Inversiones">Inversiones</option>
+              <option value="Asesoría Integral">Asesoría Integral</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactMessage">Mensaje</label>
+            <textarea id="contactMessage" class="form-textarea" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+            Enviar Consulta
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastNotification">
+    <i data-lucide="check-circle-2" style="color: var(--gold-primary); width: 22px; height: 22px;"></i>
+    <span id="toastMessage">¡Consulta enviada con éxito!</span>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

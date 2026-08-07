@@ -177,28 +177,36 @@ function renderProperties(properties) {
 
 // Filter Action
 function applyFilters() {
-  const op = filterOperacion.value;
-  const tipo = filterTipo.value;
-  const region = filterRegion.value;
-  const comuna = filterComuna.value;
+  const op = filterOperacion ? filterOperacion.value : "todos";
+  const tipo = filterTipo ? filterTipo.value : "todos";
+  const region = filterRegion ? filterRegion.value : "todas";
+  const comuna = filterComuna ? filterComuna.value : "todas";
+  const keyword = document.getElementById("filterKeyword") ? document.getElementById("filterKeyword").value.toLowerCase().trim() : "";
 
   const filtered = propertiesData.filter(prop => {
     const matchOp = (op === "todos" || prop.operacion === op);
     const matchTipo = (tipo === "todos" || prop.tipo === tipo);
     const matchRegion = (region === "todas" || prop.region === region);
     const matchComuna = (comuna === "todas" || prop.comuna === comuna);
-    return matchOp && matchTipo && matchRegion && matchComuna;
+    const matchKeyword = !keyword || (
+      prop.title.toLowerCase().includes(keyword) ||
+      prop.description.toLowerCase().includes(keyword) ||
+      prop.comunaLabel.toLowerCase().includes(keyword) ||
+      prop.features.some(f => f.toLowerCase().includes(keyword))
+    );
+    return matchOp && matchTipo && matchRegion && matchComuna && matchKeyword;
   });
+
+  const resultCountEl = document.getElementById("resultCount");
+  if (resultCountEl) {
+    resultCountEl.textContent = filtered.length;
+  }
 
   renderProperties(filtered);
 }
 
 function filterByComuna(comunaName) {
-  if (filterComuna) {
-    filterComuna.value = comunaName;
-  }
-  applyFilters();
-  scrollToSection('propiedades');
+  window.location.href = `propiedades.html?comuna=${comunaName}`;
 }
 
 function resetFiltersAndShowAll() {
@@ -206,8 +214,14 @@ function resetFiltersAndShowAll() {
   if (filterTipo) filterTipo.value = "todos";
   if (filterRegion) filterRegion.value = "todas";
   if (filterComuna) filterComuna.value = "todas";
+  const kw = document.getElementById("filterKeyword");
+  if (kw) kw.value = "";
+  
+  const resultCountEl = document.getElementById("resultCount");
+  if (resultCountEl) {
+    resultCountEl.textContent = propertiesData.length;
+  }
   renderProperties(propertiesData);
-  scrollToSection('propiedades');
 }
 
 // Event Listeners for Filters
@@ -331,7 +345,16 @@ window.addEventListener("click", (e) => {
   if (e.target === contactModal) closeContactModal();
 });
 
-// Initialize Page
+// Initialize Page & Parse URL Query Parameters
 document.addEventListener("DOMContentLoaded", () => {
-  renderProperties(propertiesData);
+  const params = new URLSearchParams(window.location.search);
+  const comunaParam = params.get("comuna");
+  const operacionParam = params.get("operacion");
+  const tipoParam = params.get("tipo");
+
+  if (comunaParam && filterComuna) filterComuna.value = comunaParam;
+  if (operacionParam && filterOperacion) filterOperacion.value = operacionParam;
+  if (tipoParam && filterTipo) filterTipo.value = tipoParam;
+
+  applyFilters();
 });
