@@ -148,51 +148,13 @@ button, input, select, textarea {
   cursor: pointer;
 }
 
-.logo-graphic {
-  width: 44px;
-  height: 44px;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  gap: 3px;
-  padding-bottom: 2px;
-}
-
-/* Custom CSS Luxury Towers Logo matching the prompt design */
-.tower {
-  background: var(--gold-gradient);
-  border-radius: 2px 2px 0 0;
-}
-.tower-1 { width: 8px; height: 26px; opacity: 0.85; }
-.tower-2 { width: 10px; height: 36px; }
-.tower-3 { width: 8px; height: 22px; opacity: 0.75; }
-
-.logo-text-box {
-  display: flex;
-  flex-direction: column;
-}
-
-.logo-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.45rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #FFFFFF;
-  line-height: 1;
-}
-
-.logo-title span {
-  color: var(--gold-primary);
-}
-
-.logo-subtitle {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 1.5px;
-  color: var(--text-light-muted);
-  text-transform: uppercase;
-  margin-top: 3px;
+.brand-logo-img {
+  height: 48px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  cursor: pointer;
+  display: block;
 }
 
 .nav-links {
@@ -1283,23 +1245,9 @@ button, input, select, textarea {
     gap: 0.6rem;
   }
 
-  .logo-graphic {
-    width: 30px;
-    height: 30px;
-  }
-
-  .tower-1 { width: 5px; height: 16px; }
-  .tower-2 { width: 6px; height: 24px; }
-  .tower-3 { width: 5px; height: 14px; }
-
-  .logo-title {
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-  }
-
-  .logo-subtitle {
-    font-size: 0.5rem;
-    letter-spacing: 0.8px;
+  .brand-logo-img {
+    height: 34px;
+    max-width: 160px;
   }
 
   .mobile-toggle {
