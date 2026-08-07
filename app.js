@@ -339,18 +339,6 @@ function scrollToSection(id) {
   }
 }
 
-// Sticky & Transparent Header Scroll Effect
-window.addEventListener("scroll", () => {
-  const header = document.querySelector(".main-header");
-  if (header) {
-    if (window.scrollY > 30) {
-      header.classList.add("scrolled");
-    } else {
-      header.classList.remove("scrolled");
-    }
-  }
-});
-
 // Close modals when clicking outside
 window.addEventListener("click", (e) => {
   if (e.target === propertyModal) closePropertyModal();
