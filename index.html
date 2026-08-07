@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hidalgo Prime | Expertos en Gestión Inmobiliaria e Inversiones</title>
+  <meta name="description" content="Asesoría integral en compra, venta, arriendos y administración de propiedades en Chile, con visión estratégica e inversión inteligente.">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- TOP HEADER BAR -->
+  <div class="top-header">
+    <div class="top-header-container">
+      <div class="top-info-group">
+        <div class="top-info-item">
+          <i data-lucide="map-pin"></i>
+          <span><span class="label">Oficina</span> Av. Vitacura 5900, oficina 211, Vitacura, Santiago, Chile</span>
+        </div>
+        <div class="top-info-item">
+          <i data-lucide="phone"></i>
+          <span><span class="label">Teléfono</span> <a href="tel:+56912345678">+56 9 1234 5678</a></span>
+        </div>
+        <div class="top-info-item">
+          <i data-lucide="mail"></i>
+          <span><span class="label">Correo</span> <a href="mailto:contacto@hidalgoprime.cl">contacto@hidalgoprime.cl</a></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION HEADER -->
+  <header class="main-header">
+    <div class="nav-container">
+      <div class="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <div class="logo-graphic">
+          <div class="tower tower-1"></div>
+          <div class="tower tower-2"></div>
+          <div class="tower tower-3"></div>
+        </div>
+        <div class="logo-text-box">
+          <span class="logo-title">HIDALGO <span>PRIME</span></span>
+          <span class="logo-subtitle">Expertos en Gestión Inmobiliaria e Inversiones</span>
+        </div>
+      </div>
+
+      <nav>
+        <ul class="nav-links" id="navLinks">
+          <li><a class="nav-link active" onclick="scrollToSection('inicio')">Inicio</a></li>
+          <li><a class="nav-link" onclick="scrollToSection('propiedades')">Propiedades</a></li>
+          <li><a class="nav-link" onclick="scrollToSection('nosotros')">Quiénes Somos</a></li>
+          <li><a class="nav-link" onclick="scrollToSection('servicios')">Servicios</a></li>
+          <li><a class="nav-link" onclick="scrollToSection('contacto')">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button class="btn-contact-nav" onclick="openContactModal()">Contáctanos</button>
+
+      <button class="mobile-toggle" id="mobileMenuBtn" aria-label="Toggle menu">
+        <i data-lucide="menu"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero-section" id="inicio">
+    <div class="hero-container">
+      <div class="hero-content">
+        <span class="hero-tagline">Expertos en Gestión Inmobiliaria e Inversiones</span>
+        <h1 class="hero-title">
+          Hacemos que tus <span>proyectos inmobiliarios</span> sean reales y rentables
+        </h1>
+        <p class="hero-description">
+          Asesoría integral en compra, venta, arriendos y administración de propiedades, con visión estratégica e inversión inteligente.
+        </p>
+        <div class="hero-actions">
+          <button class="btn-primary" onclick="scrollToSection('servicios')">Conoce Nuestros Servicios</button>
+          <button class="btn-secondary" onclick="scrollToSection('propiedades')">Ver Propiedades</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLOATING SEARCH FILTER BAR -->
+  <div class="search-wrapper">
+    <div class="search-box">
+      <div class="filter-group">
+        <label class="filter-label" for="filterOperacion">Operación</label>
+        <div class="select-wrapper">
+          <select id="filterOperacion" class="filter-select">
+            <option value="todos">Todos</option>
+            <option value="venta">Venta</option>
+            <option value="arriendo">Arriendo</option>
+          </select>
+          <i data-lucide="chevron-down" class="select-icon"></i>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label" for="filterTipo">Tipo de propiedad</label>
+        <div class="select-wrapper">
+          <select id="filterTipo" class="filter-select">
+            <option value="todos">Todos</option>
+            <option value="departamento">Departamento</option>
+            <option value="casa">Casa</option>
+            <option value="oficina">Oficina</option>
+            <option value="terreno">Terreno</option>
+          </select>
+          <i data-lucide="chevron-down" class="select-icon"></i>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label" for="filterRegion">Región</label>
+        <div class="select-wrapper">
+          <select id="filterRegion" class="filter-select">
+            <option value="todas">Todas</option>
+            <option value="rm">Región Metropolitana</option>
+            <option value="valparaiso">Valparaíso</option>
+          </select>
+          <i data-lucide="chevron-down" class="select-icon"></i>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label" for="filterComuna">Comuna</label>
+        <div class="select-wrapper">
+          <select id="filterComuna" class="filter-select">
+            <option value="todas">Todas</option>
+            <option value="vitacura">Vitacura</option>
+            <option value="las-condes">Las Condes</option>
+            <option value="lo-barnechea">Lo Barnechea</option>
+            <option value="providencia">Providencia</option>
+            <option value="la-reina">La Reina</option>
+          </select>
+          <i data-lucide="chevron-down" class="select-icon"></i>
+        </div>
+      </div>
+
+      <button class="btn-search" id="btnSearch">
+        <i data-lucide="search"></i>
+        <span>Buscar</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FEATURED PROPERTIES SECTION -->
+  <section class="section-properties" id="propiedades">
+    <div class="section-header-flex">
+      <div>
+        <p class="section-subtitle">Propiedades Destacadas</p>
+        <h2 class="section-title">Oportunidades únicas, seleccionadas para ti.</h2>
+      </div>
+      <a class="section-link" onclick="resetFiltersAndShowAll()">
+        Ver todas las propiedades <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+      </a>
+    </div>
+
+    <!-- PROPERTY GRID RENDERED VIA JS -->
+    <div class="properties-grid" id="propertiesGrid">
+      <!-- Cards dynamically generated in app.js -->
+    </div>
+  </section>
+
+  <!-- SERVICES SECTION -->
+  <section class="section-services" id="servicios">
+    <div class="services-container">
+      <div style="text-align: center;">
+        <p class="section-subtitle">Nuestros Servicios</p>
+        <h2 class="section-title">Soluciones inmobiliarias integrales.</h2>
+      </div>
+
+      <div class="services-grid">
+        <!-- Service 1 -->
+        <div class="service-card" onclick="openContactModal('Compra y Venta')">
+          <div class="service-icon-box">
+            <i data-lucide="home"></i>
+          </div>
+          <h3 class="service-title">Compra y Venta</h3>
+          <p class="service-desc">Te asesoramos para encontrar las mejores oportunidades y concretar negocios seguros.</p>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="service-card" onclick="openContactModal('Arriendos')">
+          <div class="service-icon-box">
+            <i data-lucide="key"></i>
+          </div>
+          <h3 class="service-title">Arriendos</h3>
+          <p class="service-desc">Gestionamos el arriendo de tu propiedad con visión de largo plazo y tranquilidad.</p>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="service-card" onclick="openContactModal('Administración')">
+          <div class="service-icon-box">
+            <i data-lucide="clipboard-check"></i>
+          </div>
+          <h3 class="service-title">Administración</h3>
+          <p class="service-desc">Administramos tu propiedad optimizando su valor y asegurando la tranquilidad.</p>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="service-card" onclick="openContactModal('Inversiones')">
+          <div class="service-icon-box">
+            <i data-lucide="trending-up"></i>
+          </div>
+          <h3 class="service-title">Inversiones</h3>
+          <p class="service-desc">Identificamos y evaluamos inversiones con rentabilidad y foco en tus objetivos.</p>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="service-card" onclick="openContactModal('Asesoría Integral')">
+          <div class="service-icon-box">
+            <i data-lucide="shield-check"></i>
+          </div>
+          <h3 class="service-title">Asesoría Integral</h3>
+          <p class="service-desc">Acompañamiento legal, financiero y estratégico en todas tus decisiones inmobiliarias.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED ZONES SECTION -->
+  <section class="section-zones">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <p class="section-subtitle">Zonas Destacadas</p>
+      <h2 class="section-title">Encuentra tu próxima propiedad en las mejores ubicaciones.</h2>
+    </div>
+
+    <div class="zones-grid">
+      <!-- Zone 1 -->
+      <div class="zone-card" onclick="filterByComuna('vitacura')">
+        <img src="assets/images/zone_vitacura.jpg" alt="Vitacura" class="zone-img">
+        <div class="zone-overlay">
+          <span class="zone-name">Vitacura</span>
+          <i data-lucide="arrow-right" class="zone-arrow"></i>
+        </div>
+      </div>
+
+      <!-- Zone 2 -->
+      <div class="zone-card" onclick="filterByComuna('las-condes')">
+        <img src="assets/images/zone_las_condes.jpg" alt="Las Condes" class="zone-img">
+        <div class="zone-overlay">
+          <span class="zone-name">Las Condes</span>
+          <i data-lucide="arrow-right" class="zone-arrow"></i>
+        </div>
+      </div>
+
+      <!-- Zone 3 -->
+      <div class="zone-card" onclick="filterByComuna('lo-barnechea')">
+        <img src="assets/images/zone_lo_barnechea.jpg" alt="Lo Barnechea" class="zone-img">
+        <div class="zone-overlay">
+          <span class="zone-name">Lo Barnechea</span>
+          <i data-lucide="arrow-right" class="zone-arrow"></i>
+        </div>
+      </div>
+
+      <!-- Zone 4 -->
+      <div class="zone-card" onclick="filterByComuna('providencia')">
+        <img src="assets/images/zone_providencia.jpg" alt="Providencia" class="zone-img">
+        <div class="zone-overlay">
+          <span class="zone-name">Providencia</span>
+          <i data-lucide="arrow-right" class="zone-arrow"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BANNER -->
+  <section class="stats-banner" id="nosotros">
+    <div class="stats-container">
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="users"></i></div>
+        <div class="stat-number">+10</div>
+        <div class="stat-label">Años de Experiencia</div>
+        <div class="stat-desc">en gestión inmobiliaria e inversiones.</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="handshake"></i></div>
+        <div class="stat-number">+500</div>
+        <div class="stat-label">Operaciones Exitosas</div>
+        <div class="stat-desc">en compra, venta y arriendos.</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="shield-check"></i></div>
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Compromiso y Transparencia</div>
+        <div class="stat-desc">Trabajamos con ética, claridad y foco en tus objetivos.</div>
+      </div>
+
+      <div class="stat-item">
+        <div class="stat-icon"><i data-lucide="line-chart"></i></div>
+        <div class="stat-label" style="margin-top: 1rem;">Enfoque en Resultados</div>
+        <div class="stat-desc">Estrategias personalizadas para maximizar el valor de tu inversión.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA CONTACT BANNER -->
+  <div class="cta-wrapper" id="contacto">
+    <div class="cta-box">
+      <div class="cta-left">
+        <div class="cta-phone-icon">
+          <i data-lucide="phone"></i>
+        </div>
+        <div>
+          <h3 class="cta-text-title">¿Listo para hacer realidad tu próximo proyecto?</h3>
+          <p class="cta-text-subtitle">Hablemos y encontremos la mejor oportunidad para ti.</p>
+        </div>
+      </div>
+      <button class="btn-cta" onclick="openContactModal()">Contáctanos</button>
+    </div>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <!-- Col 1: Brand & Logo -->
+      <div class="footer-brand">
+        <div class="brand-logo" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+          <div class="logo-graphic">
+            <div class="tower tower-1"></div>
+            <div class="tower tower-2"></div>
+            <div class="tower tower-3"></div>
+          </div>
+          <div class="logo-text-box">
+            <span class="logo-title">HIDALGO <span>PRIME</span></span>
+            <span class="logo-subtitle">Expertos en Gestión Inmobiliaria e Inversiones</span>
+          </div>
+        </div>
+
+        <div class="social-links">
+          <a href="#" class="social-icon" aria-label="LinkedIn"><i data-lucide="linkedin"></i></a>
+          <a href="#" class="social-icon" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+          <a href="#" class="social-icon" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+        </div>
+      </div>
+
+      <!-- Col 2: Navigation -->
+      <div>
+        <h4 class="footer-col-title">Navegación</h4>
+        <ul class="footer-links">
+          <li><a onclick="scrollToSection('inicio')">Inicio</a></li>
+          <li><a onclick="scrollToSection('propiedades')">Propiedades</a></li>
+          <li><a onclick="scrollToSection('nosotros')">Quiénes Somos</a></li>
+          <li><a onclick="scrollToSection('servicios')">Servicios</a></li>
+          <li><a onclick="scrollToSection('contacto')">Contacto</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Services -->
+      <div>
+        <h4 class="footer-col-title">Servicios</h4>
+        <ul class="footer-links">
+          <li><a onclick="openContactModal('Compra y Venta')">Compra y venta</a></li>
+          <li><a onclick="openContactModal('Arriendos')">Arriendos</a></li>
+          <li><a onclick="openContactModal('Administración')">Administración</a></li>
+          <li><a onclick="openContactModal('Inversiones')">Inversiones</a></li>
+          <li><a onclick="openContactModal('Asesoría Integral')">Asesoría integral</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Contact info -->
+      <div>
+        <h4 class="footer-col-title">Contacto</h4>
+        <div class="footer-contact-item">
+          <i data-lucide="map-pin"></i>
+          <span>Av. Vitacura 5900, Oficina 211 Vitacura, Santiago, Chile</span>
+        </div>
+        <div class="footer-contact-item">
+          <i data-lucide="phone"></i>
+          <span>+56 9 1234 5678</span>
+        </div>
+        <div class="footer-contact-item">
+          <i data-lucide="mail"></i>
+          <span>contacto@hidalgoprime.cl</span>
+        </div>
+      </div>
+
+      <!-- Col 5: Hours -->
+      <div>
+        <h4 class="footer-col-title">Horario de Atención</h4>
+        <p style="font-size: 0.85rem; margin-bottom: 0.5rem; color: #94A3B8;">Lunes a Viernes<br><strong style="color: #FFF;">9:00 a 18:00 hrs.</strong></p>
+        <p style="font-size: 0.85rem; color: #94A3B8;">Sábado<br><strong style="color: #FFF;">10:00 a 14:00 hrs.</strong></p>
+      </div>
+    </div>
+
+    <!-- Footer Copyright Bottom -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-container">
+        <span>© 2025 Hidalgo Prime SpA. Todos los derechos reservados.</span>
+        <span class="developer">Desarrollado por <strong>Conecta HC</strong></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- PROPERTY DETAIL MODAL -->
+  <div class="modal-overlay" id="propertyModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalPropTitle">Detalle de Propiedad</h3>
+        <button class="modal-close" onclick="closePropertyModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalPropContent">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- GENERAL CONTACT MODAL -->
+  <div class="modal-overlay" id="contactModal">
+    <div class="modal-card" style="max-width: 550px;">
+      <div class="modal-header">
+        <h3 class="modal-title">Contacto Hidalgo Prime</h3>
+        <button class="modal-close" onclick="closeContactModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem;">
+          Déjanos tus datos y un asesor especialista te contactará a la brevedad.
+        </p>
+        <form id="contactForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label class="form-label" for="contactName">Nombre completo *</label>
+            <input type="text" id="contactName" class="form-input" placeholder="Ej: Juan Pérez" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactEmail">Correo electrónico *</label>
+            <input type="email" id="contactEmail" class="form-input" placeholder="juan@ejemplo.com" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactPhone">Teléfono *</label>
+            <input type="tel" id="contactPhone" class="form-input" placeholder="+56 9 1234 5678" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactService">Servicio de interés</label>
+            <select id="contactService" class="form-select">
+              <option value="Compra y Venta">Compra y Venta</option>
+              <option value="Arriendos">Arriendos</option>
+              <option value="Administración">Administración</option>
+              <option value="Inversiones">Inversiones</option>
+              <option value="Asesoría Integral">Asesoría Integral</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="contactMessage">Mensaje</label>
+            <textarea id="contactMessage" class="form-textarea" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+            Enviar Consulta
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toastNotification">
+    <i data-lucide="check-circle-2" style="color: var(--gold-primary); width: 22px; height: 22px;"></i>
+    <span id="toastMessage">¡Consulta enviada con éxito!</span>
+  </div>
+
+  <script src="app.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
