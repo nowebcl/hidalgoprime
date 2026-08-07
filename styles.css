@@ -149,9 +149,9 @@ button, input, select, textarea {
 }
 
 .brand-logo-img {
-  height: 48px;
+  height: 64px;
   width: auto;
-  max-width: 220px;
+  max-width: 280px;
   object-fit: contain;
   cursor: pointer;
   display: block;
@@ -1246,8 +1246,8 @@ button, input, select, textarea {
   }
 
   .brand-logo-img {
-    height: 34px;
-    max-width: 160px;
+    height: 42px;
+    max-width: 200px;
   }
 
   .mobile-toggle {
