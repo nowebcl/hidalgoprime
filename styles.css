@@ -261,15 +261,15 @@ button, input, select, textarea {
 }
 
 /* ----------------------------------------------------
-   HERO SECTION
+   HERO SECTION (MINIMAL & IMAGE-PROMINENT)
    ---------------------------------------------------- */
 .hero-section {
   position: relative;
-  min-height: 600px;
-  background: linear-gradient(180deg, rgba(7, 18, 32, 0.82) 0%, rgba(13, 30, 50, 0.65) 100%), url('assets/images/hero_bg.jpg') center/cover no-repeat;
+  min-height: 560px;
+  background: linear-gradient(180deg, rgba(7, 18, 32, 0.55) 0%, rgba(13, 30, 50, 0.4) 100%), url('assets/images/hero_bg.jpg') center/cover no-repeat;
   display: flex;
   align-items: center;
-  padding: 5rem 1.5rem 8rem 1.5rem;
+  padding: 4rem 1.5rem 6.5rem 1.5rem;
   color: #FFFFFF;
 }
 
@@ -280,25 +280,26 @@ button, input, select, textarea {
 }
 
 .hero-content {
-  max-width: 680px;
+  max-width: 580px;
 }
 
 .hero-tagline {
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   color: var(--gold-primary);
   text-transform: uppercase;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
   display: inline-block;
 }
 
 .hero-title {
-  font-size: 3.2rem;
+  font-size: 2.6rem;
   font-weight: 700;
-  line-height: 1.15;
-  margin-bottom: 1.25rem;
+  line-height: 1.18;
+  margin-bottom: 1rem;
   color: #FFFFFF;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 .hero-title span {
@@ -309,28 +310,29 @@ button, input, select, textarea {
 }
 
 .hero-description {
-  font-size: 1.05rem;
-  color: #E2E8F0;
-  margin-bottom: 2.2rem;
-  line-height: 1.7;
-  max-width: 580px;
+  font-size: 0.95rem;
+  color: #F1F5F9;
+  margin-bottom: 1.8rem;
+  line-height: 1.6;
+  max-width: 480px;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.4);
 }
 
 .hero-actions {
   display: flex;
-  gap: 1.2rem;
+  gap: 1rem;
   flex-wrap: wrap;
 }
 
 .btn-primary {
   background: var(--gold-gradient);
   color: #0A1828;
-  padding: 0.9rem 1.8rem;
-  font-size: 0.85rem;
+  padding: 0.75rem 1.6rem;
+  font-size: 0.8rem;
   font-weight: 800;
   letter-spacing: 1px;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 50px;
   cursor: pointer;
   transition: var(--transition);
   text-transform: uppercase;
@@ -1343,51 +1345,62 @@ button, input, select, textarea {
     border-bottom: 1px solid rgba(255,255,255,0.06);
   }
 
-  /* Soft, Elegant & Compact Hero Section */
+  /* Ultra-Minimal & Image-Centered Mobile Hero Section */
   .hero-section {
-    min-height: auto;
-    padding: 2.2rem 1rem 4.5rem 1rem;
-    background: linear-gradient(180deg, rgba(7, 18, 32, 0.88) 0%, rgba(13, 30, 50, 0.78) 100%), url('assets/images/hero_bg.jpg') center/cover no-repeat;
+    min-height: 380px;
+    padding: 3rem 1rem 4.5rem 1rem;
+    background: linear-gradient(180deg, rgba(7, 18, 32, 0.45) 0%, rgba(13, 30, 50, 0.35) 100%), url('assets/images/hero_bg.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
   }
 
   .hero-container {
     padding: 0;
   }
 
+  .hero-content {
+    max-width: 320px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
   .hero-tagline {
-    font-size: 0.62rem;
-    letter-spacing: 1.5px;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
     margin-bottom: 0.4rem;
     color: var(--gold-primary);
   }
 
   .hero-title {
-    font-size: 1.35rem;
-    line-height: 1.25;
-    margin-bottom: 0.6rem;
+    font-size: 1.25rem;
+    line-height: 1.22;
+    margin-bottom: 0.5rem;
     font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
   }
 
   .hero-description {
-    font-size: 0.78rem;
-    line-height: 1.45;
-    color: #CBD5E1;
-    margin-bottom: 1.2rem;
+    font-size: 0.75rem;
+    line-height: 1.4;
+    color: #F1F5F9;
+    margin-bottom: 1rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
   }
 
   .hero-actions {
-    flex-direction: column;
-    gap: 0.6rem;
-    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5rem;
+    width: auto;
   }
 
   .btn-primary, .btn-secondary {
-    padding: 0.65rem 1.2rem;
-    font-size: 0.72rem;
-    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 0.68rem;
+    width: auto;
     justify-content: center;
-    border-radius: 50px; /* Soft Pill shape */
-    letter-spacing: 0.8px;
+    border-radius: 50px;
+    letter-spacing: 0.5px;
   }
 
   /* Clean Soft Floating Search Box */
