@@ -333,6 +333,24 @@
       cursor: pointer;
     }
 
+    .grid-3-col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .grid-2-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .grid-6-col {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 0.8rem;
+    }
+
     @media (max-width: 768px) {
       .admin-nav {
         padding: 0.8rem 1rem;
@@ -385,8 +403,22 @@
         display: flex;
       }
       .admin-modal-card {
-        border-radius: 20px 20px 0 0;
-        max-height: 95vh;
+        border-radius: 24px 24px 0 0;
+        max-height: 92vh;
+        width: 100%;
+        margin: auto 0 0 0;
+      }
+      .grid-3-col, .grid-2-col {
+        grid-template-columns: 1fr !important;
+        gap: 0.85rem !important;
+      }
+      .grid-6-col {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.85rem !important;
+      }
+      .feature-checkbox-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.5rem !important;
       }
     }
       display: flex;
@@ -587,7 +619,7 @@
             <input type="text" id="pTitulo" class="form-input" placeholder="Ej: Penthouse Exclusivo con Vista Panorámica" required>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+          <div class="grid-3-col">
             <div class="form-group">
               <label class="form-label" for="pOperacion">Operación *</label>
               <select id="pOperacion" class="form-select" required>
@@ -619,7 +651,7 @@
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div class="grid-2-col">
             <div class="form-group">
               <label class="form-label" for="pPrecio">Precio Numérico *</label>
               <input type="number" id="pPrecio" class="form-input" placeholder="18500" required>
@@ -633,7 +665,7 @@
 
           <!-- SEC 2: UBICACION -->
           <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; margin: 1.5rem 0 1rem 0;">2. Ubicación</h4>
-          <div style="display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 1rem;">
+          <div class="grid-3-col">
             <div class="form-group">
               <label class="form-label" for="pRegion">Región *</label>
               <select id="pRegion" class="form-select" required>
@@ -648,7 +680,7 @@
 
             <div class="form-group">
               <label class="form-label" for="pComuna">Comuna *</label>
-              <input type="text" id="pComuna" class="form-input" placeholder="Ej: Vitacura, Las Condes, Lo Barnechea" required>
+              <input type="text" id="pComuna" class="form-input" placeholder="Ej: Vitacura" required>
             </div>
 
             <div class="form-group">
@@ -659,7 +691,7 @@
 
           <!-- SEC 3: SUPERFICIE Y DISTRIBUCION -->
           <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; margin: 1.5rem 0 1rem 0;">3. Superficie y Distribución</h4>
-          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.8rem;">
+          <div class="grid-6-col">
             <div class="form-group">
               <label class="form-label" for="pSupUtil">Sup. Útil (m²)</label>
               <input type="number" id="pSupUtil" class="form-input" placeholder="220">
@@ -686,13 +718,13 @@
             </div>
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+          <div class="grid-2-col" style="margin-top: 0.5rem;">
             <div class="form-group">
               <label class="form-label" for="pGastosComunes">Gastos Comunes ($ CLP)</label>
               <input type="number" id="pGastosComunes" class="form-input" placeholder="Ej: 250000">
             </div>
             <div class="form-group">
-              <label class="form-label" for="pContribuciones">Contribuciones Trimestrales ($ CLP)</label>
+              <label class="form-label" for="pContribuciones">Contribuciones ($ CLP)</label>
               <input type="number" id="pContribuciones" class="form-input" placeholder="Ej: 450000">
             </div>
           </div>
