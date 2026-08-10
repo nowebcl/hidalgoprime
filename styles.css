@@ -2153,9 +2153,32 @@ button, input, select, textarea {
 
 /* Single Post Reader Layout */
 .single-post-container {
-  max-width: 840px;
+  max-width: 1240px;
   margin: 3rem auto 6rem auto;
   padding: 0 1.5rem;
+}
+
+.single-post-layout {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.post-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: sticky;
+  top: 100px;
+}
+
+.post-sidebar-card {
+  background: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 24px;
+  padding: 1.8rem;
+  box-shadow: var(--shadow-sm);
 }
 
 .post-header-card {
@@ -2312,6 +2335,15 @@ button, input, select, textarea {
 
 .blog-checklist li, .blog-numbered-list li {
   margin-bottom: 0.7rem;
+}
+
+@media (max-width: 992px) {
+  .single-post-layout {
+    grid-template-columns: 1fr;
+  }
+  .post-sidebar {
+    position: static;
+  }
 }
 
 @media (max-width: 768px) {

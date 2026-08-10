@@ -61,7 +61,7 @@
   <main class="single-post-container">
     
     <!-- BREADCRUMBS -->
-    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+    <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.8rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
       <a href="index.html" style="color: var(--text-muted); text-decoration: none;">Inicio</a>
       <i data-lucide="chevron-right" style="width: 14px; height: 14px;"></i>
       <a href="blog.html" style="color: var(--text-muted); text-decoration: none;">Blog Inmobiliario</a>
@@ -69,55 +69,105 @@
       <span style="color: var(--gold-primary); font-weight: 700;" id="postBreadcrumbTitle">Artículo</span>
     </div>
 
-    <!-- POST HEADER CARD -->
-    <div class="post-header-card">
-      <span class="blog-card-badge" id="postCategoryBadge" style="position: static; display: inline-block; margin-bottom: 0.8rem;">Categoría</span>
-      <h1 class="post-title-main" id="postMainTitle">Cargando artículo...</h1>
-      
-      <div class="post-author-bar">
-        <img src="assets/images/adela_hidalgo.png" alt="Adela Hidalgo Fuentes" class="post-author-avatar">
-        <div>
-          <div style="font-weight: 800; color: var(--bg-navy-header); font-size: 0.95rem;" id="postAuthorName">Adela Hidalgo Fuentes</div>
-          <div style="font-size: 0.78rem; color: var(--gold-primary); font-weight: 700;" id="postAuthorRole">Fundadora & Directora General</div>
+    <!-- 2-COLUMN EDITORIAL LAYOUT -->
+    <div class="single-post-layout">
+
+      <!-- LEFT COLUMN: MAIN ARTICLE -->
+      <div class="post-main-column">
+        
+        <!-- POST HEADER CARD -->
+        <div class="post-header-card">
+          <span class="blog-card-badge" id="postCategoryBadge" style="position: static; display: inline-block; margin-bottom: 0.8rem;">Categoría</span>
+          <h1 class="post-title-main" id="postMainTitle">Cargando artículo...</h1>
+          
+          <div class="post-author-bar">
+            <img src="assets/images/adela_hidalgo.png" alt="Adela Hidalgo Fuentes" class="post-author-avatar">
+            <div>
+              <div style="font-weight: 800; color: var(--bg-navy-header); font-size: 0.95rem;" id="postAuthorName">Adela Hidalgo Fuentes</div>
+              <div style="font-size: 0.78rem; color: var(--gold-primary); font-weight: 700;" id="postAuthorRole">Fundadora & Directora General</div>
+            </div>
+            <div style="margin-left: auto; text-align: right; font-size: 0.8rem; color: var(--text-muted);">
+              <div id="postDate"><i data-lucide="calendar" style="width: 14px; height: 14px; display: inline; vertical-align: middle;"></i> Agosto de 2026</div>
+              <div id="postReadTime" style="margin-top: 0.2rem;"><i data-lucide="clock" style="width: 14px; height: 14px; display: inline; vertical-align: middle;"></i> 5 min</div>
+            </div>
+          </div>
         </div>
-        <div style="margin-left: auto; text-align: right; font-size: 0.8rem; color: var(--text-muted);">
-          <div id="postDate"><i data-lucide="calendar" style="width: 14px; height: 14px; display: inline; vertical-align: middle;"></i> Agosto de 2026</div>
-          <div id="postReadTime" style="margin-top: 0.2rem;"><i data-lucide="clock" style="width: 14px; height: 14px; display: inline; vertical-align: middle;"></i> 5 min</div>
+
+        <!-- MAIN POST IMAGE -->
+        <div style="margin-bottom: 2.5rem;">
+          <img src="assets/images/zone_vitacura.jpg" alt="Artículo Blog" id="postMainImage" style="width: 100%; height: 420px; object-fit: cover; border-radius: 24px; box-shadow: var(--shadow-lg);">
         </div>
+
+        <!-- FULL ARTICLE READER CONTENT -->
+        <article class="post-content-body" id="postContentBody">
+          <!-- Article Content Rendered via JS -->
+        </article>
+
+        <!-- FOOTER UPDATE DATE BADGE -->
+        <div style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
+          “Información actualizada a agosto de 2026”
+        </div>
+
+        <!-- CTA BANNER AT BOTTOM OF POST -->
+        <div style="background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%); border: 1px solid #E2E8F0; border-radius: 24px; padding: 2.5rem 2rem; margin-top: 3.5rem; text-align: center; box-shadow: var(--shadow-md);">
+          <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--bg-navy-header); margin-bottom: 0.6rem;">¿Necesitas asesoría inmobiliaria o financiera personalizada?</h3>
+          <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 1.5rem auto;">
+            En Hidalgo Prime acompañamos tus decisiones patrimoniales con análisis riguroso y visión integral de mercado.
+          </p>
+          <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <button class="btn-primary" onclick="openContactModal('Asesoría por Blog')">Agendar Reunión con la Fundadora</button>
+            <a href="propiedades.html" class="btn-secondary" style="display: inline-flex; align-items: center; text-decoration: none;">Ver Catálogo de Propiedades</a>
+          </div>
+        </div>
+
       </div>
+
+      <!-- RIGHT COLUMN: SIDEBAR -->
+      <aside class="post-sidebar">
+        
+        <!-- FOUNDER EXECUTIVE CARD -->
+        <div class="post-sidebar-card" style="text-align: center;">
+          <img src="assets/images/adela_hidalgo.png" alt="Adela Hidalgo Fuentes" style="width: 84px; height: 84px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold-primary); margin: 0 auto 1rem auto; display: block; box-shadow: var(--shadow-sm);">
+          <h4 style="font-size: 1.1rem; font-weight: 800; color: var(--bg-navy-header); margin-bottom: 0.2rem;">Adela Hidalgo Fuentes</h4>
+          <p style="font-size: 0.78rem; color: var(--gold-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.8rem;">Fundadora & Directora General</p>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.2rem;">
+            20 años de experiencia ejecutiva en banca, finanzas e inversiones inmobiliarias en la zona oriente de Santiago.
+          </p>
+          <a href="https://wa.me/56912345678" target="_blank" class="btn-primary" style="width: 100%; justify-content: center; font-size: 0.85rem; padding: 0.65rem 1rem; text-decoration: none;">
+            <i data-lucide="message-circle" style="width: 16px; height: 16px;"></i> Contactar por WhatsApp
+          </a>
+        </div>
+
+        <!-- RECENT ARTICLES SIDEBAR -->
+        <div class="post-sidebar-card">
+          <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--bg-navy-header); margin-bottom: 1.2rem; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid #F1F5F9; padding-bottom: 0.8rem;">
+            <i data-lucide="book-open" style="color: var(--gold-primary); width: 18px; height: 18px;"></i> Otros Artículos
+          </h4>
+          <div id="sidebarRecommendedList" style="display: flex; flex-direction: column; gap: 1rem;">
+            <!-- JS Rendered sidebar list -->
+          </div>
+        </div>
+
+        <!-- QUICK CONSULTATION CARD -->
+        <div class="post-sidebar-card" style="background: linear-gradient(135deg, #0A1828 0%, #0F2037 100%); color: #FFFFFF; border: 1px solid rgba(197, 155, 63, 0.3);">
+          <span style="display: inline-block; background: rgba(197, 155, 63, 0.2); color: var(--gold-primary); border: 1px solid var(--gold-primary); font-size: 0.7rem; font-weight: 800; padding: 0.2rem 0.6rem; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 0.8rem;">Hidalgo Prime</span>
+          <h4 style="font-size: 1.1rem; font-weight: 800; color: #FFFFFF; margin-bottom: 0.6rem;">¿Quieres tasar o vender una propiedad?</h4>
+          <p style="font-size: 0.85rem; color: #CBD5E1; line-height: 1.5; margin-bottom: 1.2rem;">
+            Recibe asesoría profesional con análisis de mercado y respaldo legal riguroso.
+          </p>
+          <button class="btn-primary" onclick="openContactModal('Consulta General Sidebar')" style="width: 100%; justify-content: center; font-size: 0.85rem; padding: 0.65rem 1rem;">
+            Solicitar Evaluación
+          </button>
+        </div>
+
+      </aside>
+
     </div>
 
-    <!-- MAIN POST IMAGE -->
-    <div style="margin-bottom: 2.5rem;">
-      <img src="assets/images/zone_vitacura.jpg" alt="Artículo Blog" id="postMainImage" style="width: 100%; height: 380px; object-fit: cover; border-radius: 24px; box-shadow: var(--shadow-lg);">
-    </div>
-
-    <!-- FULL ARTICLE READER CONTENT -->
-    <article class="post-content-body" id="postContentBody">
-      <!-- Article Content Rendered via JS -->
-    </article>
-
-    <!-- FOOTER UPDATE DATE BADGE -->
-    <div style="text-align: center; margin-top: 2rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic;">
-      “Información actualizada a agosto de 2026”
-    </div>
-
-    <!-- CTA BANNER AT BOTTOM OF POST -->
-    <div style="background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 100%); border: 1px solid #E2E8F0; border-radius: 24px; padding: 2.5rem 2rem; margin-top: 3.5rem; text-align: center; box-shadow: var(--shadow-md);">
-      <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--bg-navy-header); margin-bottom: 0.6rem;">¿Necesitas asesoría inmobiliaria o financiera personalizada?</h3>
-      <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 1.5rem auto;">
-        En Hidalgo Prime acompañamos tus decisiones patrimoniales con análisis riguroso y visión integral de mercado.
-      </p>
-      <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
-        <button class="btn-primary" onclick="openContactModal('Asesoría por Blog')">Agendar Reunión con la Fundadora</button>
-        <a href="propiedades.html" class="btn-secondary" style="display: inline-flex; align-items: center; text-decoration: none;">Ver Catálogo de Propiedades</a>
-      </div>
-    </div>
-
-    <!-- RECOMMENDED ARTICLES -->
-    <div style="margin-top: 4rem;">
+    <!-- RECOMMENDED ARTICLES FULL GRID BELOW -->
+    <div style="margin-top: 5rem;">
       <h3 style="font-size: 1.4rem; font-weight: 800; color: var(--bg-navy-header); margin-bottom: 1.8rem; display: flex; align-items: center; gap: 0.5rem;">
-        <i data-lucide="book-open" style="color: var(--gold-primary);"></i> Artículos Recomendados
+        <i data-lucide="grid" style="color: var(--gold-primary);"></i> Explora más Guías e Informes
       </h3>
       <div class="blog-grid" id="recommendedPostsGrid">
         <!-- Recommended Posts Rendered JS -->
@@ -257,23 +307,38 @@
         document.getElementById("postMainImage").alt = post.title;
         document.getElementById("postContentBody").innerHTML = post.content;
 
-        // Render Recommended Posts
+        // Render Recommended Posts Full Grid at Bottom
         const recGrid = document.getElementById("recommendedPostsGrid");
+        const recommended = blogPostsData.filter(p => String(p.id) !== String(post.id)).slice(0, 3);
+        
         if (recGrid) {
-          const recommended = blogPostsData.filter(p => String(p.id) !== String(post.id)).slice(0, 3);
           recGrid.innerHTML = recommended.map(r => `
-            <a href="post.html?id=${r.id}" class="blog-card">
-              <div class="blog-card-img-wrap">
-                <img src="${r.image}" alt="${r.title}" class="blog-card-img">
-                <span class="blog-card-badge">${r.category}</span>
+            <a href="post.html?id=${r.id}" class="blog-card" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(10,24,40,0.05); display: flex; flex-direction: column; text-decoration: none; color: inherit;">
+              <div class="blog-card-img-wrap" style="position: relative; width: 100%; height: 200px; overflow: hidden;">
+                <img src="${r.image}" alt="${r.title}" class="blog-card-img" style="width: 100%; height: 200px; object-fit: cover;">
+                <span class="blog-card-badge" style="position: absolute; top: 1rem; left: 1rem; background: rgba(10, 24, 40, 0.9); color: #C59B3F; border: 1px solid rgba(197, 155, 63, 0.4); font-size: 0.72rem; font-weight: 800; padding: 0.35rem 0.8rem; border-radius: 50px; text-transform: uppercase;">${r.category}</span>
               </div>
-              <div class="blog-card-body">
-                <h3 class="blog-card-title">${r.title}</h3>
-                <p class="blog-card-summary">${r.summary}</p>
-                <div class="blog-card-footer">
-                  <span>Por ${r.author}</span>
+              <div class="blog-card-body" style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1;">
+                <h3 class="blog-card-title" style="font-size: 1.1rem; font-weight: 800; color: #0A1828; margin-bottom: 0.6rem;">${r.title}</h3>
+                <p class="blog-card-summary" style="font-size: 0.88rem; color: #64748B; margin-bottom: 1.2rem; flex-grow: 1;">${r.summary}</p>
+                <div class="blog-card-footer" style="display: flex; justify-content: space-between; padding-top: 0.8rem; border-top: 1px solid #F1F5F9; font-size: 0.82rem; font-weight: 700; color: #C59B3F;">
+                  <span style="color: #475569;">Por ${r.author}</span>
                   <span>Leer artículo <i data-lucide="arrow-right" style="width:14px;height:14px;display:inline;vertical-align:middle;"></i></span>
                 </div>
+              </div>
+            </a>
+          `).join('');
+        }
+
+        // Render Sidebar Short List
+        const sidebarList = document.getElementById("sidebarRecommendedList");
+        if (sidebarList) {
+          sidebarList.innerHTML = recommended.map(r => `
+            <a href="post.html?id=${r.id}" style="display: flex; gap: 0.8rem; text-decoration: none; align-items: center;">
+              <img src="${r.image}" alt="${r.title}" style="width: 60px; height: 60px; border-radius: 12px; object-fit: cover; flex-shrink: 0;">
+              <div>
+                <div style="font-size: 0.7rem; color: var(--gold-primary); font-weight: 800; text-transform: uppercase;">${r.category}</div>
+                <div style="font-size: 0.84rem; font-weight: 700; color: var(--bg-navy-header); line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">${r.title}</div>
               </div>
             </a>
           `).join('');
