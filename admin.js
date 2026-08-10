@@ -86,81 +86,146 @@ function updateMetrics(records) {
   document.getElementById("metricDestacadas").textContent = records.filter(r => r.destacada === true).length;
 }
 
-// Render Admin Data Table
+// Render Admin Data Table & Mobile App Cards Feed
 function renderAdminTable(records) {
   const tbody = document.getElementById("adminTableBody");
-  if (!tbody) return;
+  const mobileCardsContainer = document.getElementById("adminMobileCards");
+
+  if (!tbody && !mobileCardsContainer) return;
 
   if (records.length === 0) {
-    tbody.innerHTML = `
-      <tr>
-        <td colspan="8" style="text-align: center; padding: 3rem; color: #94A3B8;">
-          No hay propiedades registradas aún. Haz clic en <strong>+ Nueva Propiedad</strong> para agregar la primera.
-        </td>
-      </tr>
-    `;
+    if (tbody) {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="8" style="text-align: center; padding: 3rem; color: #94A3B8;">
+            No hay propiedades registradas aún. Haz clic en <strong>+ Nueva Propiedad</strong> para agregar la primera.
+          </td>
+        </tr>
+      `;
+    }
+    if (mobileCardsContainer) {
+      mobileCardsContainer.innerHTML = `
+        <div style="text-align: center; padding: 3rem 1rem; color: #94A3B8;">
+          No hay propiedades registradas aún. Presiona el botón <strong>+</strong> para agregar.
+        </div>
+      `;
+    }
     return;
   }
 
-  tbody.innerHTML = records.map(prop => {
-    // Get image URL or fallback
-    let imgUrl = "assets/images/hero_bg.jpg";
-    if (prop.imagenes && prop.imagenes.length > 0) {
-      imgUrl = pb.files.getUrl(prop, prop.imagenes[0]);
-    } else if (prop.image) {
-      imgUrl = prop.image;
-    }
+  // Render Desktop Table
+  if (tbody) {
+    tbody.innerHTML = records.map(prop => {
+      let imgUrl = "assets/images/hero_bg.jpg";
+      if (prop.imagenes && prop.imagenes.length > 0) {
+        imgUrl = pb.files.getUrl(prop, prop.imagenes[0]);
+      } else if (prop.image) {
+        imgUrl = prop.image;
+      }
 
-    const precioDisplay = prop.precio_texto || (prop.moneda === "UF" ? `UF ${prop.precio.toLocaleString('es-CL')}` : `$${prop.precio.toLocaleString('es-CL')}`);
+      const precioDisplay = prop.precio_texto || (prop.moneda === "UF" ? `UF ${prop.precio.toLocaleString('es-CL')}` : `$${prop.precio.toLocaleString('es-CL')}`);
 
-    return `
-      <tr>
-        <td>
-          <img src="${imgUrl}" alt="${prop.titulo}" class="table-thumb">
-        </td>
-        <td>
-          <div style="font-weight: 800; color: #FFFFFF; font-size: 0.92rem;">${prop.titulo}</div>
-          <div style="font-size: 0.78rem; color: #94A3B8;">ID: ${prop.id} • ${prop.direccion || 'Sin dirección'}</div>
-        </td>
-        <td>
-          <span style="background: rgba(197, 155, 63, 0.2); color: var(--gold-primary); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 50px; text-transform: uppercase;">
-            ${prop.operacion}
-          </span>
-          <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.2rem;">${prop.tipo}</div>
-        </td>
-        <td>
-          <div style="font-weight: 800; color: #FFF; font-size: 0.92rem;">${precioDisplay}</div>
-        </td>
-        <td>
-          <div style="color: #E2E8F0;">${prop.comuna}</div>
-          <div style="font-size: 0.75rem; color: #94A3B8;">${prop.region || 'RM'}</div>
-        </td>
-        <td style="text-align: center;">
-          <span class="star-toggle ${prop.destacada ? 'active' : ''}" onclick="toggleDestacada('${prop.id}', ${!prop.destacada})">
-            ★
-          </span>
-        </td>
-        <td>
-          <select class="status-badge-select" onchange="updatePropState('${prop.id}', this.value)">
-            <option value="disponible" ${prop.estado === 'disponible' ? 'selected' : ''}>Disponible</option>
-            <option value="reservada" ${prop.estado === 'reservada' ? 'selected' : ''}>Reservada</option>
-            <option value="vendida" ${prop.estado === 'vendida' ? 'selected' : ''}>Vendida</option>
-            <option value="arrendada" ${prop.estado === 'arrendada' ? 'selected' : ''}>Arrendada</option>
-          </select>
-        </td>
-        <td style="text-align: right;">
-          <div style="display: flex; gap: 0.4rem; justify-content: flex-end;">
+      return `
+        <tr>
+          <td>
+            <img src="${imgUrl}" alt="${prop.titulo}" class="table-thumb">
+          </td>
+          <td>
+            <div style="font-weight: 800; color: #FFFFFF; font-size: 0.92rem;">${prop.titulo}</div>
+            <div style="font-size: 0.78rem; color: #94A3B8;">ID: ${prop.id} • ${prop.direccion || 'Sin dirección'}</div>
+          </td>
+          <td>
+            <span style="background: rgba(197, 155, 63, 0.2); color: var(--gold-primary); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 50px; text-transform: uppercase;">
+              ${prop.operacion}
+            </span>
+            <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.2rem;">${prop.tipo}</div>
+          </td>
+          <td>
+            <div style="font-weight: 800; color: #FFF; font-size: 0.92rem;">${precioDisplay}</div>
+          </td>
+          <td>
+            <div style="color: #E2E8F0;">${prop.comuna}</div>
+            <div style="font-size: 0.75rem; color: #94A3B8;">${prop.region || 'RM'}</div>
+          </td>
+          <td style="text-align: center;">
+            <span class="star-toggle ${prop.destacada ? 'active' : ''}" onclick="toggleDestacada('${prop.id}', ${!prop.destacada})">
+              ★
+            </span>
+          </td>
+          <td>
+            <select class="status-badge-select" onchange="updatePropState('${prop.id}', this.value)">
+              <option value="disponible" ${prop.estado === 'disponible' ? 'selected' : ''}>Disponible</option>
+              <option value="reservada" ${prop.estado === 'reservada' ? 'selected' : ''}>Reservada</option>
+              <option value="vendida" ${prop.estado === 'vendida' ? 'selected' : ''}>Vendida</option>
+              <option value="arrendada" ${prop.estado === 'arrendada' ? 'selected' : ''}>Arrendada</option>
+            </select>
+          </td>
+          <td style="text-align: right;">
+            <div style="display: flex; gap: 0.4rem; justify-content: flex-end;">
+              <button class="btn-action-icon" onclick="openPropertyFormModal('${prop.id}')" title="Editar">
+                <i data-lucide="edit-3" style="width: 15px; height: 15px;"></i>
+              </button>
+              <button class="btn-action-icon btn-action-delete" onclick="deleteProperty('${prop.id}')" title="Eliminar">
+                <i data-lucide="trash-2" style="width: 15px; height: 15px;"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  // Render Mobile App Cards Feed
+  if (mobileCardsContainer) {
+    mobileCardsContainer.innerHTML = records.map(prop => {
+      let imgUrl = "assets/images/hero_bg.jpg";
+      if (prop.imagenes && prop.imagenes.length > 0) {
+        imgUrl = pb.files.getUrl(prop, prop.imagenes[0]);
+      } else if (prop.image) {
+        imgUrl = prop.image;
+      }
+
+      const precioDisplay = prop.precio_texto || (prop.moneda === "UF" ? `UF ${prop.precio.toLocaleString('es-CL')}` : `$${prop.precio.toLocaleString('es-CL')}`);
+
+      return `
+        <div class="admin-mobile-card">
+          <div class="am-card-top">
+            <img src="${imgUrl}" class="am-card-thumb" alt="${prop.titulo}">
+            <div class="am-card-info">
+              <div class="am-card-title">${prop.titulo}</div>
+              <div class="am-card-sub">ID: ${prop.id.substring(0,8)}... • ${prop.comuna}</div>
+              <div class="am-card-price">${precioDisplay}</div>
+            </div>
+            <span class="star-toggle ${prop.destacada ? 'active' : ''}" onclick="toggleDestacada('${prop.id}', ${!prop.destacada})" style="padding: 0.3rem;">
+              ★
+            </span>
+          </div>
+
+          <div class="am-card-bottom">
+            <span style="background: rgba(197, 155, 63, 0.2); color: var(--gold-primary); font-size: 0.72rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 50px; text-transform: uppercase;">
+              ${prop.operacion}
+            </span>
+
+            <select class="status-badge-select" onchange="updatePropState('${prop.id}', this.value)" style="font-size: 0.72rem; padding: 0.2rem 0.4rem;">
+              <option value="disponible" ${prop.estado === 'disponible' ? 'selected' : ''}>Disponible</option>
+              <option value="reservada" ${prop.estado === 'reservada' ? 'selected' : ''}>Reservada</option>
+              <option value="vendida" ${prop.estado === 'vendida' ? 'selected' : ''}>Vendida</option>
+              <option value="arrendada" ${prop.estado === 'arrendada' ? 'selected' : ''}>Arrendada</option>
+            </select>
+
+            <div style="flex-grow: 1;"></div>
+
             <button class="btn-action-icon" onclick="openPropertyFormModal('${prop.id}')" title="Editar">
-              <i data-lucide="edit-3" style="width: 15px; height: 15px;"></i>
+              <i data-lucide="edit-3" style="width: 14px; height: 14px;"></i>
             </button>
             <button class="btn-action-icon btn-action-delete" onclick="deleteProperty('${prop.id}')" title="Eliminar">
-              <i data-lucide="trash-2" style="width: 15px; height: 15px;"></i>
+              <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
             </button>
           </div>
-        </td>
-      </tr>
-    `;
-  }).join('');
+        </div>
+      `;
+    }).join('');
+  }
 
   lucide.createIcons();
 }
