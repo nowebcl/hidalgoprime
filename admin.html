@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | Hidalgo Prime Real Estate</title>
+  <meta name="description" content="Panel de administración de propiedades para Hidalgo Prime Real Estate.">
+  <link rel="icon" type="image/png" href="assets/images/logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- PocketBase JS SDK -->
+  <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
+
+  <style>
+    /* ADMIN SPECIFIC STYLES */
+    body.admin-body {
+      background-color: #071220;
+      color: #F8FAFC;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .admin-login-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(5, 13, 24, 0.95) 0%, rgba(13, 30, 50, 0.98) 100%), url('assets/images/portada.png') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 1.5rem;
+    }
+
+    .admin-login-card {
+      background: rgba(10, 24, 40, 0.9);
+      border: 1px solid rgba(197, 155, 63, 0.3);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(15px);
+      text-align: center;
+    }
+
+    .admin-login-logo {
+      height: 60px;
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-nav {
+      background: rgba(10, 24, 40, 0.95);
+      border-bottom: 1px solid rgba(197, 155, 63, 0.25);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .admin-container {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      width: 100%;
+      flex-grow: 1;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .metric-card {
+      background: rgba(15, 32, 55, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .metric-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: rgba(197, 155, 63, 0.15);
+      color: var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .metric-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1;
+    }
+
+    .metric-lbl {
+      font-size: 0.8rem;
+      color: #94A3B8;
+      margin-top: 0.3rem;
+    }
+
+    .admin-controls-bar {
+      background: rgba(15, 32, 55, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .admin-table-wrap {
+      background: rgba(15, 32, 55, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow-x: auto;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+
+    .admin-table th {
+      background: rgba(10, 24, 40, 0.9);
+      color: var(--gold-primary);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 1.1rem 1.2rem;
+      border-bottom: 1px solid rgba(197, 155, 63, 0.2);
+    }
+
+    .admin-table td {
+      padding: 1rem 1.2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .table-thumb {
+      width: 60px;
+      height: 45px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-action-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      color: #E2E8F0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-action-icon:hover {
+      background: var(--gold-primary);
+      color: #0A1828;
+      border-color: var(--gold-primary);
+    }
+
+    .btn-action-delete:hover {
+      background: #EF4444;
+      color: #FFFFFF;
+      border-color: #EF4444;
+    }
+
+    .status-badge-select {
+      background: rgba(10, 24, 40, 0.8);
+      border: 1px solid rgba(197, 155, 63, 0.3);
+      color: #FFFFFF;
+      padding: 0.3rem 0.6rem;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .star-toggle {
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #64748B;
+      transition: var(--transition);
+    }
+
+    .star-toggle.active {
+      color: var(--gold-primary);
+    }
+
+    /* Form Modal Styles */
+    .admin-modal-card {
+      background: #0A1828;
+      border: 1px solid rgba(197, 155, 63, 0.3);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 850px;
+      max-height: 90vh;
+      overflow-y: auto;
+      color: #FFFFFF;
+    }
+
+    .admin-modal-card .form-label {
+      color: #CBD5E1;
+      font-size: 0.82rem;
+    }
+
+    .admin-modal-card .form-input,
+    .admin-modal-card .form-select,
+    .admin-modal-card .form-textarea {
+      background: #0F2037;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #FFFFFF;
+    }
+
+    .admin-modal-card .form-input:focus,
+    .admin-modal-card .form-select:focus,
+    .admin-modal-card .form-textarea:focus {
+      border-color: var(--gold-primary);
+    }
+
+    .image-preview-grid {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+      margin-top: 0.8rem;
+    }
+
+    .preview-thumb-item {
+      position: relative;
+      width: 90px;
+      height: 65px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--gold-primary);
+    }
+
+    .preview-thumb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .feature-checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .feature-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #0F2037;
+      padding: 0.45rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.82rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- LOGIN OVERLAY -->
+  <div class="admin-login-overlay" id="loginOverlay">
+    <div class="admin-login-card">
+      <img src="assets/images/logo.png" alt="Hidalgo Prime Logo" class="admin-login-logo">
+      <h2 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 0.4rem; color: #FFF;">Panel de Administración</h2>
+      <p style="font-size: 0.85rem; color: #94A3B8; margin-bottom: 2rem;">Ingresa tus credenciales para gestionar el catálogo inmobiliario.</p>
+
+      <form id="adminLoginForm" onsubmit="handleAdminLogin(event)">
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label" for="loginEmail">Usuario / Correo Electrónico</label>
+          <input type="email" id="loginEmail" class="form-input" placeholder="contacto@hidalgoprimeinmobiliaria.cl" value="contacto@hidalgoprimeinmobiliaria.cl" required>
+        </div>
+        <div class="form-group" style="text-align: left;">
+          <label class="form-label" for="loginPass">Contraseña</label>
+          <input type="password" id="loginPass" class="form-input" placeholder="••••••••" value="HIDALGO@!" required>
+        </div>
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem; padding: 0.85rem;" id="btnLoginSubmit">
+          Ingresar al Panel
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ADMIN NAVBAR -->
+  <header class="admin-nav" id="adminNavbar" style="display: none;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <img src="assets/images/logo.png" alt="Hidalgo Prime" style="height: 46px;">
+      <span style="background: rgba(197, 155, 63, 0.2); color: var(--gold-primary); font-size: 0.75rem; font-weight: 800; padding: 0.25rem 0.75rem; border-radius: 50px; border: 1px solid rgba(197, 155, 63, 0.4);">Panel Administrable</span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <a href="index.html" target="_blank" class="btn-secondary" style="font-size: 0.75rem; padding: 0.5rem 1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;">
+        <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> Ver Sitio Web
+      </a>
+      <button class="btn-action-icon" onclick="handleAdminLogout()" title="Cerrar Sesión">
+        <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN ADMIN CONTAINER -->
+  <main class="admin-container" id="adminMainContent" style="display: none;">
+    
+    <!-- METRICS GRID -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-icon"><i data-lucide="building"></i></div>
+        <div>
+          <div class="metric-val" id="metricTotal">0</div>
+          <div class="metric-lbl">Total Propiedades</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon"><i data-lucide="key"></i></div>
+        <div>
+          <div class="metric-val" id="metricVenta">0</div>
+          <div class="metric-lbl">En Venta</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon"><i data-lucide="home"></i></div>
+        <div>
+          <div class="metric-val" id="metricArriendo">0</div>
+          <div class="metric-lbl">En Arriendo</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon"><i data-lucide="trees"></i></div>
+        <div>
+          <div class="metric-val" id="metricParcelas">0</div>
+          <div class="metric-lbl">Parcelas / Terrenos</div>
+        </div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon"><i data-lucide="star"></i></div>
+        <div>
+          <div class="metric-val" id="metricDestacadas">0</div>
+          <div class="metric-lbl">Destacadas Portada</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTROLS TOOLBAR -->
+    <div class="admin-controls-bar">
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+        <div class="search-input-wrap" style="width: 280px;">
+          <i data-lucide="search"></i>
+          <input type="text" id="adminSearchInput" placeholder="Buscar por título, comuna o ID..." onkeyup="filterAdminTable()">
+        </div>
+
+        <select id="adminFilterOperacion" class="filter-select" style="background: rgba(10,24,40,0.8); color: #FFF; border: 1px solid rgba(255,255,255,0.15);" onchange="filterAdminTable()">
+          <option value="todos">Todas las operaciones</option>
+          <option value="venta">Venta</option>
+          <option value="arriendo">Arriendo</option>
+          <option value="venta-parcela">Venta Parcela</option>
+        </select>
+      </div>
+
+      <button class="btn-primary" onclick="openPropertyFormModal()">
+        <i data-lucide="plus"></i> Nueva Propiedad
+      </button>
+    </div>
+
+    <!-- DATA TABLE -->
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th style="width: 70px;">Imagen</th>
+            <th>Propiedad & Dirección</th>
+            <th>Operación & Tipo</th>
+            <th>Precio</th>
+            <th>Ubicación</th>
+            <th style="text-align: center;">Destacada</th>
+            <th>Estado</th>
+            <th style="text-align: right;">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody">
+          <!-- Dynamic Records -->
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- FORM MODAL (CREATE / EDIT PROPERTY) -->
+  <div class="modal-overlay" id="propertyFormModal">
+    <div class="modal-card admin-modal-card">
+      <div class="modal-header" style="border-bottom: 1px solid rgba(197, 155, 63, 0.2);">
+        <h3 class="modal-title" id="formModalTitle">Agregar Nueva Propiedad</h3>
+        <button class="modal-close" onclick="closePropertyFormModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 1.8rem;">
+        <form id="propertyEditForm" onsubmit="handlePropertySave(event)">
+          <input type="hidden" id="propEditId">
+
+          <!-- SEC 1: INFORMACION PRINCIPAL -->
+          <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem;">1. Información Principal</h4>
+          
+          <div class="form-group">
+            <label class="form-label" for="pTitulo">Título Comercial de la Propiedad *</label>
+            <input type="text" id="pTitulo" class="form-input" placeholder="Ej: Penthouse Exclusivo con Vista Panorámica" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="pOperacion">Operación *</label>
+              <select id="pOperacion" class="form-select" required>
+                <option value="venta">Venta</option>
+                <option value="arriendo">Arriendo</option>
+                <option value="venta-parcela">Venta Parcela</option>
+                <option value="arriendo-temporal">Arriendo Temporal</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pTipo">Tipo de Propiedad *</label>
+              <select id="pTipo" class="form-select" required>
+                <option value="casa">Casa</option>
+                <option value="departamento">Departamento</option>
+                <option value="oficina">Oficina</option>
+                <option value="terreno-parcela">Terreno / Parcela</option>
+                <option value="local">Local Comercial</option>
+                <option value="bodega">Bodega</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pMoneda">Moneda *</label>
+              <select id="pMoneda" class="form-select" onchange="updatePrecioPlaceholder()" required>
+                <option value="UF">UF</option>
+                <option value="CLP">CLP ($)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="pPrecio">Precio Numérico *</label>
+              <input type="number" id="pPrecio" class="form-input" placeholder="18500" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pPrecioTexto">Texto de Precio Personalizado (Opcional)</label>
+              <input type="text" id="pPrecioTexto" class="form-input" placeholder="Ej: UF 18.500 o $450.000.000">
+            </div>
+          </div>
+
+          <!-- SEC 2: UBICACION -->
+          <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; margin: 1.5rem 0 1rem 0;">2. Ubicación</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="pRegion">Región *</label>
+              <select id="pRegion" class="form-select" required>
+                <option value="Región Metropolitana">Región Metropolitana</option>
+                <option value="Valparaíso">Valparaíso</option>
+                <option value="Coquimbo">Coquimbo</option>
+                <option value="O'Higgins">O'Higgins</option>
+                <option value="Los Lagos">Los Lagos</option>
+                <option value="Otra">Otra</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pComuna">Comuna *</label>
+              <input type="text" id="pComuna" class="form-input" placeholder="Ej: Vitacura, Las Condes, Lo Barnechea" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="pDireccion">Dirección / Sector</label>
+              <input type="text" id="pDireccion" class="form-input" placeholder="Ej: Av. Vitacura 5900">
+            </div>
+          </div>
+
+          <!-- SEC 3: SUPERFICIE Y DISTRIBUCION -->
+          <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; margin: 1.5rem 0 1rem 0;">3. Superficie y Distribución</h4>
+          <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.8rem;">
+            <div class="form-group">
+              <label class="form-label" for="pSupUtil">Sup. Útil (m²)</label>
+              <input type="number" id="pSupUtil" class="form-input" placeholder="220">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pSupTotal">Sup. Total (m²)</label>
+              <input type="number" id="pSupTotal" class="form-input" placeholder="280">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pDormitorios">Dormitorios</label>
+              <input type="number" id="pDormitorios" class="form-input" placeholder="4">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pBanos">Baños</label>
+              <input type="number" id="pBanos" class="form-input" placeholder="3">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pEstacionamientos">Estac.</label>
+              <input type="number" id="pEstacionamientos" class="form-input" placeholder="2">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pBodegas">Bodegas</label>
+              <input type="number" id="pBodegas" class="form-input" placeholder="1">
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 0.5rem;">
+            <div class="form-group">
+              <label class="form-label" for="pGastosComunes">Gastos Comunes ($ CLP)</label>
+              <input type="number" id="pGastosComunes" class="form-input" placeholder="Ej: 250000">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pContribuciones">Contribuciones Trimestrales ($ CLP)</label>
+              <input type="number" id="pContribuciones" class="form-input" placeholder="Ej: 450000">
+            </div>
+          </div>
+
+          <!-- SEC 4: DESCRIPCION Y CARACTERISTICAS -->
+          <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; margin: 1.5rem 0 1rem 0;">4. Descripción y Equipamiento</h4>
+          <div class="form-group">
+            <label class="form-label" for="pDescripcion">Descripción Comercial Completa</label>
+            <textarea id="pDescripcion" class="form-textarea" rows="4" placeholder="Escribe aquí el detalle completo de la propiedad..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Equipamiento y Características Seleccionables</label>
+            <div class="feature-checkbox-grid">
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Piscina Temperada"> Piscina Temperada</label>
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Quincho Equipado"> Quincho Equipado</label>
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Domótica Integral"> Domótica Integral</label>
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Paneles Solares"> Paneles Solares</label>
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Seguridad 24/7"> Seguridad 24/7</label>
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Terraza Panorámica"> Terraza Panorámica</label>
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Calefacción por Losa"> Calefacción por Losa</label>
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Jardín Formado"> Jardín Formado</label>
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Loggia Techada"> Loggia Techada</label>
+              <label class="feature-checkbox-item"><input type="checkbox" name="featCheck" value="Cerca de Metro"> Cerca de Metro</label>
+            </div>
+          </div>
+
+          <!-- SEC 5: FOTOGRAFIAS E IMAGENES (HASTA 5) -->
+          <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; margin: 1.5rem 0 1rem 0;">5. Imágenes de la Propiedad (Hasta 5 fotos)</h4>
+          <div class="form-group">
+            <label class="form-label" for="pImagenes">Seleccionar Archivos de Imagen (JPG, PNG, WEBP)</label>
+            <input type="file" id="pImagenes" class="form-input" multiple accept="image/*" onchange="handleImagePreview(this)">
+            <p style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.4rem;">Puedes seleccionar hasta 5 fotografías consecutivas.</p>
+            
+            <div class="image-preview-grid" id="imagePreviewGrid"></div>
+          </div>
+
+          <!-- SEC 6: OPCIONES DE PUBLICACION -->
+          <div style="display: flex; gap: 2rem; align-items: center; margin-top: 1.5rem; background: #0F2037; padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
+            <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer; font-weight: 700; font-size: 0.88rem;">
+              <input type="checkbox" id="pDestacada" style="width: 18px; height: 18px;"> Destacar en la Portada Principal
+            </label>
+
+            <div style="display: flex; align-items: center; gap: 0.8rem; flex-grow: 1; justify-content: flex-end;">
+              <label class="form-label" for="pEstado" style="margin: 0;">Estado:</label>
+              <select id="pEstado" class="form-select" style="width: 160px;">
+                <option value="disponible">Disponible</option>
+                <option value="reservada">Reservada</option>
+                <option value="vendida">Vendida</option>
+                <option value="arrendada">Arrendada</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 2rem; padding: 0.9rem; font-size: 0.9rem;" id="btnSaveSubmit">
+            <i data-lucide="check-circle"></i> Guardar Propiedad
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastNotification">
+    <i data-lucide="check-circle-2" style="color: var(--gold-primary); width: 22px; height: 22px;"></i>
+    <span id="toastMessage">¡Propiedad guardada exitosamente!</span>
+  </div>
+
+  <script src="admin.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

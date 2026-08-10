@@ -345,12 +345,67 @@ window.addEventListener("click", (e) => {
   if (e.target === contactModal) closeContactModal();
 });
 
+// PocketBase Client Integration
+const PUBLIC_PB_URL = "http://pocketbase-wniryajalo0ws95dy8t8j3pj.2.25.98.151.sslip.io";
+let pbPublic = null;
+if (typeof PocketBase !== "undefined") {
+  pbPublic = new PocketBase(PUBLIC_PB_URL);
+}
+
+async function fetchPropertiesFromPocketBase() {
+  if (!pbPublic) return;
+  try {
+    const records = await pbPublic.collection("propiedades").getFullList({
+      sort: "-created"
+    });
+
+    if (records && records.length > 0) {
+      propertiesData = records.map(r => {
+        let imgUrl = "assets/images/hero_bg.jpg";
+        let allImages = [];
+
+        if (r.imagenes && r.imagenes.length > 0) {
+          imgUrl = pbPublic.files.getUrl(r, r.imagenes[0]);
+          allImages = r.imagenes.map(file => pbPublic.files.getUrl(r, file));
+        } else if (r.image) {
+          imgUrl = r.image;
+          allImages = [r.image];
+        }
+
+        const precioStr = r.precio_texto || (r.moneda === "UF" ? `UF ${r.precio.toLocaleString('es-CL')}` : `$${r.precio.toLocaleString('es-CL')}`);
+
+        return {
+          id: r.id,
+          title: r.titulo,
+          operacion: r.operacion,
+          tipo: r.tipo,
+          region: r.region === "Región Metropolitana" ? "rm" : "valparaiso",
+          comuna: r.comuna ? r.comuna.toLowerCase().replace(/\s+/g, '-') : "vitacura",
+          comunaLabel: r.comuna || "Santiago",
+          dorm: r.dormitorios || 0,
+          banos: r.banos || 0,
+          superficie: r.superficie_util || r.superficie_total || 0,
+          precio: precioStr,
+          image: imgUrl,
+          allImages: allImages.length > 0 ? allImages : [imgUrl, "assets/images/zone_vitacura.jpg", "assets/images/zone_las_condes.jpg"],
+          description: r.descripcion || "",
+          features: r.caracteristicas || [],
+          destacada: r.destacada || false,
+          estado: r.estado || "disponible"
+        };
+      });
+    }
+  } catch (error) {
+    console.warn("Could not fetch PocketBase properties, using static fallback:", error);
+  }
+}
+
 // Single Property Page Renderer
 function renderSinglePropertyPage(id) {
   const singlePropLayout = document.getElementById("singlePropLayout");
   if (!singlePropLayout) return;
 
-  const prop = propertiesData.find(p => p.id === Number(id)) || propertiesData[0];
+  const prop = propertiesData.find(p => String(p.id) === String(id)) || propertiesData[0];
 
   // Update page titles
   const pageTitle = document.getElementById("pageTitle");
@@ -365,22 +420,23 @@ function renderSinglePropertyPage(id) {
   const propLocationHeader = document.getElementById("propLocationHeader");
   if (propLocationHeader) propLocationHeader.textContent = `Comuna ${prop.comunaLabel}, Santiago, Chile`;
 
+  const imagesList = prop.allImages && prop.allImages.length > 0 ? prop.allImages : [prop.image];
+
   singlePropLayout.innerHTML = `
     <div>
       <div class="prop-gallery-card">
-        <img src="${prop.image}" alt="${prop.title}" id="mainGalleryImg" class="prop-gallery-main">
+        <img src="${imagesList[0]}" alt="${prop.title}" id="mainGalleryImg" class="prop-gallery-main">
         <div class="prop-gallery-thumbs">
-          <img src="${prop.image}" class="prop-thumb active" onclick="switchMainImage(this.src, this)">
-          <img src="assets/images/hero_bg.jpg" class="prop-thumb" onclick="switchMainImage(this.src, this)">
-          <img src="assets/images/zone_vitacura.jpg" class="prop-thumb" onclick="switchMainImage(this.src, this)">
-          <img src="assets/images/zone_las_condes.jpg" class="prop-thumb" onclick="switchMainImage(this.src, this)">
+          ${imagesList.map((imgSrc, idx) => `
+            <img src="${imgSrc}" class="prop-thumb ${idx === 0 ? 'active' : ''}" onclick="switchMainImage(this.src, this)">
+          `).join('')}
         </div>
       </div>
 
       <div class="prop-detail-box">
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
           <span class="badge-tag" style="position: relative; top: 0; left: 0;">${prop.operacion}</span>
-          <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600; white-space: nowrap;">ID: HP-${1000 + prop.id}</span>
+          <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: 600; white-space: nowrap;">ID: HP-${prop.id}</span>
         </div>
 
         <div class="prop-price-large">${prop.precio}</div>
@@ -403,7 +459,7 @@ function renderSinglePropertyPage(id) {
           </div>
           <div class="spec-item-big">
             <i data-lucide="building-2"></i>
-            <span class="val">${prop.tipo.toUpperCase()}</span>
+            <span class="val">${prop.tipo ? prop.tipo.toUpperCase() : 'PROPIEDAD'}</span>
             <span class="lbl">Tipo Propiedad</span>
           </div>
         </div>
@@ -465,7 +521,7 @@ function renderSinglePropertyPage(id) {
   // Render similar properties at bottom
   const similarGrid = document.getElementById("similarPropertiesGrid");
   if (similarGrid) {
-    const similarProps = propertiesData.filter(p => p.id !== prop.id).slice(0, 3);
+    const similarProps = propertiesData.filter(p => String(p.id) !== String(prop.id)).slice(0, 3);
     similarGrid.innerHTML = similarProps.map(p => `
       <div class="property-card" onclick="window.location.href='propiedad.html?id=${p.id}'">
         <div class="card-image-wrap">
@@ -496,7 +552,10 @@ function switchMainImage(src, thumbEl) {
 }
 
 // Initialize Page & Parse URL Query Parameters
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // First load live properties from PocketBase API
+  await fetchPropertiesFromPocketBase();
+
   const params = new URLSearchParams(window.location.search);
   const idParam = params.get("id");
   const comunaParam = params.get("comuna");
