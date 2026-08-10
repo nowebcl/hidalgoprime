@@ -2179,6 +2179,8 @@ button, input, select, textarea {
   border-radius: 24px;
   padding: 1.8rem;
   box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .post-header-card {
