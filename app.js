@@ -355,9 +355,7 @@ if (typeof PocketBase !== "undefined") {
 async function fetchPropertiesFromPocketBase() {
   if (!pbPublic) return;
   try {
-    const records = await pbPublic.collection("propiedades").getFullList({
-      sort: "-created"
-    });
+    const records = await pbPublic.collection("propiedades").getFullList();
 
     if (records && records.length > 0) {
       propertiesData = records.map(r => {

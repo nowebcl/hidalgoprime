@@ -67,9 +67,7 @@ function handleAdminLogout() {
 // Fetch & Load Properties from PocketBase
 async function loadAdminProperties() {
   try {
-    const records = await pb.collection("propiedades").getFullList({
-      sort: "-created"
-    });
+    const records = await pb.collection("propiedades").getFullList();
     currentAdminProperties = records;
     updateMetrics(records);
     renderAdminTable(records);
