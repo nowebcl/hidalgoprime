@@ -3,12 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="pageTitle">Detalle de Propiedad | Hidalgo Prime</title>
-  <meta name="description" content="Detalle exclusivo de propiedad en venta o arriendo con Hidalgo Prime.">
+  <title>Blog Inmobiliario | Guía y Actualidad - Hidalgo Prime</title>
+  <meta name="description" content="Información y análisis experto sobre mercado inmobiliario, inversión, financiamiento y seguridad patrimonial en Chile.">
   <link rel="icon" type="image/png" href="assets/images/logo.png">
   <link rel="stylesheet" href="styles.css">
-  <!-- PocketBase JS SDK -->
-  <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
@@ -43,10 +41,10 @@
       <nav>
         <ul class="nav-links" id="navLinks">
           <li><a href="index.html" class="nav-link">Inicio</a></li>
-          <li><a href="propiedades.html" class="nav-link active">Propiedades</a></li>
+          <li><a href="propiedades.html" class="nav-link">Propiedades</a></li>
           <li><a href="nosotros.html" class="nav-link">Quiénes Somos</a></li>
           <li><a href="servicios.html" class="nav-link">Servicios</a></li>
-          <li><a href="blog.html" class="nav-link">Blog</a></li>
+          <li><a href="blog.html" class="nav-link active">Blog</a></li>
           <li><a href="contacto.html" class="nav-link">Contacto</a></li>
         </ul>
       </nav>
@@ -59,32 +57,22 @@
     </div>
   </header>
 
-  <!-- BREADCRUMB BANNER -->
-  <section class="page-hero" style="padding: 2rem 1rem 1.8rem 1rem;">
-    <div style="font-size: 0.68rem; color: var(--gold-primary); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.4rem; word-break: break-word; padding: 0 0.5rem;">
-      <a href="index.html" style="color: rgba(255,255,255,0.7);">Inicio</a> / <a href="propiedades.html" style="color: rgba(255,255,255,0.7);">Propiedades</a> / <span id="breadcrumbTitle" style="color: var(--gold-primary);">Detalle</span>
-    </div>
-    <h1 class="page-hero-title" id="propTitleHeader" style="font-size: 1.35rem; line-height: 1.25; margin-bottom: 0.3rem;">Propiedad Exclusiva</h1>
-    <p style="font-size: 0.8rem; color: #CBD5E1;" id="propLocationHeader">Vitacura, Santiago</p>
+  <!-- PAGE MINI HERO -->
+  <section class="page-hero">
+    <span class="page-hero-subtitle">Infórmate con los expertos de Hidalgo Prime</span>
+    <h1 class="page-hero-title">Blog Inmobiliario | Guía y Actualidad</h1>
+    <p style="font-size: 1rem; color: #E2E8F0; max-width: 720px; margin: 0.8rem auto 0 auto; line-height: 1.7; font-weight: 400;">
+      Conocimiento para tomar mejores decisiones inmobiliarias. Información y análisis sobre mercado inmobiliario, inversión, financiamiento y seguridad patrimonial, para ayudarte a tomar decisiones con mayor confianza.
+    </p>
   </section>
 
-  <!-- MAIN SINGLE PROPERTY LAYOUT -->
-  <main class="single-prop-layout" id="singlePropLayout">
-    <!-- Rendered dynamically by app.js -->
-  </main>
-
-  <!-- SIMILAR RECOMMENDED PROPERTIES -->
-  <section class="section-properties" style="margin-top: 2rem;">
-    <div class="section-header-flex">
-      <div>
-        <p class="section-subtitle">Propiedades Similares</p>
-        <h2 class="section-title">Otras Oportunidades Seleccionadas</h2>
-      </div>
-      <a href="propiedades.html" class="section-link">
-        Ver catálogo completo <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
-      </a>
+  <!-- BLOG CATALOGUE SECTION -->
+  <section style="max-width: var(--max-width); margin: 4rem auto 6rem auto; padding: 0 1.5rem;">
+    
+    <div class="blog-grid" id="blogCardsGrid">
+      <!-- Dynamic Blog Cards Rendered by JS -->
     </div>
-    <div class="properties-grid" id="similarPropertiesGrid"></div>
+
   </section>
 
   <!-- FOOTER -->
@@ -148,73 +136,114 @@
           <span>contacto@hidalgoprime.cl</span>
         </div>
       </div>
-
-      <div>
-        <h4 class="footer-col-title">Horario de Atención</h4>
-        <p style="font-size: 0.85rem; margin-bottom: 0.5rem; color: #94A3B8;">Lunes a Viernes<br><strong style="color: #FFF;">9:00 a 18:00 hrs.</strong></p>
-        <p style="font-size: 0.85rem; color: #94A3B8;">Sábado<br><strong style="color: #FFF;">10:00 a 14:00 hrs.</strong></p>
-      </div>
     </div>
 
     <div class="footer-bottom">
-      <div class="footer-bottom-container">
-        <span>© 2026 Hidalgo Prime SpA. Todos los derechos reservados.</span>
-        <span class="developer">Desarrollado por <a href="https://www.instagram.com/noweb.dev/" target="_blank" style="color: var(--gold-primary); text-decoration: none; font-weight: 700;">NOWEB LABS</a></span>
-      </div>
+      <div>&copy; 2026 Hidalgo Prime Inmobiliaria e Inversiones. Todos los derechos reservados.</div>
+      <div>Confianza – Gestión – Patrimonio</div>
     </div>
   </footer>
 
-  <!-- MODALS -->
+  <!-- Contact Modal -->
   <div class="modal-overlay" id="contactModal">
-    <div class="modal-card" style="max-width: 550px;">
+    <div class="modal-card">
       <div class="modal-header">
         <h3 class="modal-title">Contacto Hidalgo Prime</h3>
         <button class="modal-close" onclick="closeContactModal()">&times;</button>
       </div>
       <div class="modal-body">
-        <form id="contactForm" onsubmit="handleFormSubmit(event)">
+        <form onsubmit="handleFormSubmit(event)">
           <div class="form-group">
-            <label class="form-label" for="contactName">Nombre completo *</label>
-            <input type="text" id="contactName" class="form-input" placeholder="Ej: Juan Pérez" required>
+            <label class="form-label" for="cName">Nombre Completo *</label>
+            <input type="text" id="cName" class="form-input" placeholder="Ej: Juan Pérez" required>
           </div>
           <div class="form-group">
-            <label class="form-label" for="contactEmail">Correo electrónico *</label>
-            <input type="email" id="contactEmail" class="form-input" placeholder="juan@ejemplo.com" required>
+            <label class="form-label" for="cEmail">Correo Electrónico *</label>
+            <input type="email" id="cEmail" class="form-input" placeholder="juan@ejemplo.cl" required>
           </div>
           <div class="form-group">
-            <label class="form-label" for="contactPhone">Teléfono *</label>
-            <input type="tel" id="contactPhone" class="form-input" placeholder="+56 9 1234 5678" required>
+            <label class="form-label" for="cPhone">Teléfono *</label>
+            <input type="tel" id="cPhone" class="form-input" placeholder="+56 9 1234 5678" required>
           </div>
           <div class="form-group">
-            <label class="form-label" for="contactService">Servicio de interés</label>
-            <select id="contactService" class="form-select">
-              <option value="Compra y Venta">Compra y Venta</option>
-              <option value="Arriendos">Arriendos</option>
-              <option value="Administración">Administración</option>
-              <option value="Inversiones">Inversiones</option>
-              <option value="Asesoría Integral">Asesoría Integral</option>
-            </select>
+            <label class="form-label" for="cService">Asunto o Servicio</label>
+            <input type="text" id="cService" class="form-input" placeholder="Consulta General">
           </div>
           <div class="form-group">
-            <label class="form-label" for="contactMessage">Mensaje</label>
-            <textarea id="contactMessage" class="form-textarea" rows="4" placeholder="¿En qué podemos ayudarte?"></textarea>
+            <label class="form-label" for="cMessage">Mensaje</label>
+            <textarea id="cMessage" class="form-textarea" rows="3" placeholder="¿En qué podemos ayudarte?"></textarea>
           </div>
-          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1rem;">
-            Enviar Consulta
-          </button>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">Enviar Consulta</button>
         </form>
       </div>
     </div>
   </div>
 
+  <!-- Toast Notification -->
   <div class="toast" id="toastNotification">
-    <i data-lucide="check-circle-2" style="color: var(--gold-primary); width: 22px; height: 22px;"></i>
-    <span id="toastMessage">¡Consulta enviada con éxito!</span>
+    <i data-lucide="check-circle"></i>
+    <span id="toastMessage">Consulta enviada con éxito. Nos pondremos en contacto a la brevedad.</span>
   </div>
 
-  <script src="app.js"></script>
+  <script src="blog-data.js"></script>
   <script>
-    lucide.createIcons();
+    document.addEventListener("DOMContentLoaded", () => {
+      const grid = document.getElementById("blogCardsGrid");
+      if (grid && typeof blogPostsData !== "undefined") {
+        grid.innerHTML = blogPostsData.map(post => `
+          <a href="post.html?id=${post.id}" class="blog-card">
+            <div class="blog-card-img-wrap">
+              <img src="${post.image}" alt="${post.title}" class="blog-card-img">
+              <span class="blog-card-badge">${post.category}</span>
+            </div>
+            <div class="blog-card-body">
+              <div class="blog-meta-bar">
+                <span><i data-lucide="calendar" style="width: 14px; height: 14px; display: inline; vertical-align: middle;"></i> ${post.date}</span>
+                <span>•</span>
+                <span><i data-lucide="clock" style="width: 14px; height: 14px; display: inline; vertical-align: middle;"></i> ${post.readTime}</span>
+              </div>
+              <h3 class="blog-card-title">${post.title}</h3>
+              <p class="blog-card-summary">${post.summary}</p>
+              <div class="blog-card-footer">
+                <span>Por ${post.author}</span>
+                <span style="display: flex; align-items: center; gap: 0.3rem;">Leer artículo <i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i></span>
+              </div>
+            </div>
+          </a>
+        `).join('');
+        lucide.createIcons();
+      }
+
+      const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+      const navLinks = document.getElementById("navLinks");
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener("click", () => {
+          navLinks.classList.toggle("active");
+        });
+      }
+    });
+
+    function openContactModal(service = "") {
+      const modal = document.getElementById("contactModal");
+      const serviceInput = document.getElementById("cService");
+      if (serviceInput && service) serviceInput.value = service;
+      if (modal) modal.classList.add("active");
+    }
+
+    function closeContactModal() {
+      const modal = document.getElementById("contactModal");
+      if (modal) modal.classList.remove("active");
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      closeContactModal();
+      const toast = document.getElementById("toastNotification");
+      if (toast) {
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 3500);
+      }
+    }
   </script>
 </body>
 </html>
