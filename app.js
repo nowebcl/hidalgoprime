@@ -2,6 +2,17 @@
 // HIDALGO PRIME - APPLICATION LOGIC & INTERACTIVITY
 // ----------------------------------------------------
 
+// Security: HTML escaping helper to prevent XSS
+function escapeHTML(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 const propertiesData = [
   {
     id: 1,
@@ -146,28 +157,28 @@ function renderProperties(properties) {
   }
 
   propertiesGrid.innerHTML = properties.map(prop => `
-    <div class="property-card" onclick="window.location.href='propiedad.html?id=${prop.id}'">
+    <div class="property-card" onclick="window.location.href='propiedad.html?id=${escapeHTML(prop.id)}'">
       <div class="card-image-wrap">
-        <img src="${prop.image}" alt="${prop.title}" class="card-image">
-        <span class="badge-tag">${prop.operacion}</span>
+        <img src="${escapeHTML(prop.image)}" alt="${escapeHTML(prop.title)}" class="card-image">
+        <span class="badge-tag">${escapeHTML(prop.operacion)}</span>
       </div>
       <div class="card-content">
-        <h3 class="card-title">${prop.title}</h3>
+        <h3 class="card-title">${escapeHTML(prop.title)}</h3>
         <div class="card-features">
           <div class="feature-item">
             <i data-lucide="bed"></i>
-            <span>${prop.dorm} Dorm.</span>
+            <span>${escapeHTML(prop.dorm)} Dorm.</span>
           </div>
           <div class="feature-item">
             <i data-lucide="bath"></i>
-            <span>${prop.banos} Baños</span>
+            <span>${escapeHTML(prop.banos)} Baños</span>
           </div>
           <div class="feature-item">
             <i data-lucide="maximize-2"></i>
-            <span>${prop.superficie} m²</span>
+            <span>${escapeHTML(prop.superficie)} m²</span>
           </div>
         </div>
-        <div class="card-price">${prop.precio}</div>
+        <div class="card-price">${escapeHTML(prop.precio)}</div>
       </div>
     </div>
   `).join('');

@@ -2,6 +2,17 @@
 const POCKETBASE_URL = "https://pb.noweb.tech";
 const pb = new PocketBase(POCKETBASE_URL);
 
+// Security: HTML escaping helper to prevent XSS
+function escapeHTML(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 let currentAdminProperties = [];
 let editingPropId = null;
 
@@ -128,32 +139,32 @@ function renderAdminTable(records) {
       return `
         <tr>
           <td>
-            <img src="${imgUrl}" alt="${prop.titulo}" class="table-thumb">
+            <img src="${escapeHTML(imgUrl)}" alt="${escapeHTML(prop.titulo)}" class="table-thumb">
           </td>
           <td>
-            <div style="font-weight: 800; color: #FFFFFF; font-size: 0.92rem;">${prop.titulo}</div>
-            <div style="font-size: 0.78rem; color: #94A3B8;">ID: ${prop.id} • ${prop.direccion || 'Sin dirección'}</div>
+            <div style="font-weight: 800; color: #FFFFFF; font-size: 0.92rem;">${escapeHTML(prop.titulo)}</div>
+            <div style="font-size: 0.78rem; color: #94A3B8;">ID: ${escapeHTML(prop.id)} • ${escapeHTML(prop.direccion || 'Sin dirección')}</div>
           </td>
           <td>
             <span style="background: rgba(197, 155, 63, 0.2); color: var(--gold-primary); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 50px; text-transform: uppercase;">
-              ${prop.operacion}
+              ${escapeHTML(prop.operacion)}
             </span>
-            <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.2rem;">${prop.tipo}</div>
+            <div style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.2rem;">${escapeHTML(prop.tipo)}</div>
           </td>
           <td>
-            <div style="font-weight: 800; color: #FFF; font-size: 0.92rem;">${precioDisplay}</div>
+            <div style="font-weight: 800; color: #FFF; font-size: 0.92rem;">${escapeHTML(precioDisplay)}</div>
           </td>
           <td>
-            <div style="color: #E2E8F0;">${prop.comuna}</div>
-            <div style="font-size: 0.75rem; color: #94A3B8;">${prop.region || 'RM'}</div>
+            <div style="color: #E2E8F0;">${escapeHTML(prop.comuna)}</div>
+            <div style="font-size: 0.75rem; color: #94A3B8;">${escapeHTML(prop.region || 'RM')}</div>
           </td>
           <td style="text-align: center;">
-            <span class="star-toggle ${prop.destacada ? 'active' : ''}" onclick="toggleDestacada('${prop.id}', ${!prop.destacada})">
+            <span class="star-toggle ${prop.destacada ? 'active' : ''}" onclick="toggleDestacada('${escapeHTML(prop.id)}', ${!prop.destacada})">
               ★
             </span>
           </td>
           <td>
-            <select class="status-badge-select" onchange="updatePropState('${prop.id}', this.value)">
+            <select class="status-badge-select" onchange="updatePropState('${escapeHTML(prop.id)}', this.value)">
               <option value="disponible" ${prop.estado === 'disponible' ? 'selected' : ''}>Disponible</option>
               <option value="reservada" ${prop.estado === 'reservada' ? 'selected' : ''}>Reservada</option>
               <option value="vendida" ${prop.estado === 'vendida' ? 'selected' : ''}>Vendida</option>
@@ -162,10 +173,10 @@ function renderAdminTable(records) {
           </td>
           <td style="text-align: right;">
             <div style="display: flex; gap: 0.4rem; justify-content: flex-end;">
-              <button class="btn-action-icon" onclick="openPropertyFormModal('${prop.id}')" title="Editar">
+              <button class="btn-action-icon" onclick="openPropertyFormModal('${escapeHTML(prop.id)}')" title="Editar">
                 <i data-lucide="edit-3" style="width: 15px; height: 15px;"></i>
               </button>
-              <button class="btn-action-icon btn-action-delete" onclick="deleteProperty('${prop.id}')" title="Eliminar">
+              <button class="btn-action-icon btn-action-delete" onclick="deleteProperty('${escapeHTML(prop.id)}')" title="Eliminar">
                 <i data-lucide="trash-2" style="width: 15px; height: 15px;"></i>
               </button>
             </div>
@@ -190,37 +201,37 @@ function renderAdminTable(records) {
       return `
         <div class="admin-mobile-card">
           <div class="am-card-top">
-            <img src="${imgUrl}" class="am-card-thumb" alt="${prop.titulo}">
+            <img src="${escapeHTML(imgUrl)}" class="am-card-thumb" alt="${escapeHTML(prop.titulo)}">
             <div class="am-card-info">
-              <div class="am-card-title">${prop.titulo}</div>
-              <div class="am-card-sub">ID: ${prop.id.substring(0,8)}... • ${prop.comuna}</div>
-              <div class="am-card-price">${precioDisplay}</div>
+              <div class="am-card-title">${escapeHTML(prop.titulo)}</div>
+              <div class="am-card-sub">ID: ${escapeHTML(prop.id.substring(0,8))}... • ${escapeHTML(prop.comuna)}</div>
+              <div class="am-card-price">${escapeHTML(precioDisplay)}</div>
             </div>
-            <span class="star-toggle ${prop.destacada ? 'active' : ''}" onclick="toggleDestacada('${prop.id}', ${!prop.destacada})" style="padding: 0.3rem;">
+            <span class="star-toggle ${prop.destacada ? 'active' : ''}" onclick="toggleDestacada('${escapeHTML(prop.id)}', ${!prop.destacada})" style="padding: 0.3rem;">
               ★
             </span>
           </div>
 
           <div class="am-card-bottom">
             <span style="background: rgba(197, 155, 63, 0.2); color: var(--gold-primary); font-size: 0.72rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 50px; text-transform: uppercase;">
-              ${prop.operacion}
+              ${escapeHTML(prop.operacion)}
             </span>
 
-            <select class="status-badge-select" onchange="updatePropState('${prop.id}', this.value)" style="font-size: 0.72rem; padding: 0.2rem 0.4rem;">
+            <select class="status-badge-select" onchange="updatePropState('${escapeHTML(prop.id)}', this.value)" style="font-size: 0.72rem; padding: 0.2rem 0.4rem;">
               <option value="disponible" ${prop.estado === 'disponible' ? 'selected' : ''}>Disponible</option>
               <option value="reservada" ${prop.estado === 'reservada' ? 'selected' : ''}>Reservada</option>
               <option value="vendida" ${prop.estado === 'vendida' ? 'selected' : ''}>Vendida</option>
               <option value="arrendada" ${prop.estado === 'arrendada' ? 'selected' : ''}>Arrendada</option>
             </select>
 
-            <div style="flex-grow: 1;"></div>
-
-            <button class="btn-action-icon" onclick="openPropertyFormModal('${prop.id}')" title="Editar">
-              <i data-lucide="edit-3" style="width: 14px; height: 14px;"></i>
-            </button>
-            <button class="btn-action-icon btn-action-delete" onclick="deleteProperty('${prop.id}')" title="Eliminar">
-              <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
-            </button>
+            <div class="am-card-actions">
+              <button class="btn-action-icon" onclick="openPropertyFormModal('${escapeHTML(prop.id)}')" title="Editar">
+                <i data-lucide="edit-3" style="width: 14px; height: 14px;"></i>
+              </button>
+              <button class="btn-action-icon btn-action-delete" onclick="deleteProperty('${escapeHTML(prop.id)}')" title="Eliminar">
+                <i data-lucide="trash-2" style="width: 14px; height: 14px;"></i>
+              </button>
+            </div>
           </div>
         </div>
       `;
