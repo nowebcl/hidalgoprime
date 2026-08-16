@@ -346,7 +346,7 @@ window.addEventListener("click", (e) => {
 });
 
 // PocketBase Client Integration
-const PUBLIC_PB_URL = "http://pocketbase-wniryajalo0ws95dy8t8j3pj.2.25.98.151.sslip.io";
+const PUBLIC_PB_URL = "https://pb.noweb.tech";
 let pbPublic = null;
 if (typeof PocketBase !== "undefined") {
   pbPublic = new PocketBase(PUBLIC_PB_URL);

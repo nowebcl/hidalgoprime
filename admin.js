@@ -1,5 +1,5 @@
 // PocketBase API URL Configuration
-const POCKETBASE_URL = "http://pocketbase-wniryajalo0ws95dy8t8j3pj.2.25.98.151.sslip.io";
+const POCKETBASE_URL = "https://pb.noweb.tech";
 const pb = new PocketBase(POCKETBASE_URL);
 
 let currentAdminProperties = [];
