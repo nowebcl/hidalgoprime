@@ -281,8 +281,8 @@ function openPropertyModal(id) {
           <button class="btn-primary" style="justify-content: center;" onclick="closePropertyModal(); openContactModal('Consulta por ${prop.title}');">
             <i data-lucide="mail"></i> Solicitar Información
           </button>
-          <a href="https://wa.me/56962070997?text=Hola,%20quisiera%20consultar%20por%20la%20propiedad:%20${encodeURIComponent(prop.title)}" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; text-align: center;">
-            <i data-lucide="message-circle" style="color: #25D366;"></i> Contactar por WhatsApp
+          <a href="https://wa.me/56962070997?text=Hola,%20quisiera%20consultar%20por%20la%20propiedad:%20${encodeURIComponent(prop.title)}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; text-align: center; box-sizing: border-box;">
+            <i data-lucide="message-circle" style="color: #FFFFFF; stroke: #FFFFFF;"></i> <span style="color: #FFFFFF; font-weight: 700;">Contactar por WhatsApp</span>
           </a>
         </div>
       </div>
@@ -520,8 +520,8 @@ function renderSinglePropertyPage(id) {
           </button>
         </form>
 
-        <a href="https://wa.me/56962070997?text=Hola,%20quisiera%20consultar%20por%20la%20propiedad:%20${encodeURIComponent(prop.title)}" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none;">
-          <i data-lucide="message-circle" style="color: #25D366;"></i> Consultar por WhatsApp
+        <a href="https://wa.me/56962070997?text=Hola,%20quisiera%20consultar%20por%20la%20propiedad:%20${encodeURIComponent(prop.title)}" target="_blank" rel="noopener noreferrer" class="btn-whatsapp" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; box-sizing: border-box;">
+          <i data-lucide="message-circle" style="color: #FFFFFF; stroke: #FFFFFF;"></i> <span style="color: #FFFFFF; font-weight: 700;">Consultar por WhatsApp</span>
         </a>
       </div>
     </div>
