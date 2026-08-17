@@ -2355,5 +2355,57 @@ button, input, select, textarea {
   }
 }
 
+/* ====================================================
+   FLOATING WHATSAPP BUTTON (BOTTOM-LEFT)
+==================================================== */
+.floating-whatsapp-btn {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 9999;
+  background: #25D366;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.25rem 0.75rem 1rem;
+  border-radius: 50px;
+  box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4), 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.92rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(8px);
+}
+
+.floating-whatsapp-btn svg {
+  stroke: #FFFFFF;
+  stroke-width: 2.2;
+  transition: transform 0.3s ease;
+}
+
+.floating-whatsapp-btn:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.55), 0 6px 15px rgba(0, 0, 0, 0.2);
+  background: #20BA5A;
+  color: #FFFFFF;
+}
+
+.floating-whatsapp-btn:hover svg {
+  transform: scale(1.1) rotate(5deg);
+}
+
+@media (max-width: 768px) {
+  .floating-whatsapp-btn {
+    bottom: 20px;
+    left: 20px;
+    padding: 0.8rem;
+    border-radius: 50%;
+  }
+  .floating-wa-text {
+    display: none;
+  }
+}
+
 
 
