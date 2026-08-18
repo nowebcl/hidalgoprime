@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel de Administración | Hidalgo Prime Real Estate</title>
   <meta name="description" content="Panel de administración de propiedades para Hidalgo Prime Real Estate.">
+  <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/png" href="assets/images/logo.png?v=2">
   <link rel="stylesheet" href="styles.css">
   <!-- Lucide Icons -->
@@ -13,20 +14,58 @@
   <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
 
   <style>
-    /* ADMIN SPECIFIC STYLES */
-    body.admin-body {
-      background-color: #071220;
-      color: #F8FAFC;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+    /* ==========================================================================
+       HIDALGO PRIME LUXURY ADMIN SYSTEM - HARMONIOUS DESKTOP & MOBILE
+       ========================================================================== */
+    :root {
+      --admin-bg: #071220;
+      --admin-surface: #0D1E33;
+      --admin-surface-card: rgba(13, 30, 51, 0.85);
+      --admin-surface-hover: rgba(20, 44, 76, 0.95);
+      --admin-border: rgba(255, 255, 255, 0.09);
+      --admin-border-gold: rgba(197, 155, 63, 0.35);
+      --gold-primary: #C59B3F;
+      --gold-light: #E4CA86;
+      --gold-gradient: linear-gradient(135deg, #E4CA86 0%, #C59B3F 50%, #9B7827 100%);
+      --text-main: #FFFFFF;
+      --text-sub: #94A3B8;
+      --text-muted: #64748B;
+      --radius-sm: 10px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-full: 9999px;
+      --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --shadow-glow: 0 0 25px rgba(197, 155, 63, 0.25);
+      --transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body.admin-body {
+      background-color: var(--admin-bg);
+      background-image: 
+        radial-gradient(circle at 10% 10%, rgba(197, 155, 63, 0.07) 0px, transparent 40%),
+        radial-gradient(circle at 90% 90%, rgba(13, 30, 50, 0.6) 0px, transparent 50%);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* ----------------------------------------------------
+       1. LOGIN OVERLAY
+       ---------------------------------------------------- */
     .admin-login-overlay {
       position: fixed;
       inset: 0;
-      background: linear-gradient(135deg, rgba(5, 13, 24, 0.95) 0%, rgba(13, 30, 50, 0.98) 100%), url('assets/images/portada.png') center/cover no-repeat;
+      background: linear-gradient(135deg, rgba(5, 13, 24, 0.96) 0%, rgba(10, 24, 40, 0.98) 100%), url('assets/images/portada.png') center/cover no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -35,90 +74,205 @@
     }
 
     .admin-login-card {
-      background: rgba(10, 24, 40, 0.9);
-      border: 1px solid rgba(197, 155, 63, 0.3);
-      border-radius: 24px;
+      background: rgba(13, 30, 51, 0.94);
+      border: 1px solid var(--admin-border-gold);
+      border-radius: var(--radius-lg);
       padding: 3rem 2.5rem;
       width: 100%;
       max-width: 440px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(15px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(20px);
       text-align: center;
     }
 
     .admin-login-logo {
-      height: 60px;
+      height: 56px;
       margin-bottom: 1.5rem;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.4));
     }
 
-    .form-label {
-      color: #F1F5F9 !important;
-      font-size: 0.88rem !important;
-      font-weight: 700 !important;
-      margin-bottom: 0.5rem !important;
-      display: block !important;
-      letter-spacing: 0.2px;
-      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-    }
-
-    .form-input, .form-select, .form-textarea {
-      background: rgba(15, 32, 55, 0.85) !important;
-      border: 1px solid rgba(255, 255, 255, 0.18) !important;
-      color: #FFFFFF !important;
-      font-size: 0.95rem !important;
-      padding: 0.85rem 1rem !important;
-      border-radius: 12px !important;
-      width: 100% !important;
-      box-sizing: border-box !important;
-      transition: all 0.2s ease !important;
-    }
-
-    .form-input:focus, .form-select:focus, .form-textarea:focus {
-      border-color: var(--gold-primary) !important;
-      background: rgba(15, 32, 55, 1) !important;
-      box-shadow: 0 0 0 3px rgba(197, 155, 63, 0.25) !important;
-      outline: none !important;
-    }
-
-    .form-input::placeholder, .form-textarea::placeholder {
-      color: #64748B !important;
-    }
-
+    /* ----------------------------------------------------
+       2. TOP NAVBAR (CENTERED LOGO MINIMAL DESIGN)
+       ---------------------------------------------------- */
     .admin-nav {
-      background: rgba(10, 24, 40, 0.95);
-      border-bottom: 1px solid rgba(197, 155, 63, 0.25);
-      padding: 1rem 2rem;
+      background: rgba(10, 24, 40, 0.92);
+      border-bottom: 1px solid var(--admin-border);
+      padding: 0.75rem 2rem;
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 100;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      min-height: 64px;
     }
 
+    .admin-nav-brand {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .admin-nav-logo {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      display: block;
+      transition: var(--transition);
+    }
+
+    .admin-nav-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      z-index: 2;
+    }
+
+    .admin-nav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: var(--transition);
+      border: 1px solid var(--admin-border);
+      background: rgba(255, 255, 255, 0.04);
+      color: #E2E8F0;
+      min-height: 38px;
+    }
+
+    .admin-nav-btn-web {
+      border-color: rgba(197, 155, 63, 0.35);
+      color: var(--gold-light);
+      background: rgba(197, 155, 63, 0.08);
+    }
+
+    .admin-nav-btn-web:hover {
+      background: var(--gold-primary);
+      color: #0A1828;
+      border-color: var(--gold-primary);
+      box-shadow: 0 4px 15px rgba(197, 155, 63, 0.35);
+    }
+
+    .admin-nav-btn-logout:hover {
+      background: rgba(239, 68, 68, 0.15);
+      color: #EF4444;
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+
+    /* ----------------------------------------------------
+       3. MAIN LAYOUT CONTAINER
+       ---------------------------------------------------- */
     .admin-container {
-      max-width: 1300px;
+      max-width: 1360px;
       margin: 2rem auto;
-      padding: 0 1.5rem;
+      padding: 0 2rem 5rem 2rem;
       width: 100%;
       flex-grow: 1;
     }
 
+    /* ----------------------------------------------------
+       4. LUXURY TABS (PILL STYLE ON DESKTOP)
+       ---------------------------------------------------- */
+    .admin-tab-nav {
+      display: inline-flex;
+      background: rgba(13, 30, 51, 0.85);
+      border: 1px solid var(--admin-border);
+      padding: 5px;
+      border-radius: var(--radius-full);
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      gap: 5px;
+    }
+
+    .admin-tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-sub);
+      padding: 0.65rem 1.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .admin-tab-btn i {
+      width: 18px;
+      height: 18px;
+    }
+
+    .admin-tab-btn:hover {
+      color: var(--text-main);
+    }
+
+    .admin-tab-btn.active {
+      background: var(--gold-gradient);
+      color: #0A1828;
+      font-weight: 800;
+      box-shadow: 0 4px 18px rgba(197, 155, 63, 0.4);
+    }
+
+    .tab-badge {
+      background: #EF4444;
+      color: #FFFFFF;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: var(--radius-full);
+      line-height: 1;
+      margin-left: 0.2rem;
+    }
+
+    .admin-tab-btn.active .tab-badge {
+      background: #0A1828;
+      color: #FFFFFF;
+    }
+
+    /* ----------------------------------------------------
+       5. DASHBOARD METRICS CARDS (BALANCED DESKTOP GRID)
+       ---------------------------------------------------- */
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.2rem;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 1rem;
       margin-bottom: 2rem;
     }
 
     .metric-card {
-      background: rgba(15, 32, 55, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 1.2rem 1.5rem;
+      background: var(--admin-surface-card);
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-md);
+      padding: 1.15rem 1.25rem;
       display: flex;
       align-items: center;
-      gap: 1rem;
+      gap: 0.95rem;
+      transition: var(--transition);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(12px);
+    }
+
+    .metric-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--admin-border-gold);
+      background: var(--admin-surface-hover);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 15px rgba(197, 155, 63, 0.12);
     }
 
     .metric-icon {
@@ -126,86 +280,191 @@
       height: 46px;
       border-radius: 12px;
       background: rgba(197, 155, 63, 0.15);
-      color: var(--gold-primary);
+      color: var(--gold-light);
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .metric-icon i {
+      width: 22px;
+      height: 22px;
+    }
+
+    .metric-data {
+      overflow: hidden;
     }
 
     .metric-val {
-      font-size: 1.6rem;
+      font-size: 1.65rem;
       font-weight: 800;
-      color: #FFFFFF;
-      line-height: 1;
+      color: var(--text-main);
+      line-height: 1.1;
+      letter-spacing: -0.5px;
     }
 
     .metric-lbl {
-      font-size: 0.8rem;
-      color: #94A3B8;
-      margin-top: 0.3rem;
+      font-size: 0.76rem;
+      color: var(--text-sub);
+      margin-top: 0.25rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 600;
     }
 
+    .metric-card-msg .metric-icon {
+      background: rgba(59, 130, 246, 0.15);
+      color: #60A5FA;
+    }
+
+    /* ----------------------------------------------------
+       6. CONTROLS TOOLBAR (SEARCH & FILTERS)
+       ---------------------------------------------------- */
     .admin-controls-bar {
-      background: rgba(15, 32, 55, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 16px;
-      padding: 1.2rem 1.5rem;
+      background: var(--admin-surface-card);
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-md);
+      padding: 1.1rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 1rem;
-      flex-wrap: wrap;
       margin-bottom: 1.5rem;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     }
 
+    .controls-inputs-wrap {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+
+    .search-input-wrap {
+      position: relative;
+      width: 320px;
+    }
+
+    .search-input-wrap i {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input-wrap input {
+      width: 100%;
+      background: rgba(10, 24, 40, 0.85);
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1.1rem 0.75rem 2.8rem;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input-wrap input:focus {
+      border-color: var(--gold-primary);
+      box-shadow: 0 0 0 3px rgba(197, 155, 63, 0.2);
+    }
+
+    .custom-admin-select {
+      background: rgba(10, 24, 40, 0.85);
+      border: 1px solid var(--admin-border);
+      color: var(--text-main);
+      padding: 0.75rem 1.1rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      outline: none;
+      cursor: pointer;
+      min-height: 44px;
+      transition: var(--transition);
+    }
+
+    .custom-admin-select:focus {
+      border-color: var(--gold-primary);
+    }
+
+    .btn-add-prop-main {
+      padding: 0.75rem 1.6rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+      border-radius: var(--radius-sm);
+      white-space: nowrap;
+      box-shadow: 0 6px 20px rgba(197, 155, 63, 0.35);
+    }
+
+    /* ----------------------------------------------------
+       7. DESKTOP DATA TABLE (HARMONIOUS LUXURY STYLING)
+       ---------------------------------------------------- */
     .admin-table-wrap {
-      background: rgba(15, 32, 55, 0.7);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
+      background: var(--admin-surface-card);
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-lg);
       overflow-x: auto;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(14px);
     }
 
     .admin-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
     }
 
     .admin-table th {
-      background: rgba(10, 24, 40, 0.9);
-      color: var(--gold-primary);
-      font-size: 0.78rem;
+      background: rgba(10, 24, 40, 0.95);
+      color: var(--gold-light);
+      font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      padding: 1.1rem 1.2rem;
-      border-bottom: 1px solid rgba(197, 155, 63, 0.2);
+      padding: 1.15rem 1.4rem;
+      border-bottom: 1px solid var(--admin-border-gold);
+      font-weight: 800;
     }
 
     .admin-table td {
-      padding: 1rem 1.2rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 1.1rem 1.4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
       vertical-align: middle;
     }
 
+    .admin-table tr {
+      transition: background 0.18s ease;
+    }
+
     .admin-table tr:hover {
-      background: rgba(255, 255, 255, 0.03);
+      background: rgba(197, 155, 63, 0.035);
     }
 
     .table-thumb {
-      width: 60px;
-      height: 45px;
+      width: 68px;
+      height: 50px;
       object-fit: cover;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease;
+    }
+
+    .table-thumb:hover {
+      transform: scale(1.08);
     }
 
     .btn-action-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      width: 38px;
+      height: 38px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--admin-border);
       background: rgba(255, 255, 255, 0.05);
       color: #E2E8F0;
       display: inline-flex;
@@ -219,169 +478,353 @@
       background: var(--gold-primary);
       color: #0A1828;
       border-color: var(--gold-primary);
+      box-shadow: 0 0 12px rgba(197, 155, 63, 0.4);
     }
 
     .btn-action-delete:hover {
       background: #EF4444;
       color: #FFFFFF;
       border-color: #EF4444;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
     }
 
     .status-badge-select {
-      background: rgba(10, 24, 40, 0.8);
-      border: 1px solid rgba(197, 155, 63, 0.3);
+      background: rgba(10, 24, 40, 0.9);
+      border: 1px solid var(--admin-border-gold);
       color: #FFFFFF;
-      padding: 0.3rem 0.6rem;
-      border-radius: 50px;
-      font-size: 0.78rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-full);
+      font-size: 0.8rem;
       outline: none;
       cursor: pointer;
+      font-weight: 700;
+      transition: var(--transition);
+    }
+
+    .status-badge-select:focus {
+      box-shadow: 0 0 0 3px rgba(197, 155, 63, 0.25);
     }
 
     .star-toggle {
       cursor: pointer;
-      font-size: 1.2rem;
-      color: #64748B;
+      font-size: 1.25rem;
+      color: var(--text-muted);
       transition: var(--transition);
+      display: inline-block;
+    }
+
+    .star-toggle:hover {
+      color: var(--gold-light);
+      transform: scale(1.2);
     }
 
     .star-toggle.active {
       color: var(--gold-primary);
+      filter: drop-shadow(0 0 8px rgba(197, 155, 63, 0.6));
     }
 
-    /* Form Modal Styles */
-    .admin-modal-card {
-      background: #0A1828;
-      border: 1px solid rgba(197, 155, 63, 0.3);
-      border-radius: 24px;
-      width: 100%;
-      max-width: 850px;
-      max-height: 90vh;
-      overflow-y: auto;
-      color: #FFFFFF;
-    }
-
-    .admin-modal-card .form-label {
-      color: #CBD5E1;
-      font-size: 0.82rem;
-    }
-
-    .admin-modal-card .form-input,
-    .admin-modal-card .form-select,
-    .admin-modal-card .form-textarea {
-      background: #0F2037;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #FFFFFF;
-    }
-
-    .admin-modal-card .form-input:focus,
-    .admin-modal-card .form-select:focus,
-    .admin-modal-card .form-textarea:focus {
-      border-color: var(--gold-primary);
-    }
-
-    /* Mobile App-like UI Styles */
+    /* ----------------------------------------------------
+       8. MOBILE APP CARDS FEED (LUXURY MOBILE UI)
+       ---------------------------------------------------- */
     .admin-mobile-cards {
       display: none;
       flex-direction: column;
-      gap: 1rem;
+      gap: 1.1rem;
     }
 
     .admin-mobile-card {
-      background: rgba(15, 32, 55, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 18px;
-      padding: 1rem;
+      background: var(--admin-surface-card);
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
       display: flex;
       flex-direction: column;
-      gap: 0.85rem;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transition: var(--transition);
     }
 
-    .am-card-top {
-      display: flex;
-      gap: 0.85rem;
-      align-items: center;
+    .mobile-card-media {
+      position: relative;
+      width: 100%;
+      height: 180px;
+      overflow: hidden;
+      background: #0A1828;
     }
 
-    .am-card-thumb {
-      width: 72px;
-      height: 72px;
-      border-radius: 12px;
+    .mobile-card-img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-media-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7, 18, 32, 0.4) 0%, rgba(7, 18, 32, 0) 40%, rgba(7, 18, 32, 0.8) 100%);
+      pointer-events: none;
+    }
+
+    .mobile-card-top-badges {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .mobile-badge-op {
+      background: rgba(10, 24, 40, 0.85);
+      border: 1px solid var(--admin-border-gold);
+      color: var(--gold-light);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.3rem 0.75rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(8px);
+    }
+
+    .mobile-star-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(10, 24, 40, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: var(--transition);
+    }
+
+    .mobile-star-btn.active {
+      background: var(--gold-gradient);
+      color: #0A1828;
+      border-color: transparent;
+      box-shadow: 0 0 12px rgba(197, 155, 63, 0.6);
+    }
+
+    .mobile-card-content {
+      padding: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .mobile-card-type-id {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .mobile-card-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .mobile-card-loc {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.82rem;
+      color: var(--text-sub);
+    }
+
+    .mobile-card-loc i {
+      width: 14px;
+      height: 14px;
+      color: var(--gold-primary);
       flex-shrink: 0;
     }
 
-    .am-card-info {
-      flex-grow: 1;
-      overflow: hidden;
+    .mobile-card-price {
+      font-size: 1.3rem;
+      font-weight: 900;
+      color: var(--gold-primary);
+      margin: 0.2rem 0;
+      letter-spacing: -0.3px;
     }
 
-    .am-card-title {
-      font-weight: 800;
-      font-size: 0.92rem;
-      color: #FFFFFF;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 0.2rem;
+    .mobile-card-specs {
+      display: flex;
+      gap: 0.6rem;
+      background: rgba(10, 24, 40, 0.6);
+      padding: 0.55rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--admin-border);
+      margin-bottom: 0.4rem;
     }
 
-    .am-card-sub {
-      font-size: 0.76rem;
-      color: #94A3B8;
-      margin-bottom: 0.35rem;
+    .m-spec-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.78rem;
+      color: #CBD5E1;
+      font-weight: 600;
     }
 
-    .am-card-price {
-      font-weight: 800;
-      font-size: 1.05rem;
+    .m-spec-item i {
+      width: 14px;
+      height: 14px;
       color: var(--gold-primary);
     }
 
-    .am-card-bottom {
+    .mobile-card-footer {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      padding-top: 0.6rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      gap: 0.5rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--admin-border);
     }
 
+    /* ----------------------------------------------------
+       9. FLOATING ACTION BUTTON (FAB)
+       ---------------------------------------------------- */
     .fab-new-btn {
       display: none;
       position: fixed;
       bottom: 24px;
-      right: 24px;
-      width: 56px;
-      height: 56px;
+      right: 20px;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
       background: var(--gold-gradient);
       color: #0A1828;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 10px 25px rgba(197, 155, 63, 0.5);
-      z-index: 999;
+      box-shadow: 0 10px 25px rgba(197, 155, 63, 0.5), 0 0 15px rgba(197, 155, 63, 0.3);
+      z-index: 900;
       border: none;
       cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .fab-new-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* ----------------------------------------------------
+       10. FORM MODAL (CENTERED ON PC / BOTTOM SHEET ON MOBILE)
+       ---------------------------------------------------- */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 13, 24, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 1.5rem;
+    }
+
+    .admin-modal-card {
+      background: #0A1828;
+      border: 1px solid var(--admin-border-gold);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 880px;
+      max-height: 90vh;
+      overflow-y: auto;
+      color: #FFFFFF;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.85);
+    }
+
+    .modal-header-box {
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      background: #0A1828;
+      z-index: 10;
+    }
+
+    .modal-body-box {
+      padding: 2rem;
+    }
+
+    .form-label {
+      color: #F1F5F9 !important;
+      font-size: 0.86rem !important;
+      font-weight: 700 !important;
+      margin-bottom: 0.45rem !important;
+      display: block !important;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      background: rgba(15, 32, 55, 0.85) !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      color: #FFFFFF !important;
+      font-size: 0.92rem !important;
+      padding: 0.75rem 1rem !important;
+      border-radius: var(--radius-sm) !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      transition: var(--transition) !important;
+    }
+
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--gold-primary) !important;
+      background: rgba(15, 32, 55, 1) !important;
+      box-shadow: 0 0 0 3px rgba(197, 155, 63, 0.25) !important;
+      outline: none !important;
     }
 
     .grid-3-col {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
+      gap: 1.2rem;
     }
 
     .grid-2-col {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1rem;
+      gap: 1.2rem;
     }
 
     .grid-6-col {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 0.8rem;
+      gap: 0.85rem;
+    }
+
+    .feature-checkbox-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 0.65rem;
+      margin-top: 0.5rem;
+    }
+
+    .feature-checkbox-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #0F2037;
+      padding: 0.55rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--admin-border);
+      font-size: 0.84rem;
+      cursor: pointer;
     }
 
     .pub-options-box {
@@ -391,149 +834,322 @@
       gap: 1.5rem;
       margin-top: 1.5rem;
       background: #0F2037;
-      padding: 1.2rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1.25rem 1.5rem;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--admin-border);
     }
 
     .pub-checkbox-label {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.65rem;
       cursor: pointer;
       font-weight: 700;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: #FFFFFF;
     }
 
     .pub-state-group {
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 0.85rem;
     }
 
-    @media (max-width: 768px) {
-      .admin-nav {
-        padding: 0.8rem 1rem;
-      }
-      .admin-container {
-        padding: 0 0.85rem 5rem 0.85rem;
-        margin: 1rem auto;
-      }
-      .metrics-grid {
-        display: flex;
-        overflow-x: auto;
-        padding-bottom: 0.5rem;
-        gap: 0.7rem;
-      }
-      .metric-card {
-        min-width: 140px;
-        padding: 0.85rem 1rem;
-        border-radius: 14px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-      }
-      .metric-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-      }
-      .metric-val {
-        font-size: 1.3rem;
-      }
-      .metric-lbl {
-        font-size: 0.7rem;
-      }
-      .admin-controls-bar {
-        padding: 0.85rem;
-        border-radius: 14px;
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .search-input-wrap {
-        width: 100% !important;
-      }
-      .admin-table-wrap {
-        display: none; /* Hide large desktop table on mobile */
-      }
-      .admin-mobile-cards {
-        display: flex; /* Show mobile app cards on mobile */
-      }
-      .fab-new-btn {
-        display: flex;
-      }
-      .admin-modal-card {
-        border-radius: 24px 24px 0 0;
-        max-height: 92vh;
-        width: 100%;
-        margin: auto 0 0 0;
-      }
-      .grid-3-col, .grid-2-col {
-        grid-template-columns: 1fr !important;
-        gap: 0.85rem !important;
-      }
-      .grid-6-col {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 0.85rem !important;
-      }
-      .feature-checkbox-grid {
-        grid-template-columns: 1fr !important;
-        gap: 0.5rem !important;
-      }
-      .pub-options-box {
-        flex-direction: column !important;
-        align-items: stretch !important;
-        gap: 1rem !important;
-        padding: 1rem !important;
-      }
-      .pub-state-group {
-        justify-content: space-between !important;
-        width: 100% !important;
-      }
-      .pub-state-group select {
-        flex-grow: 1 !important;
-        max-width: 200px !important;
-      }
-    }
-      display: flex;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-      margin-top: 0.8rem;
+    /* ----------------------------------------------------
+       11. MESSAGES INBOX STYLES & PILLS
+       ---------------------------------------------------- */
+    .image-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
     }
 
     .preview-thumb-item {
       position: relative;
-      width: 90px;
-      height: 65px;
-      border-radius: 8px;
+      width: 100%;
+      height: 85px;
+      border-radius: var(--radius-sm);
       overflow: hidden;
-      border: 1px solid var(--gold-primary);
+      border: 1px solid var(--admin-border-gold);
+      background: #0A1828;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
 
     .preview-thumb-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
     }
 
-    .feature-checkbox-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 0.6rem;
-      margin-top: 0.5rem;
+    .preview-thumb-badge {
+      position: absolute;
+      bottom: 3px;
+      left: 3px;
+      right: 3px;
+      background: rgba(7, 18, 32, 0.9);
+      color: var(--gold-light);
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 0.15rem 0.3rem;
+      border-radius: 4px;
+      text-align: center;
+      letter-spacing: 0.3px;
+      backdrop-filter: blur(4px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .feature-checkbox-item {
-      display: flex;
+    .msg-status-pill {
+      display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: #0F2037;
-      padding: 0.45rem 0.8rem;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 0.82rem;
-      cursor: pointer;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 0.25rem 0.7rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .msg-status-unread {
+      background: rgba(245, 158, 11, 0.2);
+      color: #FBBF24;
+      border: 1px solid rgba(245, 158, 11, 0.5);
+    }
+
+    .msg-status-read {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60A5FA;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+    }
+
+    .msg-status-replied {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34D399;
+      border: 1px solid rgba(16, 185, 129, 0.5);
+    }
+
+    .msg-row-unread {
+      background: rgba(197, 155, 63, 0.05);
+    }
+
+    .btn-wa-action {
+      background: rgba(37, 211, 102, 0.15) !important;
+      color: #25D366 !important;
+      border-color: rgba(37, 211, 102, 0.3) !important;
+    }
+
+    .btn-wa-action:hover {
+      background: #25D366 !important;
+      color: #FFFFFF !important;
+      border-color: #25D366 !important;
+    }
+
+    .message-detail-box {
+      background: rgba(10, 24, 40, 0.85);
+      border: 1px solid var(--admin-border-gold);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .message-detail-item {
+      display: flex;
+      margin-bottom: 0.85rem;
+      font-size: 0.9rem;
+    }
+
+    .message-detail-label {
+      width: 130px;
+      font-weight: 700;
+      color: var(--gold-light);
+      flex-shrink: 0;
+    }
+
+    .message-detail-val {
+      color: #F8FAFC;
+      flex-grow: 1;
+      word-break: break-word;
+    }
+
+    /* ----------------------------------------------------
+       12. MOBILE APP RESPONSIVE BREAKPOINT (< 768px)
+       ---------------------------------------------------- */
+    @media (max-width: 768px) {
+      .admin-nav {
+        padding: 0.6rem 1rem !important;
+        min-height: 52px !important;
+      }
+      
+      .admin-nav-logo {
+        height: 30px !important;
+      }
+
+      .admin-nav-badge,
+      .nav-brand-divider, 
+      .nav-title-group, 
+      .admin-user-chip, 
+      .desktop-only-text {
+        display: none !important;
+      }
+
+      .admin-nav-actions {
+        gap: 0.4rem !important;
+      }
+
+      .admin-nav-btn {
+        width: 36px !important;
+        height: 36px !important;
+        min-height: 36px !important;
+        padding: 0 !important;
+        border-radius: 8px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+      }
+
+      .admin-container {
+        padding: 0 0.85rem calc(6rem + env(safe-area-inset-bottom)) 0.85rem;
+        margin: 1rem auto;
+      }
+
+      /* Mobile Segmented 2-Columns Tabs */
+      .admin-tab-nav {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        border-radius: var(--radius-md) !important;
+        width: 100% !important;
+        margin-bottom: 1.2rem;
+      }
+
+      .admin-tab-btn {
+        padding: 0.75rem 0.5rem !important;
+        border-radius: var(--radius-sm) !important;
+        font-size: 0.86rem !important;
+      }
+
+      /* 2-Columns Compact Metrics Grid on Mobile */
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.65rem !important;
+        margin-bottom: 1.2rem;
+      }
+
+      .metric-card {
+        padding: 0.75rem 0.85rem;
+        border-radius: var(--radius-md);
+        gap: 0.6rem;
+      }
+
+      .metric-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius-sm);
+      }
+
+      .metric-icon i {
+        width: 17px;
+        height: 17px;
+      }
+
+      .metric-val {
+        font-size: 1.25rem;
+      }
+
+      .metric-lbl {
+        font-size: 0.7rem;
+      }
+
+      /* Mobile Controls Bar */
+      .admin-controls-bar {
+        padding: 0.85rem;
+        border-radius: var(--radius-md);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+      }
+
+      .controls-inputs-wrap {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .search-input-wrap {
+        width: 100% !important;
+        min-width: 100% !important;
+      }
+
+      .custom-admin-select {
+        width: 100% !important;
+      }
+
+      .btn-add-prop-main {
+        width: 100%;
+        justify-content: center;
+      }
+
+      /* Switch Desktop Table to Mobile App Cards Feed */
+      .admin-table-wrap {
+        display: none !important;
+      }
+
+      .admin-mobile-cards {
+        display: flex !important;
+      }
+
+      .fab-new-btn {
+        display: flex !important;
+      }
+
+      /* Bottom-sheet Form Modal */
+      .modal-overlay {
+        padding: 0;
+        align-items: flex-end;
+      }
+
+      .admin-modal-card {
+        border-radius: 24px 24px 0 0;
+        max-height: 92vh;
+        width: 100%;
+        margin: 0;
+        border-bottom: none;
+      }
+
+      .grid-3-col, .grid-2-col {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+      }
+
+      .grid-6-col {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.65rem !important;
+      }
+
+      .feature-checkbox-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.4rem !important;
+      }
+
+      .pub-options-box {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.85rem !important;
+        padding: 0.9rem !important;
+      }
+
+      .pub-state-group {
+        justify-content: space-between !important;
+        width: 100% !important;
+      }
+
+      .pub-state-group select {
+        flex-grow: 1 !important;
+        max-width: 180px !important;
+      }
     }
   </style>
 </head>
@@ -562,19 +1178,20 @@
     </div>
   </div>
 
-  <!-- ADMIN NAVBAR -->
+  <!-- ADMIN NAVBAR (MINIMAL LUXURY) -->
   <header class="admin-nav" id="adminNavbar" style="display: none;">
-    <div style="display: flex; align-items: center; gap: 1rem;">
-      <img src="assets/images/logo.png?v=2" alt="Hidalgo Prime" style="height: 46px;">
-      <span style="background: rgba(197, 155, 63, 0.2); color: var(--gold-primary); font-size: 0.75rem; font-weight: 800; padding: 0.25rem 0.75rem; border-radius: 50px; border: 1px solid rgba(197, 155, 63, 0.4);">Panel Administrable</span>
+    <div class="admin-nav-brand">
+      <img src="assets/images/logo.png?v=2" alt="Hidalgo Prime" class="admin-nav-logo">
     </div>
 
-    <div style="display: flex; align-items: center; gap: 1rem;">
-      <a href="index.html" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="font-size: 0.75rem; padding: 0.5rem 1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;">
-        <i data-lucide="external-link" style="width: 14px; height: 14px;"></i> Ver Sitio Web
+    <div class="admin-nav-actions">
+      <a href="index.html" target="_blank" rel="noopener noreferrer" class="admin-nav-btn admin-nav-btn-web" title="Ver Sitio Web">
+        <i data-lucide="external-link" style="width: 15px; height: 15px;"></i>
+        <span class="desktop-only-text">Ver Web</span>
       </a>
-      <button class="btn-action-icon" onclick="handleAdminLogout()" title="Cerrar Sesión">
-        <i data-lucide="log-out" style="width: 16px; height: 16px;"></i>
+      <button class="admin-nav-btn admin-nav-btn-logout" onclick="handleAdminLogout()" title="Cerrar Sesión">
+        <i data-lucide="log-out" style="width: 15px; height: 15px;"></i>
+        <span class="desktop-only-text">Salir</span>
       </button>
     </div>
   </header>
@@ -582,96 +1199,180 @@
   <!-- MAIN ADMIN CONTAINER -->
   <main class="admin-container" id="adminMainContent" style="display: none;">
     
+    <!-- ADMIN SECTION TABS (APP SEGMENTED CONTROL) -->
+    <div class="admin-tab-nav">
+      <button class="admin-tab-btn active" id="tabPropsBtn" onclick="switchAdminTab('properties')">
+        <i data-lucide="building-2"></i>
+        <span>Propiedades</span>
+      </button>
+      <button class="admin-tab-btn" id="tabMessagesBtn" onclick="switchAdminTab('messages')">
+        <i data-lucide="mail"></i>
+        <span>Mensajes</span>
+        <span class="tab-badge" id="unreadMsgBadge" style="display: none;">0</span>
+      </button>
+    </div>
+
     <!-- METRICS GRID -->
     <div class="metrics-grid">
-      <div class="metric-card">
+      <div class="metric-card" onclick="switchAdminTab('properties')" style="cursor: pointer;">
         <div class="metric-icon"><i data-lucide="building"></i></div>
-        <div>
+        <div class="metric-data">
           <div class="metric-val" id="metricTotal">0</div>
           <div class="metric-lbl">Total Propiedades</div>
         </div>
       </div>
       <div class="metric-card">
         <div class="metric-icon"><i data-lucide="key"></i></div>
-        <div>
+        <div class="metric-data">
           <div class="metric-val" id="metricVenta">0</div>
           <div class="metric-lbl">En Venta</div>
         </div>
       </div>
       <div class="metric-card">
         <div class="metric-icon"><i data-lucide="home"></i></div>
-        <div>
+        <div class="metric-data">
           <div class="metric-val" id="metricArriendo">0</div>
           <div class="metric-lbl">En Arriendo</div>
         </div>
       </div>
       <div class="metric-card">
         <div class="metric-icon"><i data-lucide="trees"></i></div>
-        <div>
+        <div class="metric-data">
           <div class="metric-val" id="metricParcelas">0</div>
           <div class="metric-lbl">Parcelas / Terrenos</div>
         </div>
       </div>
       <div class="metric-card">
         <div class="metric-icon"><i data-lucide="star"></i></div>
-        <div>
+        <div class="metric-data">
           <div class="metric-val" id="metricDestacadas">0</div>
           <div class="metric-lbl">Destacadas Portada</div>
         </div>
       </div>
+      <div class="metric-card metric-card-msg" onclick="switchAdminTab('messages')" style="cursor: pointer;" title="Ver bandeja de mensajes">
+        <div class="metric-icon"><i data-lucide="mail"></i></div>
+        <div class="metric-data">
+          <div class="metric-val" id="metricMensajes">0</div>
+          <div class="metric-lbl" id="metricMensajesSub" style="color: #FBBF24;">0 sin leer</div>
+        </div>
+      </div>
     </div>
 
-    <!-- CONTROLS TOOLBAR -->
-    <div class="admin-controls-bar">
-      <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
-        <div class="search-input-wrap" style="width: 280px;">
-          <i data-lucide="search"></i>
-          <input type="text" id="adminSearchInput" placeholder="Buscar por título, comuna o ID..." onkeyup="filterAdminTable()">
+    <!-- 1. PROPERTIES MANAGEMENT SECTION -->
+    <div id="propertiesSection">
+      <!-- CONTROLS TOOLBAR -->
+      <div class="admin-controls-bar">
+        <div class="controls-inputs-wrap">
+          <div class="search-input-wrap">
+            <i data-lucide="search"></i>
+            <input type="text" id="adminSearchInput" placeholder="Buscar por título, comuna o ID..." onkeyup="filterAdminTable()">
+          </div>
+
+          <select id="adminFilterOperacion" class="custom-admin-select" onchange="filterAdminTable()">
+            <option value="todos">Todas las operaciones</option>
+            <option value="venta">Venta</option>
+            <option value="arriendo">Arriendo</option>
+            <option value="venta-parcela">Venta Parcela</option>
+          </select>
         </div>
 
-        <select id="adminFilterOperacion" class="filter-select" style="background: rgba(10,24,40,0.8); color: #FFF; border: 1px solid rgba(255,255,255,0.15);" onchange="filterAdminTable()">
-          <option value="todos">Todas las operaciones</option>
-          <option value="venta">Venta</option>
-          <option value="arriendo">Arriendo</option>
-          <option value="venta-parcela">Venta Parcela</option>
-        </select>
+        <button class="btn-primary btn-add-prop-main" onclick="openPropertyFormModal()">
+          <i data-lucide="plus"></i> Nueva Propiedad
+        </button>
       </div>
 
-      <button class="btn-primary" onclick="openPropertyFormModal()">
-        <i data-lucide="plus"></i> Nueva Propiedad
+      <!-- DATA TABLE (DESKTOP) -->
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 70px;">Imagen</th>
+              <th>Propiedad & Dirección</th>
+              <th>Operación & Tipo</th>
+              <th>Precio</th>
+              <th>Ubicación</th>
+              <th style="text-align: center;">Destacada</th>
+              <th>Estado</th>
+              <th style="text-align: right;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="adminTableBody">
+            <!-- Dynamic Records -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- MOBILE CARDS FEED (MOBILE APP VIEW) -->
+      <div class="admin-mobile-cards" id="adminMobileCards">
+        <!-- Dynamic Mobile Cards -->
+      </div>
+
+      <!-- FLOATING ACTION BUTTON (MOBILE FAB) -->
+      <button class="fab-new-btn" onclick="openPropertyFormModal()" title="Agregar Propiedad">
+        <i data-lucide="plus" style="width: 28px; height: 28px;"></i>
       </button>
     </div>
 
-    <!-- DATA TABLE (DESKTOP) -->
-    <div class="admin-table-wrap">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th style="width: 70px;">Imagen</th>
-            <th>Propiedad & Dirección</th>
-            <th>Operación & Tipo</th>
-            <th>Precio</th>
-            <th>Ubicación</th>
-            <th style="text-align: center;">Destacada</th>
-            <th>Estado</th>
-            <th style="text-align: right;">Acciones</th>
-          </tr>
-        </thead>
-        <tbody id="adminTableBody">
-          <!-- Dynamic Records -->
-        </tbody>
-      </table>
-    </div>
+    <!-- 2. MESSAGES INBOX SECTION -->
+    <div id="messagesSection" style="display: none;">
+      <!-- CONTROLS TOOLBAR -->
+      <div class="admin-controls-bar">
+        <div class="controls-inputs-wrap">
+          <div class="search-input-wrap">
+            <i data-lucide="search"></i>
+            <input type="text" id="msgSearchInput" placeholder="Buscar por cliente, correo o mensaje..." onkeyup="filterAdminMessages()">
+          </div>
 
-    <!-- MOBILE CARDS FEED (MOBILE APP VIEW) -->
-    <div class="admin-mobile-cards" id="adminMobileCards">
-      <!-- Dynamic Mobile Cards -->
-    </div>
+          <select id="msgFilterStatus" class="custom-admin-select" onchange="filterAdminMessages()">
+            <option value="todos">Todos los estados</option>
+            <option value="unread">No leídos</option>
+            <option value="read">Leídos</option>
+            <option value="replied">Respondidos</option>
+          </select>
 
-    <!-- FLOATING ACTION BUTTON (MOBILE FAB) -->
-    <button class="fab-new-btn" onclick="openPropertyFormModal()" title="Agregar Propiedad">
-      <i data-lucide="plus" style="width: 28px; height: 28px;"></i>
-    </button>
+          <select id="msgFilterService" class="custom-admin-select" onchange="filterAdminMessages()">
+            <option value="todos">Todos los servicios</option>
+            <option value="Compra y Venta">Compra y Venta</option>
+            <option value="Arriendos">Arriendos</option>
+            <option value="Administración">Administración</option>
+            <option value="Inversiones">Inversiones</option>
+            <option value="Asesoría Integral">Asesoría Integral</option>
+            <option value="Consulta Propiedad">Consulta Propiedad</option>
+          </select>
+        </div>
+
+        <div>
+          <button class="admin-nav-btn" onclick="loadAdminMessages()" title="Recargar mensajes">
+            <i data-lucide="refresh-cw" style="width: 15px; height: 15px;"></i> Actualizar
+          </button>
+        </div>
+      </div>
+
+      <!-- MESSAGES DATA TABLE (DESKTOP) -->
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th style="width: 110px;">Estado</th>
+              <th style="width: 140px;">Fecha</th>
+              <th>Cliente & Origen</th>
+              <th>Contacto</th>
+              <th>Asunto / Servicio</th>
+              <th>Mensaje</th>
+              <th style="text-align: right; width: 140px;">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="adminMessagesTableBody">
+            <!-- Dynamic Messages -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- MESSAGES MOBILE CARDS -->
+      <div class="admin-mobile-cards" id="adminMobileMessagesCards">
+        <!-- Dynamic Mobile Messages -->
+      </div>
+    </div>
 
   </main>
 
@@ -755,12 +1456,12 @@
 
             <div class="form-group">
               <label class="form-label" for="pComuna">Comuna *</label>
-              <input type="text" id="pComuna" class="form-input" placeholder="Ej: Vitacura" required>
+              <input type="text" id="pComuna" class="form-input" placeholder="Ej: Las Condes" required>
             </div>
 
             <div class="form-group">
               <label class="form-label" for="pDireccion">Dirección / Sector</label>
-              <input type="text" id="pDireccion" class="form-input" placeholder="Ej: Av. Vitacura 5900">
+              <input type="text" id="pDireccion" class="form-input" placeholder="Ej: Badajoz 100 Oficina 1014">
             </div>
           </div>
 
@@ -827,12 +1528,15 @@
             </div>
           </div>
 
-          <!-- SEC 5: FOTOGRAFIAS E IMAGENES (HASTA 5) -->
-          <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; margin: 1.5rem 0 1rem 0;">5. Imágenes de la Propiedad (Hasta 5 fotos)</h4>
+          <!-- SEC 5: FOTOGRAFIAS E IMAGENES (HASTA 7 FOTOS - OPTIMIZACION WEBP) -->
+          <h4 style="font-size: 0.9rem; font-weight: 800; color: var(--gold-primary); text-transform: uppercase; letter-spacing: 1px; margin: 1.5rem 0 1rem 0;">5. Imágenes de la Propiedad (Hasta 7 fotos optimizadas a WebP)</h4>
           <div class="form-group">
-            <label class="form-label" for="pImagenes">Seleccionar Archivos de Imagen (JPG, PNG, WEBP)</label>
+            <label class="form-label" for="pImagenes">Seleccionar Fotografías (JPG, PNG, WEBP, HEIC)</label>
             <input type="file" id="pImagenes" class="form-input" multiple accept="image/*" onchange="handleImagePreview(this)">
-            <p style="font-size: 0.75rem; color: #94A3B8; margin-top: 0.4rem;">Puedes seleccionar hasta 5 fotografías consecutivas.</p>
+            <p style="font-size: 0.76rem; color: #94A3B8; margin-top: 0.45rem; line-height: 1.4;">
+              <i data-lucide="sparkles" style="width: 14px; height: 14px; display: inline; vertical-align: middle; color: var(--gold-primary);"></i>
+              Puedes seleccionar hasta <strong>7 fotografías</strong>. El script integrado las convertirá y optimizará automáticamente a <strong>formato WebP ultraligero</strong> para máxima velocidad de carga.
+            </p>
             
             <div class="image-preview-grid" id="imagePreviewGrid"></div>
           </div>
@@ -863,12 +1567,31 @@
     </div>
   </div>
 
+  <!-- MESSAGE DETAIL MODAL -->
+  <div class="modal-overlay" id="messageDetailModal">
+    <div class="modal-card admin-modal-card" style="max-width: 650px;">
+      <div class="modal-header" style="border-bottom: 1px solid rgba(197, 155, 63, 0.2);">
+        <h3 class="modal-title" id="msgDetailModalTitle">Detalle de Consulta de Cliente</h3>
+        <button class="modal-close" onclick="closeMessageDetailModal()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding: 1.8rem;">
+        <div class="message-detail-box" id="msgDetailContent">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <div style="display: flex; gap: 0.8rem; justify-content: flex-end; flex-wrap: wrap; margin-top: 1rem;" id="msgDetailActions">
+          <!-- Dynamic Action Buttons -->
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toastNotification">
     <i data-lucide="check-circle-2" style="color: var(--gold-primary); width: 22px; height: 22px;"></i>
     <span id="toastMessage">¡Propiedad guardada exitosamente!</span>
   </div>
 
-  <script src="admin.js"></script>
+  <script src="admin.js?v=3.0"></script>
   <script>
     lucide.createIcons();
   </script>

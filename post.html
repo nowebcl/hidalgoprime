@@ -5,8 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="postPageTitle">Artículo | Blog Hidalgo Prime</title>
   <meta name="description" content="Análisis inmobiliario y financiero experto por Hidalgo Prime.">
+  <link rel="canonical" href="https://hidalgoprimeinmobiliaria.cl/blog.html">
   <link rel="icon" type="image/png" href="assets/images/logo.png?v=2">
   <link rel="stylesheet" href="styles.css?v=3">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://hidalgoprimeinmobiliaria.cl/blog.html">
+  <meta property="og:title" content="Artículo | Blog Hidalgo Prime">
+  <meta property="og:description" content="Análisis inmobiliario y financiero experto por Hidalgo Prime.">
+  <meta property="og:image" content="https://hidalgoprimeinmobiliaria.cl/assets/images/hero-bg.png">
+  <meta property="og:locale" content="es_CL">
+
+  <!-- PocketBase JS SDK -->
+  <script src="https://unpkg.com/pocketbase/dist/pocketbase.umd.js"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
@@ -17,7 +29,7 @@
       <div class="top-info-group">
         <div class="top-info-item">
           <i data-lucide="map-pin"></i>
-          <span><span class="label">Oficina</span> Av. Vitacura 5900, oficina 211, Vitacura, Santiago, Chile</span>
+          <span><span class="label">Oficina</span> Badajoz 100 Oficina 1014, Las Condes, Santiago, Chile</span>
         </div>
         <div class="top-info-item">
           <i data-lucide="phone"></i>
@@ -203,7 +215,7 @@
         <h4 class="footer-col-title">Contacto</h4>
         <div class="footer-contact-item">
           <i data-lucide="map-pin"></i>
-          <span>Av. Vitacura 5900, Oficina 211 Vitacura, Santiago, Chile</span>
+          <span>Badajoz 100 Oficina 1014, Las Condes, Santiago, Chile</span>
         </div>
         <div class="footer-contact-item">
           <i data-lucide="phone"></i>
@@ -332,29 +344,8 @@
         });
       }
     });
-
-    function openContactModal(service = "") {
-      const modal = document.getElementById("contactModal");
-      const serviceInput = document.getElementById("cService");
-      if (serviceInput && service) serviceInput.value = service;
-      if (modal) modal.classList.add("active");
-    }
-
-    function closeContactModal() {
-      const modal = document.getElementById("contactModal");
-      if (modal) modal.classList.remove("active");
-    }
-
-    function handleFormSubmit(e) {
-      e.preventDefault();
-      closeContactModal();
-      const toast = document.getElementById("toastNotification");
-      if (toast) {
-        toast.classList.add("show");
-        setTimeout(() => toast.classList.remove("show"), 3500);
-      }
-    }
   </script>
+  <script src="app.js?v=3.0"></script>
     <!-- FLOATING WHATSAPP BUTTON (BOTTOM LEFT) -->
   <a href="https://wa.me/56962070997?text=Hola,%20quisiera%20recibir%20asesor%C3%ADa%20inmobiliaria%20de%20Hidalgo%20Prime." target="_blank" rel="noopener noreferrer" class="floating-whatsapp-btn" aria-label="Contactar por WhatsApp" title="Chatea con nosotros por WhatsApp">
     <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">

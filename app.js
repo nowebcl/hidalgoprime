@@ -13,104 +13,8 @@ function escapeHTML(str) {
     .replace(/'/g, '&#039;');
 }
 
-const propertiesData = [
-  {
-    id: 1,
-    title: "Departamento en La Reina",
-    operacion: "venta",
-    tipo: "departamento",
-    region: "rm",
-    comuna: "la-reina",
-    comunaLabel: "La Reina",
-    dorm: 3,
-    banos: 2,
-    superficie: 95,
-    precio: "UF 7.200",
-    image: "assets/images/prop_la_reina.jpg",
-    description: "Espectacular departamento con terraza vista despejada al oriente. Finas terminaciones, cocina equipada con cubierta de cuarzo, estacionamiento y bodega incluidos. Ubicado en sector residencial de alta plusvalía.",
-    features: ["Vista Panorámica", "Terraza Privada", "Estacionamiento", "Bodega", "Calefacción Central"]
-  },
-  {
-    id: 2,
-    title: "Casa en Vitacura",
-    operacion: "venta",
-    tipo: "casa",
-    region: "rm",
-    comuna: "vitacura",
-    comunaLabel: "Vitacura",
-    dorm: 4,
-    banos: 4,
-    superficie: 250,
-    precio: "UF 16.800",
-    image: "assets/images/prop_vitacura.jpg",
-    description: "Hermosa propiedad arquitectónica en exclusivo barrio de Vitacura. Amplios espacios iluminados, jardín consolidado con piscina, quincho techado y seguridad 24/7. Cercana a colegios y parque Bicentenario.",
-    features: ["Piscina", "Quincho", "Jardín Consolidado", "Seguridad 24/7", "Gran Suite Principal"]
-  },
-  {
-    id: 3,
-    title: "Departamento en Las Condes",
-    operacion: "arriendo",
-    tipo: "departamento",
-    region: "rm",
-    comuna: "las-condes",
-    comunaLabel: "Las Condes",
-    dorm: 2,
-    banos: 2,
-    superficie: 120,
-    precio: "UF 45 / mes",
-    image: "assets/images/prop_las_condes.jpg",
-    description: "Moderno departamento completamente equipado a pasos de metro El Golf. Amplia terraza, acabados de primer nivel, gimnasio, salón de eventos y conserjería permanente.",
-    features: ["A Pasos del Metro", "Amoblado / Semiamoblado", "Gimnasio", "Salón de Eventos", "Seguridad"]
-  },
-  {
-    id: 4,
-    title: "Penthouse Exclusivo en Lo Barnechea",
-    operacion: "venta",
-    tipo: "departamento",
-    region: "rm",
-    comuna: "lo-barnechea",
-    comunaLabel: "Lo Barnechea",
-    dorm: 4,
-    banos: 4,
-    superficie: 310,
-    precio: "UF 22.500",
-    image: "assets/images/hero_bg.jpg",
-    description: "Exclusivo Penthouse duplex con rooftop privado y piscina. Panorámicas vistas a los cerros de La Dehesa, acabados de lujo con pisos de madera noble y domótica integral.",
-    features: ["Rooftop Privado", "Piscina Propia", "Domótica Integrada", "3 Estacionamientos", "Bodega Doble"]
-  },
-  {
-    id: 5,
-    title: "Oficina Prime en Providencia",
-    operacion: "arriendo",
-    tipo: "oficina",
-    region: "rm",
-    comuna: "providencia",
-    comunaLabel: "Providencia",
-    dorm: 2,
-    banos: 2,
-    superficie: 85,
-    precio: "UF 38 / mes",
-    image: "assets/images/zone_providencia.jpg",
-    description: "Oficina corporativa habilitada en edificio A+ de Providencia. Recepción, privados climatizados, kitchenette y salas de reunión equipadas.",
-    features: ["Climatización HVAC", "Seguridad 24/7", "Estacionamiento Visitas", "Acceso Controlado"]
-  },
-  {
-    id: 6,
-    title: "Casa Mediterránea en Las Condes",
-    operacion: "venta",
-    tipo: "casa",
-    region: "rm",
-    comuna: "las-condes",
-    comunaLabel: "Las Condes",
-    dorm: 5,
-    banos: 4,
-    superficie: 340,
-    precio: "UF 19.900",
-    image: "assets/images/zone_las_condes.jpg",
-    description: "Elegante casa de estilo mediterráneo en pasaje cerrado de San Carlos de Apoquindo. Finas terminaciones, piscina temperada y paneles solares.",
-    features: ["Paneles Solares", "Piscina Temperada", "Sector Residencial", "Loggia Techada"]
-  }
-];
+// Dynamic properties data from PocketBase
+let propertiesData = [];
 
 // DOM Elements
 const propertiesGrid = document.getElementById("propertiesGrid");
@@ -188,22 +92,22 @@ function renderProperties(properties) {
 
 // Filter Action
 function applyFilters() {
-  const op = filterOperacion ? filterOperacion.value : "todos";
-  const tipo = filterTipo ? filterTipo.value : "todos";
-  const region = filterRegion ? filterRegion.value : "todas";
-  const comuna = filterComuna ? filterComuna.value : "todas";
+  const op = filterOperacion ? filterOperacion.value.toLowerCase() : "todos";
+  const tipo = filterTipo ? filterTipo.value.toLowerCase() : "todos";
+  const region = filterRegion ? filterRegion.value.toLowerCase() : "todas";
+  const comuna = filterComuna ? filterComuna.value.toLowerCase() : "todas";
   const keyword = document.getElementById("filterKeyword") ? document.getElementById("filterKeyword").value.toLowerCase().trim() : "";
 
   const filtered = propertiesData.filter(prop => {
-    const matchOp = (op === "todos" || prop.operacion === op);
-    const matchTipo = (tipo === "todos" || prop.tipo === tipo);
+    const matchOp = (op === "todos" || prop.operacion === op || (op === "venta" && prop.operacion === "venta-parcela"));
+    const matchTipo = (tipo === "todos" || prop.tipo === tipo || (tipo === "terreno-parcela" && String(prop.tipo).includes("parcela")));
     const matchRegion = (region === "todas" || prop.region === region);
-    const matchComuna = (comuna === "todas" || prop.comuna === comuna);
+    const matchComuna = (comuna === "todas" || prop.comuna === comuna || String(prop.comuna).includes(comuna));
     const matchKeyword = !keyword || (
-      prop.title.toLowerCase().includes(keyword) ||
-      prop.description.toLowerCase().includes(keyword) ||
-      prop.comunaLabel.toLowerCase().includes(keyword) ||
-      prop.features.some(f => f.toLowerCase().includes(keyword))
+      (prop.title && prop.title.toLowerCase().includes(keyword)) ||
+      (prop.description && prop.description.toLowerCase().includes(keyword)) ||
+      (prop.comunaLabel && prop.comunaLabel.toLowerCase().includes(keyword)) ||
+      (Array.isArray(prop.features) && prop.features.some(f => String(f).toLowerCase().includes(keyword)))
     );
     return matchOp && matchTipo && matchRegion && matchComuna && matchKeyword;
   });
@@ -254,7 +158,7 @@ function openPropertyModal(id) {
       <div>
         <img src="${prop.image}" alt="${prop.title}" class="modal-prop-img">
         <div style="margin-top: 1.2rem; display: flex; flex-wrap: wrap; gap: 0.5rem;">
-          ${prop.features.map(f => `<span style="background: var(--bg-body); border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 0.3rem 0.7rem; border-radius: 4px; color: var(--text-dark);">${f}</span>`).join('')}
+          ${(Array.isArray(prop.features) ? prop.features : []).map(f => `<span style="background: var(--bg-body); border: 1px solid var(--border-light); font-size: 0.78rem; font-weight: 600; padding: 0.3rem 0.7rem; border-radius: 4px; color: var(--text-dark);">${escapeHTML(f)}</span>`).join('')}
         </div>
       </div>
 
@@ -315,12 +219,85 @@ function closeContactModal() {
   contactModal.classList.remove("active");
 }
 
-// Contact Form Handler
-function handleFormSubmit(event) {
+// PocketBase Client Integration
+const PUBLIC_PB_URL = "https://pb.noweb.tech";
+let pbPublic = null;
+if (typeof PocketBase !== "undefined") {
+  pbPublic = new PocketBase(PUBLIC_PB_URL);
+}
+
+// Contact Form Handler - Persists seamlessly to PocketBase & Local Storage
+async function handleFormSubmit(event) {
   event.preventDefault();
+  const form = event.target;
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn ? submitBtn.innerHTML : "";
+
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `Enviando...`;
+  }
+
+  // Extract Form Fields dynamically
+  const nameInput = form.querySelector('#contactName, #cName, #spName, input[name="name"], input[placeholder*="Nombre"], input[type="text"]');
+  const emailInput = form.querySelector('#contactEmail, #cEmail, #spEmail, input[name="email"], input[type="email"]');
+  const phoneInput = form.querySelector('#contactPhone, #cPhone, #spPhone, input[name="phone"], input[type="tel"]');
+  const serviceInput = form.querySelector('#contactService, #cService, #spService, select');
+  const messageInput = form.querySelector('#contactMessage, #cMessage, #spMessage, textarea');
+
+  const nameVal = nameInput ? nameInput.value.trim() : "Cliente Interesado";
+  const emailVal = emailInput ? emailInput.value.trim() : "";
+  const phoneVal = phoneInput ? phoneInput.value.trim() : "";
+  const serviceVal = serviceInput ? serviceInput.value : "Consulta General";
+  const messageVal = messageInput ? messageInput.value.trim() : "Consulta desde formulario web";
+
+  // Detect property reference if available
+  const propTitleEl = document.getElementById("propertyDetailTitle") || document.getElementById("modalPropTitle");
+  const propRef = propTitleEl ? propTitleEl.textContent.trim() : "";
+
+  const pagePath = window.location.pathname.split("/").pop() || "index.html";
+
+  const messagePayload = {
+    nombre: nameVal,
+    email: emailVal,
+    telefono: phoneVal,
+    servicio: serviceVal,
+    mensaje: messageVal,
+    propiedad_ref: propRef,
+    leido: false,
+    respondido: false,
+    origen: pagePath,
+    fecha: new Date().toISOString()
+  };
+
+  // 1. Save to PocketBase collection 'mensajes'
+  if (pbPublic) {
+    try {
+      await pbPublic.collection("mensajes").create(messagePayload);
+    } catch (err) {
+      console.warn("PocketBase collection save warning (saving to local storage fallback):", err);
+    }
+  }
+
+  // 2. Backup to Local Storage so no lead is ever lost
+  try {
+    messagePayload.id = "local_" + Date.now();
+    const localMsgs = JSON.parse(localStorage.getItem("hp_local_messages") || "[]");
+    localMsgs.unshift(messagePayload);
+    localStorage.setItem("hp_local_messages", JSON.stringify(localMsgs));
+  } catch (err) {
+    console.error("Local storage error:", err);
+  }
+
+  // Restore button state
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnText;
+  }
+
   closeContactModal();
-  showToast("¡Muchas gracias! Tu mensaje ha sido enviado a un asesor.");
-  event.target.reset();
+  form.reset();
+  showToast("¡Muchas gracias! Tu mensaje ha sido recibido con éxito. Un asesor te contactará a la brevedad.");
 }
 
 // Toast Function
@@ -356,56 +333,105 @@ window.addEventListener("click", (e) => {
   if (e.target === contactModal) closeContactModal();
 });
 
-// PocketBase Client Integration
-const PUBLIC_PB_URL = "https://pb.noweb.tech";
-let pbPublic = null;
-if (typeof PocketBase !== "undefined") {
-  pbPublic = new PocketBase(PUBLIC_PB_URL);
-}
-
 async function fetchPropertiesFromPocketBase() {
-  if (!pbPublic) return;
   try {
-    const records = await pbPublic.collection("propiedades").getFullList();
+    let records = [];
 
-    if (records && records.length > 0) {
+    // 1. Direct High-Speed Fetch from PocketBase REST API
+    try {
+      const response = await fetch(`${PUBLIC_PB_URL}/api/collections/propiedades/records?perPage=200&t=${Date.now()}`);
+      if (response.ok) {
+        const data = await response.json();
+        records = data.items || [];
+      }
+    } catch (fetchErr) {
+      console.warn("Direct fetch error, attempting SDK fallback:", fetchErr);
+    }
+
+    // 2. Fallback to PocketBase SDK
+    if ((!records || records.length === 0) && pbPublic) {
+      try {
+        records = await pbPublic.collection("propiedades").getFullList();
+      } catch (sdkErr) {
+        console.warn("SDK fetch error:", sdkErr);
+      }
+    }
+
+    if (records) {
       propertiesData = records.map(r => {
-        let imgUrl = "assets/images/hero_bg.jpg";
         let allImages = [];
-
-        if (r.imagenes && r.imagenes.length > 0) {
-          imgUrl = pbPublic.files.getUrl(r, r.imagenes[0]);
-          allImages = r.imagenes.map(file => pbPublic.files.getUrl(r, file));
+        if (r.imagenes && Array.isArray(r.imagenes) && r.imagenes.length > 0) {
+          const col = r.collectionId || r.collectionName || "propiedades";
+          allImages = r.imagenes.map(file => `${PUBLIC_PB_URL}/api/files/${col}/${r.id}/${file}`);
         } else if (r.image) {
-          imgUrl = r.image;
           allImages = [r.image];
         }
 
-        const precioStr = r.precio_texto || (r.moneda === "UF" ? `UF ${r.precio.toLocaleString('es-CL')}` : `$${r.precio.toLocaleString('es-CL')}`);
+        const imgUrl = allImages.length > 0 ? allImages[0] : "assets/images/portada.png";
+
+        let feats = [];
+        if (r.caracteristicas) {
+          try {
+            feats = typeof r.caracteristicas === "string" ? JSON.parse(r.caracteristicas) : r.caracteristicas;
+          } catch (e) {
+            feats = Array.isArray(r.caracteristicas) ? r.caracteristicas : [];
+          }
+        }
+
+        const precioStr = r.precio_texto || (r.moneda === "UF" ? `UF ${Number(r.precio).toLocaleString('es-CL')}` : `$ ${Number(r.precio).toLocaleString('es-CL')} CLP`);
+
+        let regCode = "rm";
+        if (r.region) {
+          const regLower = r.region.toLowerCase();
+          if (regLower.includes("valpara") || regLower.includes("v")) regCode = "valparaiso";
+          else if (regLower.includes("bio") || regLower.includes("viii")) regCode = "biobio";
+          else regCode = "rm";
+        }
+
+        let comCode = "todas";
+        if (r.comuna) {
+          comCode = r.comuna.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '-');
+        }
 
         return {
           id: r.id,
-          title: r.titulo,
-          operacion: r.operacion,
-          tipo: r.tipo,
-          region: r.region === "Región Metropolitana" ? "rm" : "valparaiso",
-          comuna: r.comuna ? r.comuna.toLowerCase().replace(/\s+/g, '-') : "vitacura",
+          title: r.titulo || "Propiedad Exclusiva",
+          operacion: (r.operacion || "venta").toLowerCase(),
+          tipo: (r.tipo || "departamento").toLowerCase(),
+          region: regCode,
+          comuna: comCode,
           comunaLabel: r.comuna || "Santiago",
           dorm: r.dormitorios || 0,
           banos: r.banos || 0,
           superficie: r.superficie_util || r.superficie_total || 0,
           precio: precioStr,
           image: imgUrl,
-          allImages: allImages.length > 0 ? allImages : [imgUrl, "assets/images/zone_vitacura.jpg", "assets/images/zone_las_condes.jpg"],
+          allImages: allImages.length > 0 ? allImages : [imgUrl],
           description: r.descripcion || "",
-          features: r.caracteristicas || [],
-          destacada: r.destacada || false,
+          features: feats,
+          destacada: r.destacada === true,
           estado: r.estado || "disponible"
         };
       });
+
+      // Dynamically add new comunas to filterComuna select dropdown if not already present
+      if (filterComuna) {
+        const existingValues = Array.from(filterComuna.options).map(o => o.value);
+        propertiesData.forEach(p => {
+          if (p.comuna && p.comuna !== "todas" && !existingValues.includes(p.comuna)) {
+            const opt = document.createElement("option");
+            opt.value = p.comuna;
+            opt.textContent = p.comunaLabel;
+            filterComuna.appendChild(opt);
+            existingValues.push(p.comuna);
+          }
+        });
+      }
+
+      console.log(`[Hidalgo Prime] ${propertiesData.length} propiedades sincronizadas desde PocketBase.`);
     }
   } catch (error) {
-    console.warn("Could not fetch PocketBase properties, using static fallback:", error);
+    console.error("Error sincronizando propiedades de PocketBase:", error);
   }
 }
 
@@ -415,8 +441,16 @@ function renderSinglePropertyPage(id) {
   if (!singlePropLayout) return;
 
   const prop = propertiesData.find(p => String(p.id) === String(id)) || propertiesData[0];
-
-  // Update page titles
+  if (!prop) {
+    singlePropLayout.innerHTML = `
+      <div style="grid-column: 1 / -1; text-align: center; padding: 5rem 1rem;">
+        <h3 style="font-size: 1.3rem; color: var(--bg-navy-header); margin-bottom: 1rem;">Propiedad no encontrada</h3>
+        <p style="color: var(--text-muted); margin-bottom: 1.5rem;">El inmueble solicitado no está disponible o ha sido actualizado.</p>
+        <a href="propiedades.html" class="btn-primary" style="display: inline-flex;">Explorar Propiedades</a>
+      </div>
+    `;
+    return;
+  }
   const pageTitle = document.getElementById("pageTitle");
   if (pageTitle) pageTitle.textContent = `${prop.title} | Hidalgo Prime`;
   
@@ -480,7 +514,7 @@ function renderSinglePropertyPage(id) {
 
         <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--bg-navy-header); margin-bottom: 0.8rem;">Equipamiento y Características</h3>
         <div style="display: flex; flex-wrap: wrap; gap: 0.6rem;">
-          ${prop.features.map(f => `<span style="background: #F8FAFC; border: 1px solid #E2E8F0; font-size: 0.82rem; font-weight: 700; padding: 0.4rem 0.85rem; border-radius: 50px; color: var(--bg-navy-header);">${f}</span>`).join('')}
+          ${(Array.isArray(prop.features) ? prop.features : []).map(f => `<span style="background: #F8FAFC; border: 1px solid #E2E8F0; font-size: 0.82rem; font-weight: 700; padding: 0.4rem 0.85rem; border-radius: 50px; color: var(--bg-navy-header);">${escapeHTML(f)}</span>`).join('')}
         </div>
       </div>
     </div>

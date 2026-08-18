@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manual de Usuario y Acta de Entrega Oficial - Hidalgo Prime Inmobiliaria | Noweb Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    @page {
+      size: A4;
+      margin: 12mm 10mm 15mm 10mm;
+    }
+
+    :root {
+      --primary-navy: #071220;
+      --secondary-navy: #0D1E33;
+      --card-navy: #10243C;
+      --gold-primary: #C59B3F;
+      --gold-light: #E4CA86;
+      --gold-dark: #9A7525;
+      --gold-gradient: linear-gradient(135deg, #E4CA86 0%, #C59B3F 50%, #9A7525 100%);
+      --text-dark: #0F172A;
+      --text-muted: #64748B;
+      --text-light: #F8FAFC;
+      --border-light: #E2E8F0;
+      --border-gold: rgba(197, 155, 63, 0.4);
+      --bg-light: #F8FAFC;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #FFFFFF;
+      color: #1E293B;
+      line-height: 1.55;
+      font-size: 13.5px;
+    }
+
+    .document-page {
+      max-width: 820px;
+      margin: 0 auto;
+      background: #FFFFFF;
+      overflow: hidden;
+    }
+
+    /* Luxury Header / Cover */
+    .cover-section {
+      background: linear-gradient(135deg, #050E18 0%, #0D1E33 55%, #152E4D 100%);
+      color: #FFFFFF;
+      padding: 3rem 2.8rem 2.5rem 2.8rem;
+      border-bottom: 4px solid var(--gold-primary);
+      border-radius: var(--radius-md) var(--radius-md) 0 0;
+      margin-bottom: 2rem;
+    }
+
+    .cover-badges-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .cover-badge-agency {
+      background: rgba(59, 130, 246, 0.18);
+      border: 1px solid #3B82F6;
+      color: #93C5FD;
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .cover-badge-warranty {
+      background: rgba(197, 155, 63, 0.18);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .cover-logo {
+      height: 52px;
+      width: auto;
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .cover-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+
+    .cover-subtitle {
+      font-size: 0.98rem;
+      color: #CBD5E1;
+      line-height: 1.45;
+      margin-bottom: 1.8rem;
+    }
+
+    .cover-meta-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1.4fr 1fr 1fr;
+      gap: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+      padding-top: 1.2rem;
+    }
+
+    .cover-meta-item small {
+      display: block;
+      color: var(--gold-light);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.15rem;
+    }
+
+    .cover-meta-item span {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #FFFFFF;
+    }
+
+    /* Content Area */
+    .content-area {
+      padding: 0 1.5rem 2rem 1.5rem;
+    }
+
+    .section-block {
+      margin-bottom: 2.2rem;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 1.35rem;
+      color: var(--primary-navy);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.45rem;
+      border-bottom: 2px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .section-title-tag {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    /* Credentials Card (Overflow-Proof & Fully Responsive) */
+    .credentials-card {
+      background: linear-gradient(135deg, #0A1828 0%, #0F233A 100%);
+      border: 1px solid var(--border-gold);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+      color: #FFFFFF;
+      margin: 1rem 0 1.25rem 0;
+      box-shadow: 0 6px 20px rgba(10, 24, 40, 0.12);
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .cred-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .cred-title {
+      color: var(--gold-light);
+      font-size: 0.95rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .cred-badge {
+      background: rgba(197, 155, 63, 0.15);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+      text-transform: uppercase;
+    }
+
+    .cred-rows-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .cred-row-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-sm);
+      padding: 0.65rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .cred-row-item label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--gold-light);
+      letter-spacing: 0.5px;
+    }
+
+    .cred-row-item code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      word-break: break-all;
+      white-space: normal;
+      line-height: 1.3;
+    }
+
+    .cred-row-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    /* Steps Guide */
+    .step-item {
+      display: flex;
+      gap: 0.9rem;
+      margin-bottom: 1.1rem;
+      align-items: flex-start;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .step-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gold-gradient);
+      color: #071220;
+      font-weight: 900;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 3px 8px rgba(197, 155, 63, 0.3);
+    }
+
+    .step-body h4 {
+      font-size: 0.95rem;
+      color: var(--primary-navy);
+      margin-bottom: 0.2rem;
+      font-weight: 800;
+    }
+
+    .step-body p {
+      color: #475569;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    /* Feature Grid / SEO Checklist */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+      margin-top: 0.9rem;
+    }
+
+    .feature-box {
+      background: #FFFFFF;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.1rem;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .feature-box-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: rgba(197, 155, 63, 0.12);
+      color: var(--gold-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-box h5 {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--primary-navy);
+      margin-bottom: 0.25rem;
+    }
+
+    .feature-box p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Callout Boxes */
+    .callout-box {
+      background: #F8FAFC;
+      border-left: 4px solid var(--gold-primary);
+      padding: 0.9rem 1.2rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 0.9rem 0;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .callout-box.dark {
+      background: var(--secondary-navy);
+      color: #FFFFFF;
+      border-left-color: var(--gold-primary);
+    }
+
+    .callout-title {
+      font-weight: 800;
+      font-size: 0.88rem;
+      color: var(--primary-navy);
+      margin-bottom: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .callout-box.dark .callout-title {
+      color: var(--gold-light);
+    }
+
+    /* Warranty Table */
+    .warranty-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.9rem 0;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .warranty-table th {
+      background: var(--secondary-navy);
+      color: var(--gold-light);
+      padding: 0.75rem 1rem;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      text-align: left;
+    }
+
+    .warranty-table td {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border-light);
+      font-size: 0.82rem;
+    }
+
+    .warranty-table tr:nth-child(even) {
+      background: #F8FAFC;
+    }
+
+    .warranty-badge {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .badge-gold {
+      background: rgba(197, 155, 63, 0.15);
+      color: var(--gold-dark);
+      border: 1px solid rgba(197, 155, 63, 0.4);
+    }
+
+    /* Sign-off & Delivery Block */
+    .signoff-box {
+      background: #F8FAFC;
+      border: 2px dashed #CBD5E1;
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-top: 1.75rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.75rem;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    .sign-col h6 {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+    }
+
+    .sign-line {
+      border-bottom: 1px solid #94A3B8;
+      height: 35px;
+      margin-bottom: 0.4rem;
+    }
+
+    .sign-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+
+    /* Document Footer */
+    .doc-footer {
+      background: var(--primary-navy);
+      color: #94A3B8;
+      padding: 1.1rem 2rem;
+      font-size: 0.74rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      margin-top: 1rem;
+    }
+
+    .page-break-divider {
+      page-break-after: always;
+      break-after: page;
+      height: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <main class="document-page">
+    
+    <!-- COVER SECTION -->
+    <header class="cover-section">
+      <div class="cover-badges-row">
+        <div class="cover-badge-agency">
+          <i data-lucide="layers" style="width: 13px; height: 13px;"></i> Desarrollado por Noweb Labs
+        </div>
+        <div class="cover-badge-warranty">
+          <i data-lucide="shield-check" style="width: 13px; height: 13px;"></i> Garantía Oficial de 12 Meses
+        </div>
+      </div>
+
+      <img src="assets/images/logo.png?v=2" alt="Hidalgo Prime Logo" class="cover-logo">
+      <h1 class="cover-title">Manual de Administración y Acta de Entrega Técnica</h1>
+      <p class="cover-subtitle">
+        Plataforma Inmobiliaria Exclusiva de Alto Nivel con Catálogo Cloud, Motor SEO Integrado y Sistema de Gestión Multiplataforma para PC y Móvil.
+      </p>
+
+      <div class="cover-meta-grid">
+        <div class="cover-meta-item">
+          <small>Proveedor</small>
+          <span>Noweb Labs</span>
+        </div>
+        <div class="cover-meta-item">
+          <small>Cliente</small>
+          <span>Hidalgo Prime Inmobiliaria</span>
+        </div>
+        <div class="cover-meta-item">
+          <small>Dominio Oficial</small>
+          <span>hidalgoprimeinmobiliaria.cl</span>
+        </div>
+        <div class="cover-meta-item">
+          <small>Estado</small>
+          <span style="color: #4ADE80;">100% Entregado</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content-area">
+
+      <!-- SEC 1: INTRODUCCION Y STACK TECNOLOGICO -->
+      <section class="section-block">
+        <div class="section-title">
+          <span>1. Resumen Ejecutivo y Arquitectura Técnica</span>
+          <span class="section-title-tag">Noweb Labs</span>
+        </div>
+        <p>
+          La agencia <strong>Noweb Labs</strong> hace entrega formal y técnica del portal inmobiliario desarrollado a medida para <strong>Hidalgo Prime Inmobiliaria</strong>. El ecosistema ha sido diseñado y optimizado para maximizar la conversión de clientes de alto patrimonio, con tiempos de respuesta instantáneos y catálogo administrable en tiempo real:
+        </p>
+
+        <div class="feature-grid">
+          <div class="feature-box">
+            <div class="feature-box-icon"><i data-lucide="zap"></i></div>
+            <h5>Frontend Ultra Rápido (Vanilla ES6+)</h5>
+            <p>Arquitectura ligera sin frameworks pesados, garantizando máxima fluidez y cumplimiento de Core Web Vitals de Google.</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-icon"><i data-lucide="database"></i></div>
+            <h5>Base de Datos Cloud PocketBase</h5>
+            <p>Infraestructura en la nube de alta disponibilidad, segura y escalable con tiempos de respuesta en milisegundos.</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-icon"><i data-lucide="smartphone"></i></div>
+            <h5>Experiencia App Móvil Nativa</h5>
+            <p>Panel que se adapta automáticamente como aplicación táctil en teléfonos y como panel corporativo en computadoras.</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-icon"><i data-lucide="lock"></i></div>
+            <h5>Seguridad SSL / TLS 1.3</h5>
+            <p>Cifrado de extremo a extremo para la protección de todas las consultas de clientes y credenciales de administración.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEC 2: TUTORIAL DE ACCESO AL MODO ADMINISTRADOR -->
+      <section class="section-block">
+        <div class="section-title">
+          <span>2. Tutorial: Acceso al Modo Administrador</span>
+          <span class="section-title-tag">Acceso Seguro</span>
+        </div>
+        <p>
+          El panel de control está integrado directamente en su dominio principal y es accesible desde cualquier navegador web (Chrome, Safari, Edge) en computadora o celular sin necesidad de instalar aplicaciones externas.
+        </p>
+
+        <!-- Structured Credentials Box -->
+        <div class="credentials-card">
+          <div class="cred-header">
+            <div class="cred-title">
+              <i data-lucide="key-round" style="width: 17px; height: 17px; color: var(--gold-light);"></i>
+              Credenciales Oficiales de Administración
+            </div>
+            <span class="cred-badge">Acceso Protegido</span>
+          </div>
+
+          <div class="cred-rows-wrap">
+            <div class="cred-row-item">
+              <label>Enlace Directo del Panel de Administración</label>
+              <code>https://hidalgoprimeinmobiliaria.cl/admin.html</code>
+            </div>
+
+            <div class="cred-row-item">
+              <label>Usuario / Correo Electrónico</label>
+              <code>contacto@hidalgoprimeinmobiliaria.cl</code>
+            </div>
+
+            <div class="cred-row-grid-2">
+              <div class="cred-row-item">
+                <label>Contraseña Maestra</label>
+                <code>HIDALGO@!</code>
+              </div>
+              <div class="cred-row-item">
+                <label>Acceso desde la Web</label>
+                <span style="font-size: 0.82rem; color: #CBD5E1; font-weight: 700;">Pie de página > Enlace "Admin"</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout-box">
+          <div class="callout-title"><i data-lucide="info"></i> Sesión Persistente y Segura</div>
+          <p style="font-size: 0.82rem; color: #475569;">
+            Al iniciar sesión, el sistema guardará su acceso seguro en el dispositivo. Para cerrar sesión en computadoras públicas o compartidas, simplemente pulse el botón <strong>"Salir"</strong> en la esquina superior derecha.
+          </p>
+        </div>
+      </section>
+
+      <!-- SEC 3: GESTION DE PROPIEDADES -->
+      <section class="section-block">
+        <div class="section-title">
+          <span>3. Tutorial: Cómo Subir y Administrar Propiedades</span>
+          <span class="section-title-tag">Catálogo en Vivo</span>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Crear una Nueva Propiedad</h4>
+            <p>
+              Haga clic en el botón dorado <strong>"+ Nueva Propiedad"</strong> (en PC en la barra superior o en celular presionando el botón flotante circular <strong>+</strong>). Se abrirá el formulario interactivo.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Completar Datos Comerciales y Precios</h4>
+            <p>
+              Ingrese el título atractivo (ej. <em>"Casa Mediterránea en Condominio Exclusivo"</em>), seleccione la operación (<strong>Venta, Arriendo, Parcela</strong>), el tipo de inmueble (Casa, Departamento, Terreno, etc.) y la moneda (<strong>UF</strong> o <strong>CLP $</strong>). El sistema calculará y formateará los montos de forma automática.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Ubicación, Distribución y Amenidades</h4>
+            <p>
+              Indique la Región, Comuna y Dirección, junto a los dormitorios, baños, metros útiles, metros totales y estacionamientos. Puede marcar las amenidades disponibles con un solo clic (<em>Piscina, Quincho, Seguridad 24/7, Domótica, etc.</em>).
+            </p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Carga de hasta 7 Fotografías y Optimización WebP</h4>
+            <p>
+              Suba hasta <strong>7 fotografías de alta calidad</strong>. El script integrado las convertirá y optimizará automáticamente a formato <strong>WebP ultraligero</strong> en tiempo real antes de guardarlas, reduciendo drásticamente el peso de las imágenes sin pérdida de nitidez y acelerando la velocidad de carga de su sitio web. Si desea que el inmueble aparezca en el carrusel principal de la portada, marque la casilla <strong>"Destacar en Portada"</strong> o pulse el icono de estrella dorada.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <h4>Cambio de Estado en Tiempo Real</h4>
+            <p>
+              En cualquier momento puede cambiar el estado de la propiedad con el selector rápido entre <strong>Disponible (Verde)</strong>, <strong>Reservada (Amarillo)</strong>, <strong>Vendida (Rojo)</strong> o <strong>Arrendada (Azul)</strong>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEC 4: BANDEJA DE MENSAJES Y CONTACTOS -->
+      <section class="section-block">
+        <div class="section-title">
+          <span>4. Tutorial: Gestión de Consultas y Contactos</span>
+          <span class="section-title-tag">Bandeja de Entrada</span>
+        </div>
+        <p>
+          Todos los clientes que envíen consultas a través del formulario de contacto o fichas de propiedades son registrados de forma automática en la Base de Datos y presentados en la pestaña <strong>"Mensajes"</strong> con un indicador de mensajes no leídos.
+        </p>
+
+        <div class="feature-grid" style="margin-top: 1rem;">
+          <div class="feature-box">
+            <div class="feature-box-icon"><i data-lucide="message-circle" style="color: #25D366;"></i></div>
+            <h5>Contacto Directo por WhatsApp</h5>
+            <p>Haga clic en el botón verde de WhatsApp para abrir inmediatamente una conversación pre-redactada con el cliente citando su consulta y datos de contacto.</p>
+          </div>
+          <div class="feature-box">
+            <div class="feature-box-icon"><i data-lucide="eye"></i></div>
+            <h5>Ficha Detallada de Consulta</h5>
+            <p>Revise el mensaje completo, correo, teléfono, fecha exacta y propiedad de interés del prospecto para brindarle una atención personalizada.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEC 5: ESTRATEGIA DE POSICIONAMIENTO SEO -->
+      <section class="section-block">
+        <div class="section-title">
+          <span>5. Estrategia de Posicionamiento SEO y Rendimiento</span>
+          <span class="section-title-tag">Google & SEO</span>
+        </div>
+        <p>
+          El sitio web ha sido meticulosamente optimizado por <strong>Noweb Labs</strong> cumpliendo el 100% de las directrices técnicas de indexación y posicionamiento orgánico en Google:
+        </p>
+
+        <table class="warranty-table" style="margin-top: 0.75rem;">
+          <thead>
+            <tr>
+              <th style="width: 25%;">Componente SEO</th>
+              <th>Implementación Realizada</th>
+              <th style="width: 20%; text-align: center;">Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Sitemap XML</strong></td>
+              <td>Generado en <code>/sitemap.xml</code> con indexación de todas las secciones y páginas clave del portal inmobiliario.</td>
+              <td style="text-align: center;"><span class="warranty-badge badge-gold">✓ Entregado</span></td>
+            </tr>
+            <tr>
+              <td><strong>Robots.txt</strong></td>
+              <td>Configurado en <code>/robots.txt</code> permitiendo el rastreo exhaustivo de Googlebot y vinculación al mapa del sitio.</td>
+              <td style="text-align: center;"><span class="warranty-badge badge-gold">✓ Entregado</span></td>
+            </tr>
+            <tr>
+              <td><strong>Schema Markup</strong></td>
+              <td>Datos estructurados JSON-LD tipo <code>RealEstateAgent</code>, <code>PostalAddress</code> y <code>Offer</code> para rich snippets en Google.</td>
+              <td style="text-align: center;"><span class="warranty-badge badge-gold">✓ Entregado</span></td>
+            </tr>
+            <tr>
+              <td><strong>Meta Etiquetas & OpenGraph</strong></td>
+              <td>Meta títulos y descripciones persuasivas con palabras clave del sector inmobiliario de lujo y tarjetas sociales para WhatsApp/Facebook.</td>
+              <td style="text-align: center;"><span class="warranty-badge badge-gold">✓ Entregado</span></td>
+            </tr>
+            <tr>
+              <td><strong>Optimización de Imágenes</strong></td>
+              <td>Carga diferida (<em>lazy loading</em>), compresión inteligente y atributos descriptivos <code>alt</code> para Google Imágenes.</td>
+              <td style="text-align: center;"><span class="warranty-badge badge-gold">✓ Entregado</span></td>
+            </tr>
+            <tr>
+              <td><strong>Google Search Console</strong></td>
+              <td>Arquitectura lista para vinculación inmediata mediante etiqueta meta y archivo HTML de verificación.</td>
+              <td style="text-align: center;"><span class="warranty-badge badge-gold">✓ Listo</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- SEC 6: POLIZA DE GARANTIA Y CONDICIONES -->
+      <section class="section-block">
+        <div class="section-title">
+          <span>6. Garantía de Satisfacción y Soporte Técnico Noweb Labs</span>
+          <span class="section-title-tag">Garantías Oficiales</span>
+        </div>
+        <p>
+          Para el total respaldo y tranquilidad de <strong>Hidalgo Prime Inmobiliaria</strong>, la agencia <strong>Noweb Labs</strong> otorga las siguientes garantías oficiales (activas posterior a la liquidación del pago acordado):
+        </p>
+
+        <div class="feature-grid" style="margin-top: 1rem;">
+          <div class="feature-box" style="border: 2px solid var(--gold-primary);">
+            <div class="feature-box-icon" style="background: rgba(197, 155, 63, 0.2);"><i data-lucide="calendar"></i></div>
+            <h5 style="color: var(--gold-dark); font-size: 0.95rem;">1 Mes de Garantía de Cambios</h5>
+            <p>
+              Cobertura completa de <strong>30 días corridos</strong> para solicitar modificaciones en textos, imágenes, ajustes visuales menores o adaptación de secciones de contenido sin costo adicional.
+            </p>
+          </div>
+
+          <div class="feature-box" style="border: 2px solid var(--secondary-navy);">
+            <div class="feature-box-icon" style="background: rgba(13, 30, 51, 0.15);"><i data-lucide="shield"></i></div>
+            <h5 style="color: var(--primary-navy); font-size: 0.95rem;">12 Meses de Garantía Técnica</h5>
+            <p>
+              Cobertura de <strong>1 año calendario (12 meses)</strong> que garantiza la estabilidad de la plataforma, corrección de errores de código, funcionamiento de la base de datos y disponibilidad del panel.
+            </p>
+          </div>
+        </div>
+
+        <div class="callout-box dark" style="margin-top: 1.1rem;">
+          <div class="callout-title"><i data-lucide="check-circle"></i> Activación de Cobertura</div>
+          <p style="font-size: 0.82rem; color: #CBD5E1;">
+            Ambas garantías entran en vigencia de forma automática una vez formalizada la entrega y liquidado el pago acordado por el desarrollo del proyecto.
+          </p>
+        </div>
+      </section>
+
+      <!-- SEC 7: ACTA DE ENTREGA Y CONFORMIDAD -->
+      <section class="section-block">
+        <div class="section-title">
+          <span>7. Acta de Entrega y Recepción Conforme</span>
+          <span class="section-title-tag">Conformidad</span>
+        </div>
+        <p>
+          Por medio del presente documento, se certifica la entrega técnica y puesta en marcha del portal inmobiliario en favor de <strong>Hidalgo Prime Inmobiliaria</strong>, desarrollado y entregado por la agencia <strong>Noweb Labs</strong>.
+        </p>
+
+        <div class="signoff-box">
+          <div class="sign-col">
+            <h6>Por el Proveedor de Desarrollo</h6>
+            <div class="sign-line"></div>
+            <div class="sign-meta">
+              <strong>Agencia Digital Noweb Labs</strong><br>
+              Área de Ingeniería & UI/UX Design<br>
+              Fecha: 17 de Agosto de 2026
+            </div>
+          </div>
+
+          <div class="sign-col">
+            <h6>Por el Cliente / Recepción Conforme</h6>
+            <div class="sign-line"></div>
+            <div class="sign-meta">
+              <strong>Hidalgo Prime Inmobiliaria</strong><br>
+              Representante Legal / Administración<br>
+              Santiago de Chile
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- DOCUMENT FOOTER -->
+    <footer class="doc-footer">
+      <div>
+        <strong>Noweb Labs</strong> • Agencia de Desarrollo Digital & Soluciones Cloud
+      </div>
+      <div>
+        Entregado a <strong>Hidalgo Prime Inmobiliaria</strong> • 2026
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
