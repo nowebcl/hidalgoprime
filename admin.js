@@ -1,5 +1,5 @@
 // PocketBase API URL Configuration
-const POCKETBASE_URL = "https://pb.noweb.tech";
+const POCKETBASE_URL = "https://hidalgo.noweb.cl";
 const pb = new PocketBase(POCKETBASE_URL);
 
 // Security: HTML escaping helper to prevent XSS

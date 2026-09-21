@@ -220,7 +220,7 @@ function closeContactModal() {
 }
 
 // PocketBase Client Integration
-const PUBLIC_PB_URL = "https://pb.noweb.tech";
+const PUBLIC_PB_URL = "https://hidalgo.noweb.cl";
 let pbPublic = null;
 if (typeof PocketBase !== "undefined") {
   pbPublic = new PocketBase(PUBLIC_PB_URL);
